@@ -1,11 +1,8 @@
-# Welcome to your Jupyter Book
+### Welcome to MyProfile  
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
+Semua ini adalah hasil dokumentasi saya selama mengambil matkul Proyek Sain Data 5B di Semester 5.  
 
-Check out the content pages bundled with this sample book to see more.
-
-```{tableofcontents}
-```
+Nama : Aqbil Baraka  
+NIM  : 230411100077  
+Prodi: Teknik Informatika  
+Email: 230411100077@student.trunojoyo.ac.id  
