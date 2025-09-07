@@ -183,10 +183,6 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Bussiness Understanding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DataUnderstanding.html">Data Understanding</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ExplorasiData.html">Explorasi Data</a></li>
-
-
-
-
 </ul>
 
     </div>
@@ -401,42 +397,47 @@ document.write(`
 <h1>Bussiness Understanding<a class="headerlink" href="#bussiness-understanding" title="Link to this heading">#</a></h1>
 <section id="judul-dataset">
 <h2>Judul Dataset<a class="headerlink" href="#judul-dataset" title="Link to this heading">#</a></h2>
-<p>“Fetal Health Classification (Klasifikasi Kesehatan Janin)”</p>
+<p>“Iris Flower Dataset”  <a class="reference external" href="https://www.kaggle.com/datasets/arshid/iris-flower-dataset">https://www.kaggle.com/datasets/arshid/iris-flower-dataset</a></p>
 </section>
 <section id="menentukan-tujuan-bisnis">
 <h2>Menentukan Tujuan Bisnis<a class="headerlink" href="#menentukan-tujuan-bisnis" title="Link to this heading">#</a></h2>
-<p>Kehamilan merupakan salah satu fase penting dalam kehidupan manusia yang membutuhkan pemantauan ketat terhadap kondisi kesehatan janin. Salah satu cara pemantauan dilakukan melalui pemeriksaan <strong>Cardiotocography (CTG)</strong>, yaitu metode merekam detak jantung janin dan aktivitas rahim ibu. Namun, interpretasi data CTG secara manual membutuhkan waktu, tenaga, dan pengalaman tinggi dari tenaga medis.</p>
-<p>Oleh karena itu, tujuan bisnis dari proyek ini adalah:</p>
-<ul class="simple">
-<li><p>Mengembangkan sistem klasifikasi berbasis data CTG untuk <strong>memprediksi kondisi kesehatan janin</strong>.</p></li>
-<li><p>Membantu tenaga medis membedakan kondisi janin menjadi tiga kategori:</p>
-<ul>
-<li><p><strong>Normal</strong> → janin sehat, tidak membutuhkan intervensi.</p></li>
-<li><p><strong>Suspect</strong> → kondisi janin perlu pemantauan lebih lanjut.</p></li>
-<li><p><strong>Pathological</strong> → janin berisiko, membutuhkan penanganan segera.</p></li>
-</ul>
-</li>
-<li><p>Mengurangi risiko keterlambatan diagnosis dan meningkatkan kualitas pelayanan medis.</p></li>
-</ul>
+<p><strong>Tujuan Utama:</strong> Tujuan dari proyek ini adalah untuk memahami karakteristik fisik yang membedakan tiga spesies bunga Iris (Setosa, Versicolor, dan Virginica). Analisis ini bertujuan untuk memberikan dasar bagi sistem identifikasi otomatis atau untuk membantu ahli botani dalam mengklasifikasikan bunga Iris berdasarkan pengukuran kelopak (petal) dan mahkota (sepal).</p>
+<p><strong>Tujuan Teknis:</strong> Secara teknis, proyek ini bertujuan untuk:</p>
+<ol class="arabic simple">
+<li><p>Membangun alur kerja data dari database cloud (MySQL &amp; PostgreSQL di Aiven) ke alat visualisasi (Power BI).</p></li>
+<li><p>Melakukan analisis data eksplorasi untuk mengekstrak statistik deskriptif kunci (min, max, rata-rata).</p></li>
+<li><p>Memvalidasi keseimbangan data antar kelas melalui visualisasi untuk memastikan setiap spesies terwakili dengan baik.</p></li>
+</ol>
+<p><strong>Kriteria Sukses:</strong> Proyek ini dianggap berhasil jika dasbor interaktif di Power BI berhasil dibuat, menampilkan semua metrik dan visualisasi yang diperlukan secara akurat, dengan data yang ditarik langsung dari kedua database.</p>
 </section>
 <section id="membuat-rencana-proyek">
 <h2>Membuat Rencana Proyek<a class="headerlink" href="#membuat-rencana-proyek" title="Link to this heading">#</a></h2>
-<p>Rencana proyek ini berfokus pada:</p>
+<p>Rencana proyek dibagi menjadi tahapan logis sebagai berikut:</p>
+<ol class="arabic simple">
+<li><p><strong>Langkah 1:</strong> Membuat dan mengkonfigurasi database MySQL dan PostgreSQL pada platform Aiven.</p></li>
+<li><p><strong>Langkah 2:</strong> Membuat skema tabel iris di kedua database dan mengimpor data dari file CSV menggunakan DBeaver.</p></li>
+<li><p><strong>Langkah 3:</strong> Menghubungkan database ke Power BI agar data bisa divisualisasikan secara interaktif.</p></li>
+<li><p><strong>Langkah 4:</strong> Melakukan eksplorasi data:</p>
 <ul class="simple">
-<li><p><strong>Eksplorasi Data</strong> untuk memahami karakteristik dataset Fetal Health.</p></li>
-<li><p><strong>Pengembangan Model Prediksi</strong> yang mampu membedakan kondisi janin (Normal, Suspect, Pathological).</p></li>
-<li><p><strong>Evaluasi Akurasi Model</strong> menggunakan metrik klasifikasi.</p></li>
-<li><p><strong>Penyusunan Rekomendasi</strong> bagi tenaga medis berdasarkan hasil analisis.</p></li>
+<li><p>Menghitung nilai minimum, maksimum, dan rata-rata tiap kolom numerik.</p></li>
+<li><p>Membuat grafik batang jumlah data tiap kelas (Setosa, Versicolor, Virginica).</p></li>
 </ul>
+</li>
+<li><p><strong>Langkah 5:</strong> Menyusun laporan insight dari hasil analisis.</p></li>
+</ol>
 </section>
 <section id="menilai-situasi-dan-kondisi">
 <h2>Menilai Situasi dan Kondisi<a class="headerlink" href="#menilai-situasi-dan-kondisi" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>Ketersediaan Data:</strong> dataset tersedia di Kaggle dengan total 2.126 baris data dan 21 fitur numerik hasil rekaman CTG.</p></li>
-<li><p><strong>Kondisi Teknis:</strong> data sudah dalam bentuk numerik, sehingga mempermudah proses preprocessing dan modeling.</p></li>
-<li><p><strong>Kesempatan:</strong> model dapat digunakan untuk mendukung keputusan medis, khususnya dalam diagnosis dini kondisi janin.</p></li>
-<li><p><strong>Keterbatasan:</strong> data berasal dari satu sumber (single dataset), sehingga ada kemungkinan model kurang general untuk populasi berbeda.</p></li>
-<li><p><strong>Risiko:</strong> interpretasi akhir tetap harus dilakukan oleh dokter; sistem ini hanya berfungsi sebagai alat bantu, bukan pengganti tenaga medis.</p></li>
+<li><p><strong>Sumber Daya:</strong></p>
+<ul>
+<li><p><strong>Data:</strong> Dataset Iris klasik yang terdiri dari 150 sampel, yang merupakan data bersih dan terstruktur dengan baik.</p></li>
+<li><p><strong>Infrastruktur:</strong> Database MySQL dan PostgreSQL yang dihosting di platform cloud Aiven.</p></li>
+<li><p><strong>Perangkat Lunak:</strong> DBeaver untuk manajemen database dan Power BI untuk analisis serta visualisasi.</p></li>
+</ul>
+</li>
+<li><p><strong>Risiko:</strong> Risiko utama dalam proyek ini adalah masalah konektivitas jaringan antara Power BI dan database cloud di Aiven, seperti timeout dan validasi sertifikat SSL. Risiko ini telah berhasil diidentifikasi dan diatasi selama tahap awal proyek.</p></li>
+<li><p><strong>Asumsi:</strong> Proyek ini mengasumsikan bahwa data yang disediakan dalam dataset Iris adalah akurat dan tidak memerlukan pembersihan data yang ekstensif (seperti penanganan nilai yang hilang atau outlier).</p></li>
 </ul>
 </section>
 </section>
