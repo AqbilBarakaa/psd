@@ -438,8 +438,6 @@ document.write(`
 <li><p>Klik “Create Service” dan pilih databse Postgre sebagai databasenya.</p></li>
 <li><p>Buat Service untuk MySQL dan PostgreSQL.</p></li>
 </ul>
-<p><img alt="Logo" src="images%5Cmysql.png" /></p>
-<p><img alt="image-2.png" src="images%5C141031.png" /></p>
 </section>
 <section id="membuat-database-mysql-dan-postgresql-dan-insert-data-di-dbeaver">
 <h3>Membuat Database MySQL dan PostgreSQL dan Insert Data di DBeaver<a class="headerlink" href="#membuat-database-mysql-dan-postgresql-dan-insert-data-di-dbeaver" title="Link to this heading">#</a></h3>
@@ -455,20 +453,18 @@ document.write(`
 </ul>
 </li>
 </ul>
-<p><img alt="image-2.png" src="images%5C140708.png" /></p>
-<p><img alt="image-2.png" src="images%5C120742.png" /></p>
 </section>
 <section id="menarik-data-mysql-dan-postgresql-ke-power-bi">
 <h3>Menarik Data MySQL dan PostgreSQL ke Power BI<a class="headerlink" href="#menarik-data-mysql-dan-postgresql-ke-power-bi" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Siapkan tools Power BI yang telah teristall melalui site resmi yakni melalui Microsoft.</p></li>
-<li><p>Setelah itu buat blank baru atau project baru.</p></li>
-<li><p>Pilih Fitur Get Data pada Navbar Power BI.</p></li>
-<li><p>Pada menu “ALL” atau “Database” pilih MySQL dan PostgreSQL Database, setelah itu klik “Connect”.</p></li>
-<li><p>Kemudian pilih Other -&gt; Python Scripting, setelah itu klik connect untuk memulai koneksi.</p></li>
-<li><p>Setelah itu masukkan script Python yang berisi library, kredensial dari aiven dan query ke tabel databasenya.</p></li>
+<li><p>Install Dbeaver melalui sites resmi <a class="reference external" href="https://dbeaver.io/download/">https://dbeaver.io/download/</a>.</p></li>
+<li><p>uat Database baru dengan source MySQL dan PostgreSQL pada Dbeaver.</p></li>
+<li><p>Koneksikan Database dengan cloud Database aiven melalui kredensial service MySQL dan PostgreSQL yang disediakan <a class="reference external" href="http://aiven.io">aiven.io</a>.</p></li>
+<li><p>Buat tabel database terlebih dahulu dengan “SQL Editor -&gt; Open SQL Script”.</p></li>
+<li><p>Setelah tabel terbuat. Insert data MySQL dan PostgreSQL dengan data IRIS,</p></li>
+<li><p>Untuk MySQL diisi dengan Data Iris Petal Length dan Petal Width.</p></li>
 </ul>
-<p>Dan ini adalah Script MySQL dengan Data Iris Sepal Length dan Sepal Width menggunakan POWER BI:</p>
+<p>Untuk PostgreSQL diisi dengan Data Iris Sepal Length dan Sepal Width.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pymysql</span>
@@ -491,7 +487,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_26820\2359332973.py:14: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12344\2359332973.py:14: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   data_mysql = pd.read_sql(query_mysql, mysql_conn)
 </pre></div>
 </div>
@@ -602,7 +598,6 @@ document.write(`
 <p>150 rows × 4 columns</p>
 </div></div></div>
 </div>
-<p><img alt="image.png" src="attachment:image.png" /></p>
 <p>Dan ini adalah Script PostgreSQL dengan Data Iris Sepal Length dan Sepal Width menggunakan POWER BI:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -625,7 +620,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_26820\1682131863.py:13: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12344\1682131863.py:13: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   data_pg = pd.read_sql(query_pg, pg_conn)
 </pre></div>
 </div>
@@ -736,7 +731,6 @@ document.write(`
 <p>150 rows × 4 columns</p>
 </div></div></div>
 </div>
-<p><img alt="image.png" src="attachment:image.png" /></p>
 </section>
 <section id="menggabungkan-data-di-power-bi">
 <h3>Menggabungkan Data di Power BI<a class="headerlink" href="#menggabungkan-data-di-power-bi" title="Link to this heading">#</a></h3>
@@ -745,17 +739,8 @@ document.write(`
 <li><p>Setelah itu pilih fitur Merge Queries, kemudian pilih Merge Queries as New untuk hasil penggabungan kolom dibuat tabel baru.</p></li>
 <li><p>Pilih tabel yang akan digabungkan dengan memilih tabel pada dropdown.</p></li>
 <li><p>Pilih kolom yang akan digabungkan, pada dataset iris data memiliki id yang sama disebabkan jumlah data yang sama, sehingga untuk menggabungkannya cukup menggunakan inner join, konsep inner join akan menggabungkan data yang memiliki id yang sama. Setelah memilih kolom klik Ok untuk melanjutkan proses.</p></li>
-</ul>
-<p><img alt="image.png" src="attachment:image.png" /></p>
-<ul class="simple">
 <li><p>Kemudian akan muncul tabel hasil penggabungan, pada kolom yang digabungkan klik tanda panah untuk menyeleksi kolom apa saja yang akan digabungkan.</p></li>
 </ul>
-<p><img alt="image-2.png" src="attachment:image-2.png" /></p>
-<ul class="simple">
-<li><p>Berikut hasil penggabungan kolom dari kedua tabel.</p></li>
-</ul>
-<p><img alt="image-3.png" src="attachment:image-3.png" /></p>
-<p>Penggabungan Data MySQL dan PostgreSQL dengan Script langsung pada Web Statis:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pymysql</span>
@@ -963,22 +948,22 @@ Tujuannya adalah untuk melihat pola dasar, kemungkinan outlier, serta gambaran u
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_26820\94481480.py:4: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12344\94481480.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Set2&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_26820\94481480.py:4: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_12344\94481480.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Set2&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_26820\94481480.py:4: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_12344\94481480.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Set2&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_26820\94481480.py:4: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_12344\94481480.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
@@ -1075,22 +1060,22 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_26820\1975838105.py:4: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12344\1975838105.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.violinplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Pastel1&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_26820\1975838105.py:4: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_12344\1975838105.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.violinplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Pastel1&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_26820\1975838105.py:4: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_12344\1975838105.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.violinplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Pastel1&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_26820\1975838105.py:4: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_12344\1975838105.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
@@ -1329,22 +1314,22 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_26820\3944055742.py:7: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12344\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_26820\3944055742.py:7: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_12344\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_26820\3944055742.py:7: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_12344\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_26820\3944055742.py:7: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_12344\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
