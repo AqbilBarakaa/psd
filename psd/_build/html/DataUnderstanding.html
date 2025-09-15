@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'DataUnderstanding';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="&lt;no title&gt;" href="DataPreprocessing.html" />
     <link rel="prev" title="Bussiness Understanding" href="BusinessUnderstanding.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -384,11 +385,13 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeskripsikan-data">Mendeskripsikan Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">Eksplorasi Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-minimum-dan-maksimum">1. Nilai Minimum dan Maksimum</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-rata-rata-mean">2. Nilai Rata-rata (Mean)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-jumlah-data-tiap-kelas">3. Distribusi Jumlah Data Tiap Kelas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">Eksplorasi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-minimum-dan-maksimum">1. Nilai Minimum dan Maksimum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-rata-rata-mean">2. Nilai Rata-rata (Mean)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-jumlah-data-tiap-kelas">3. Distribusi Jumlah Data Tiap Kelas</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifikasi-kualitas-data">Verifikasi Kualitas Data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-missing-values">1. Cek Missing Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-duplikasi-data">2. Cek Duplikasi Data</a></li>
@@ -481,7 +484,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_21196\2359332973.py:14: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12012\2359332973.py:14: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   data_mysql = pd.read_sql(query_mysql, mysql_conn)
 </pre></div>
 </div>
@@ -614,7 +617,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_21196\1682131863.py:13: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12012\1682131863.py:13: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   data_pg = pd.read_sql(query_pg, pg_conn)
 </pre></div>
 </div>
@@ -905,9 +908,8 @@ sepalwidth  -0.397729    -0.420516   -0.356544    -0.109369    1.000000
 <h2>Eksplorasi Data<a class="headerlink" href="#eksplorasi-data" title="Link to this heading">#</a></h2>
 <p>Eksplorasi data bertujuan untuk memahami karakteristik dataset sebelum dilakukan analisis lanjutan.<br />
 Tahapan ini meliputi analisis numerik, visualisasi, serta interpretasi.</p>
-</section>
 <section id="load-data">
-<h2>Load Data<a class="headerlink" href="#load-data" title="Link to this heading">#</a></h2>
+<h3>Load Data<a class="headerlink" href="#load-data" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -1002,7 +1004,7 @@ Tahapan ini meliputi analisis numerik, visualisasi, serta interpretasi.</p>
 <p>Berikut adalah beberapa analisis yang dilakukan:</p>
 </section>
 <section id="nilai-minimum-dan-maksimum">
-<h2>1. Nilai Minimum dan Maksimum<a class="headerlink" href="#nilai-minimum-dan-maksimum" title="Link to this heading">#</a></h2>
+<h3>1. Nilai Minimum dan Maksimum<a class="headerlink" href="#nilai-minimum-dan-maksimum" title="Link to this heading">#</a></h3>
 <p>Nilai minimum dan maksimum digunakan untuk melihat <strong>rentang (range)</strong> dari setiap fitur numerik.<br />
 Hal ini membantu memahami seberapa lebar penyebaran data.</p>
 <div class="cell docutils container">
@@ -1048,7 +1050,7 @@ dtype: float64
 </ul>
 </section>
 <section id="nilai-rata-rata-mean">
-<h2>2. Nilai Rata-rata (Mean)<a class="headerlink" href="#nilai-rata-rata-mean" title="Link to this heading">#</a></h2>
+<h3>2. Nilai Rata-rata (Mean)<a class="headerlink" href="#nilai-rata-rata-mean" title="Link to this heading">#</a></h3>
 <p>Rata-rata memberikan gambaran <strong>titik tengah</strong> distribusi data.<br />
 Dengan ini, kita bisa tahu fitur mana yang memiliki skala lebih besar.</p>
 <div class="cell docutils container">
@@ -1076,7 +1078,7 @@ dtype: float64
 </ul>
 </section>
 <section id="distribusi-jumlah-data-tiap-kelas">
-<h2>3. Distribusi Jumlah Data Tiap Kelas<a class="headerlink" href="#distribusi-jumlah-data-tiap-kelas" title="Link to this heading">#</a></h2>
+<h3>3. Distribusi Jumlah Data Tiap Kelas<a class="headerlink" href="#distribusi-jumlah-data-tiap-kelas" title="Link to this heading">#</a></h3>
 <p>Distribusi kelas penting untuk memastikan dataset <strong>seimbang</strong> (tidak ada kelas yang dominan).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1103,7 +1105,7 @@ Iris-virginica     50
 Name: count, dtype: int64
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_21196\764761306.py:7: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12012\764761306.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
@@ -1117,6 +1119,7 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <li><p>Dataset iris seimbang → masing-masing kelas ± 50 data.</p></li>
 <li><p>Tidak ada kelas yang dominan → cocok untuk model klasifikasi.</p></li>
 </ul>
+</section>
 </section>
 <section id="verifikasi-kualitas-data">
 <h2>Verifikasi Kualitas Data<a class="headerlink" href="#verifikasi-kualitas-data" title="Link to this heading">#</a></h2>
@@ -1339,22 +1342,24 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_21196\3944055742.py:7: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12012\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_21196\3944055742.py:7: FutureWarning: 
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12012\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_21196\3944055742.py:7: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_12012\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_21196\3944055742.py:7: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_12012\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
@@ -1427,6 +1432,15 @@ Jumlah ID unik: 150
         <p class="prev-next-title">Bussiness Understanding</p>
       </div>
     </a>
+    <a class="right-next"
+       href="DataPreprocessing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1451,11 +1465,13 @@ Jumlah ID unik: 150
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeskripsikan-data">Mendeskripsikan Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">Eksplorasi Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-minimum-dan-maksimum">1. Nilai Minimum dan Maksimum</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-rata-rata-mean">2. Nilai Rata-rata (Mean)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-jumlah-data-tiap-kelas">3. Distribusi Jumlah Data Tiap Kelas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">Eksplorasi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-minimum-dan-maksimum">1. Nilai Minimum dan Maksimum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-rata-rata-mean">2. Nilai Rata-rata (Mean)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-jumlah-data-tiap-kelas">3. Distribusi Jumlah Data Tiap Kelas</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifikasi-kualitas-data">Verifikasi Kualitas Data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-missing-values">1. Cek Missing Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-duplikasi-data">2. Cek Duplikasi Data</a></li>
