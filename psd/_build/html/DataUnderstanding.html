@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Data Understanding &#8212; My sample book</title>
+    <title>Data Understanding dan Eksplorasi Data &#8212; My sample book</title>
   
   
   
@@ -60,7 +60,6 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'DataUnderstanding';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Explorasi Data" href="ExplorasiData.html" />
     <link rel="prev" title="Bussiness Understanding" href="BusinessUnderstanding.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -181,8 +180,7 @@
         </ul>
         <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="BusinessUnderstanding.html">Bussiness Understanding</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Understanding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ExplorasiData.html">Explorasi Data</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Understanding dan Eksplorasi Data</a></li>
 </ul>
 
     </div>
@@ -368,7 +366,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Data Understanding</h1>
+    <h1>Data Understanding dan Eksplorasi Data</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -386,15 +384,11 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeskripsikan-data">Mendeskripsikan Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data-menyelidiki-data">Eksplorasi Data / Menyelidiki Data</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-setiap-fitur-numerik">1. Histogram setiap fitur numerik</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boxplot-tiap-fitur-numerik-per-kelas">2. Boxplot tiap fitur numerik per kelas</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#density-plot-kde-per-fitur-numerik">3. Density Plot (KDE) per fitur numerik</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pairplot-antar-fitur">4. Pairplot antar fitur</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#heatmap-korelasi">5. Heatmap Korelasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#violin-plot">6. Violin Plot</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">Eksplorasi Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-minimum-dan-maksimum">1. Nilai Minimum dan Maksimum</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-rata-rata-mean">2. Nilai Rata-rata (Mean)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-jumlah-data-tiap-kelas">3. Distribusi Jumlah Data Tiap Kelas</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifikasi-kualitas-data">Verifikasi Kualitas Data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-missing-values">1. Cek Missing Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-duplikasi-data">2. Cek Duplikasi Data</a></li>
@@ -416,8 +410,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="data-understanding">
-<h1>Data Understanding<a class="headerlink" href="#data-understanding" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="data-understanding-dan-eksplorasi-data">
+<h1>Data Understanding dan Eksplorasi Data<a class="headerlink" href="#data-understanding-dan-eksplorasi-data" title="Link to this heading">#</a></h1>
 <p>Tujuan dari memahami data adalah untuk mengenali karakteristik data yang akan digunakan, sehingga kita dapat menentukan metode dan teknik yang tepat untuk analisis lebih lanjut. Beberapa kegiatan yang termasuk dalam memahami data antara lain:</p>
 <ol class="arabic simple">
 <li><p><strong>Pengumpulan Data:</strong> Mengumpulkan data dari berbagai sumber yang relevan.</p></li>
@@ -487,7 +481,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12344\2359332973.py:14: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_21196\2359332973.py:14: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   data_mysql = pd.read_sql(query_mysql, mysql_conn)
 </pre></div>
 </div>
@@ -620,7 +614,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12344\1682131863.py:13: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_21196\1682131863.py:13: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   data_pg = pd.read_sql(query_pg, pg_conn)
 </pre></div>
 </div>
@@ -907,191 +901,222 @@ sepalwidth  -0.397729    -0.420516   -0.356544    -0.109369    1.000000
 </div>
 </div>
 </section>
-<section id="eksplorasi-data-menyelidiki-data">
-<h2>Eksplorasi Data / Menyelidiki Data<a class="headerlink" href="#eksplorasi-data-menyelidiki-data" title="Link to this heading">#</a></h2>
-<p>Pada tahap ini, dilakukan eksplorasi awal untuk memahami struktur serta distribusi data secara sederhana.<br />
-Tujuannya adalah untuk melihat pola dasar, kemungkinan outlier, serta gambaran umum hubungan antar fitur.</p>
-<section id="histogram-setiap-fitur-numerik">
-<h3>1. Histogram setiap fitur numerik<a class="headerlink" href="#histogram-setiap-fitur-numerik" title="Link to this heading">#</a></h3>
+<section id="eksplorasi-data">
+<h2>Eksplorasi Data<a class="headerlink" href="#eksplorasi-data" title="Link to this heading">#</a></h2>
+<p>Eksplorasi data bertujuan untuk memahami karakteristik dataset sebelum dilakukan analisis lanjutan.<br />
+Tahapan ini meliputi analisis numerik, visualisasi, serta interpretasi.</p>
+</section>
+<section id="load-data">
+<h2>Load Data<a class="headerlink" href="#load-data" title="Link to this heading">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Histogram tiap fitur numerik</span>
-<span class="n">df_combined</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;skyblue&quot;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Histogram Setiap Fitur Numerik&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="c1"># Baca dataset gabungan</span>
+<span class="n">df_combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data_gabungan_iris.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># Lihat 5 baris pertama</span>
+<span class="n">df_combined</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>class</th>
+      <th>petallength</th>
+      <th>petalwidth</th>
+      <th>sepallength</th>
+      <th>sepalwidth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>4.9</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.7</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>4.6</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Berikut adalah beberapa analisis yang dilakukan:</p>
+</section>
+<section id="nilai-minimum-dan-maksimum">
+<h2>1. Nilai Minimum dan Maksimum<a class="headerlink" href="#nilai-minimum-dan-maksimum" title="Link to this heading">#</a></h2>
+<p>Nilai minimum dan maksimum digunakan untuk melihat <strong>rentang (range)</strong> dari setiap fitur numerik.<br />
+Hal ini membantu memahami seberapa lebar penyebaran data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nilai minimum tiap kolom:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Nilai maksimum tiap kolom:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Nilai minimum tiap kolom:
+id             1.0
+petallength    1.0
+petalwidth     0.1
+sepallength    4.3
+sepalwidth     2.0
+dtype: float64
+
+Nilai maksimum tiap kolom:
+id             150.0
+petallength      6.9
+petalwidth       2.5
+sepallength      7.9
+sepalwidth       4.4
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Menunjukkan rentang data tiap fitur.</p></li>
+<li><p>Pada dataset iris biasanya:</p>
+<ul>
+<li><p>Sepal length: 4.3 – 7.9</p></li>
+<li><p>Sepal width: 2.0 – 4.4</p></li>
+<li><p>Petal length: 1.0 – 6.9</p></li>
+<li><p>Petal width: 0.1 – 2.5</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="nilai-rata-rata-mean">
+<h2>2. Nilai Rata-rata (Mean)<a class="headerlink" href="#nilai-rata-rata-mean" title="Link to this heading">#</a></h2>
+<p>Rata-rata memberikan gambaran <strong>titik tengah</strong> distribusi data.<br />
+Dengan ini, kita bisa tahu fitur mana yang memiliki skala lebih besar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rata-rata tiap kolom:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rata-rata tiap kolom:
+id             75.500000
+petallength     3.758667
+petalwidth      1.198667
+sepallength     5.843333
+sepalwidth      3.054000
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Rata-rata sepal lebih besar dibanding petal.</p></li>
+<li><p>Rata-rata membantu perbandingan antar fitur.</p></li>
+</ul>
+</section>
+<section id="distribusi-jumlah-data-tiap-kelas">
+<h2>3. Distribusi Jumlah Data Tiap Kelas<a class="headerlink" href="#distribusi-jumlah-data-tiap-kelas" title="Link to this heading">#</a></h2>
+<p>Distribusi kelas penting untuk memastikan dataset <strong>seimbang</strong> (tidak ada kelas yang dominan).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">class_counts</span> <span class="o">=</span> <span class="n">df_combined</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah data tiap kelas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">class_counts</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">class_counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">class_counts</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribusi Jumlah Data per Kelas&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Kelas&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Jumlah Data&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/37ccf54dd9717ab22026f064c7fa53df3855748e70cd9b590c85c811115ed806.png" src="_images/37ccf54dd9717ab22026f064c7fa53df3855748e70cd9b590c85c811115ed806.png" />
-</div>
-</div>
-<p>Histogram memperlihatkan distribusi dari setiap fitur numerik.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">sepallength</span></code> cenderung menyebar normal.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">sepalwidth</span></code> sedikit miring ke kanan.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">petallength</span></code> dan <code class="docutils literal notranslate"><span class="pre">petalwidth</span></code> cukup memisahkan kelas, terlihat ada distribusi berbeda.</p></li>
-</ul>
-</section>
-<section id="boxplot-tiap-fitur-numerik-per-kelas">
-<h3>2. Boxplot tiap fitur numerik per kelas<a class="headerlink" href="#boxplot-tiap-fitur-numerik-per-kelas" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">&quot;sepallength&quot;</span><span class="p">,</span> <span class="s2">&quot;sepalwidth&quot;</span><span class="p">,</span> <span class="s2">&quot;petallength&quot;</span><span class="p">,</span> <span class="s2">&quot;petalwidth&quot;</span><span class="p">],</span> <span class="mi">1</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_combined</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;Set2&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Boxplot </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> berdasarkan class&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah data tiap kelas:
+class
+Iris-setosa        50
+Iris-versicolor    50
+Iris-virginica     50
+Name: count, dtype: int64
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12344\94481480.py:4: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_21196\764761306.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
-  sns.boxplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Set2&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_12344\94481480.py:4: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.boxplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Set2&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_12344\94481480.py:4: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.boxplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Set2&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_12344\94481480.py:4: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.boxplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Set2&quot;)
+  sns.barplot(x=class_counts.index, y=class_counts.values, palette=&quot;viridis&quot;)
 </pre></div>
 </div>
-<img alt="_images/59ffab26773dc640752a9eb890da2d72a82fe16e15087acaa73a809c49f88acc.png" src="_images/59ffab26773dc640752a9eb890da2d72a82fe16e15087acaa73a809c49f88acc.png" />
-</div>
-</div>
-<p>Boxplot membantu melihat perbedaan distribusi tiap fitur antar kelas.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">setosa</span></code> terlihat memiliki nilai <code class="docutils literal notranslate"><span class="pre">petallength</span></code> dan <code class="docutils literal notranslate"><span class="pre">petalwidth</span></code> lebih kecil dari kelas lain.</p></li>
-<li><p>Ada potensi outlier kecil di fitur <code class="docutils literal notranslate"><span class="pre">sepalwidth</span></code>.</p></li>
-<li><p>Distribusi kelas virginica dan versicolor agak berdekatan di <code class="docutils literal notranslate"><span class="pre">sepallength</span></code>.</p></li>
-</ul>
-</section>
-<section id="density-plot-kde-per-fitur-numerik">
-<h3>3. Density Plot (KDE) per fitur numerik<a class="headerlink" href="#density-plot-kde-per-fitur-numerik" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;sepallength&quot;</span><span class="p">,</span> <span class="s2">&quot;sepalwidth&quot;</span><span class="p">,</span> <span class="s2">&quot;petallength&quot;</span><span class="p">,</span> <span class="s2">&quot;petalwidth&quot;</span><span class="p">]:</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_combined</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribusi (KDE) Fitur Numerik berdasarkan Class&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/f4653e763a2905fd5e84b6fd444ea7fa955a10fc829c5fe09dcc2ef832b4c197.png" src="_images/f4653e763a2905fd5e84b6fd444ea7fa955a10fc829c5fe09dcc2ef832b4c197.png" />
-</div>
-</div>
-<p>Plot KDE memperlihatkan kepadatan distribusi:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">petallength</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">petalwidth</span></code> sangat jelas memisahkan kelas.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">sepalwidth</span></code> tidak begitu baik untuk memisahkan kelas.</p></li>
-<li><p>Distribusi <code class="docutils literal notranslate"><span class="pre">setosa</span></code> sangat berbeda dibanding dua kelas lainnya.</p></li>
-</ul>
-</section>
-<section id="pairplot-antar-fitur">
-<h3>4. Pairplot antar fitur<a class="headerlink" href="#pairplot-antar-fitur" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">df_combined</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">diag_kind</span><span class="o">=</span><span class="s2">&quot;kde&quot;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;Set1&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Pairplot Hubungan Antar Fitur&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/091e7055b24a35a45f7859d33ec6af51af34babd23238196a584095bb8e28b3a.png" src="_images/091e7055b24a35a45f7859d33ec6af51af34babd23238196a584095bb8e28b3a.png" />
-</div>
-</div>
-<p>Pairplot menunjukkan hubungan antar fitur:</p>
-<ul class="simple">
-<li><p>Kombinasi <code class="docutils literal notranslate"><span class="pre">petallength</span></code> vs <code class="docutils literal notranslate"><span class="pre">petalwidth</span></code> sangat jelas membentuk cluster kelas.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">sepallength</span></code> vs <code class="docutils literal notranslate"><span class="pre">sepalwidth</span></code> masih tumpang tindih antar kelas.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">setosa</span></code> dapat terpisah sempurna dari dua kelas lainnya.</p></li>
-</ul>
-</section>
-<section id="heatmap-korelasi">
-<h3>5. Heatmap Korelasi<a class="headerlink" href="#heatmap-korelasi" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;coolwarm&quot;</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Heatmap Korelasi Antar Fitur Numerik&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/98ddf9541ca5fe00e69bfaa7505897561dc1349105d1d8a231876603108f3fb9.png" src="_images/98ddf9541ca5fe00e69bfaa7505897561dc1349105d1d8a231876603108f3fb9.png" />
+<img alt="_images/4c340f3fd74c2cb3844b15e3a51a0504680fb367e9dd9eb4193ad2899e82dfd8.png" src="_images/4c340f3fd74c2cb3844b15e3a51a0504680fb367e9dd9eb4193ad2899e82dfd8.png" />
 </div>
 </div>
 <ul class="simple">
-<li><p>Korelasi paling tinggi ada pada <code class="docutils literal notranslate"><span class="pre">petallength</span></code> dengan <code class="docutils literal notranslate"><span class="pre">petalwidth</span></code> (hampir 0.96).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">sepallength</span></code> juga memiliki korelasi sedang dengan <code class="docutils literal notranslate"><span class="pre">petallength</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">sepalwidth</span></code> cenderung tidak terlalu berkorelasi dengan fitur lainnya.</p></li>
+<li><p>Dataset iris seimbang → masing-masing kelas ± 50 data.</p></li>
+<li><p>Tidak ada kelas yang dominan → cocok untuk model klasifikasi.</p></li>
 </ul>
-</section>
-<section id="violin-plot">
-<h3>6. Violin Plot<a class="headerlink" href="#violin-plot" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">&quot;sepallength&quot;</span><span class="p">,</span> <span class="s2">&quot;sepalwidth&quot;</span><span class="p">,</span> <span class="s2">&quot;petallength&quot;</span><span class="p">,</span> <span class="s2">&quot;petalwidth&quot;</span><span class="p">],</span> <span class="mi">1</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">violinplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_combined</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;Pastel1&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Violin Plot </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> berdasarkan class&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12344\1975838105.py:4: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.violinplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Pastel1&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_12344\1975838105.py:4: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.violinplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Pastel1&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_12344\1975838105.py:4: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.violinplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Pastel1&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_12344\1975838105.py:4: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.violinplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Pastel1&quot;)
-</pre></div>
-</div>
-<img alt="_images/3ee9ef21f07cf8c320143184ebb214deaffa2977dc06f21a10e3c76f4b02bb87.png" src="_images/3ee9ef21f07cf8c320143184ebb214deaffa2977dc06f21a10e3c76f4b02bb87.png" />
-</div>
-</div>
-<p>Violin plot memperlihatkan distribusi kepadatan tiap kelas:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">setosa</span></code> memiliki distribusi paling sempit (stabil) pada <code class="docutils literal notranslate"><span class="pre">petallength</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">petalwidth</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">versicolor</span></code> dan <code class="docutils literal notranslate"><span class="pre">virginica</span></code> sedikit overlap terutama di <code class="docutils literal notranslate"><span class="pre">sepallength</span></code>.</p></li>
-<li><p>Bentuk violin membantu melihat distribusi ganda (multi-mode) pada beberapa fitur.</p></li>
-</ul>
-</section>
 </section>
 <section id="verifikasi-kualitas-data">
 <h2>Verifikasi Kualitas Data<a class="headerlink" href="#verifikasi-kualitas-data" title="Link to this heading">#</a></h2>
@@ -1314,22 +1339,22 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_12344\3944055742.py:7: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_21196\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_12344\3944055742.py:7: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_21196\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_12344\3944055742.py:7: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_21196\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_12344\3944055742.py:7: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_21196\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
@@ -1402,15 +1427,6 @@ Jumlah ID unik: 150
         <p class="prev-next-title">Bussiness Understanding</p>
       </div>
     </a>
-    <a class="right-next"
-       href="ExplorasiData.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Explorasi Data</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
@@ -1435,15 +1451,11 @@ Jumlah ID unik: 150
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeskripsikan-data">Mendeskripsikan Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data-menyelidiki-data">Eksplorasi Data / Menyelidiki Data</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-setiap-fitur-numerik">1. Histogram setiap fitur numerik</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#boxplot-tiap-fitur-numerik-per-kelas">2. Boxplot tiap fitur numerik per kelas</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#density-plot-kde-per-fitur-numerik">3. Density Plot (KDE) per fitur numerik</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pairplot-antar-fitur">4. Pairplot antar fitur</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#heatmap-korelasi">5. Heatmap Korelasi</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#violin-plot">6. Violin Plot</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">Eksplorasi Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-minimum-dan-maksimum">1. Nilai Minimum dan Maksimum</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-rata-rata-mean">2. Nilai Rata-rata (Mean)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-jumlah-data-tiap-kelas">3. Distribusi Jumlah Data Tiap Kelas</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifikasi-kualitas-data">Verifikasi Kualitas Data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-missing-values">1. Cek Missing Values</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-duplikasi-data">2. Cek Duplikasi Data</a></li>
