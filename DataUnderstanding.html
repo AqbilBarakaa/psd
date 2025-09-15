@@ -393,13 +393,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifikasi-kualitas-data">Verifikasi Kualitas Data</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-missing-values">1. Cek Missing Values</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-duplikasi-data">2. Cek Duplikasi Data</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-tipe-data">3. Cek Tipe Data</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-nilai-unik-pada-kolom-kategori">4. Cek Nilai Unik pada Kolom Kategori</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-statistik-deskriptif">5. Cek Statistik Deskriptif</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-outlier">6. Visualisasi Outlier</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-konsistensi-id">7. Cek Konsistensi ID</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeteksi-outlier">Mendeteksi Outlier</a></li>
 </ul>
 </li>
 </ul>
@@ -452,18 +446,18 @@ document.write(`
 </ul>
 </li>
 </ul>
+<p><img alt="Screenshot" src="_images/140708.png" /></p>
+<p><img alt="Screenshot" src="_images/140742.png" /></p>
 </section>
 <section id="menarik-data-mysql-dan-postgresql-ke-power-bi">
 <h3>Menarik Data MySQL dan PostgreSQL ke Power BI<a class="headerlink" href="#menarik-data-mysql-dan-postgresql-ke-power-bi" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Install Dbeaver melalui sites resmi <a class="reference external" href="https://dbeaver.io/download/">https://dbeaver.io/download/</a>.</p></li>
-<li><p>uat Database baru dengan source MySQL dan PostgreSQL pada Dbeaver.</p></li>
-<li><p>Koneksikan Database dengan cloud Database aiven melalui kredensial service MySQL dan PostgreSQL yang disediakan <a class="reference external" href="http://aiven.io">aiven.io</a>.</p></li>
-<li><p>Buat tabel database terlebih dahulu dengan “SQL Editor -&gt; Open SQL Script”.</p></li>
-<li><p>Setelah tabel terbuat. Insert data MySQL dan PostgreSQL dengan data IRIS,</p></li>
-<li><p>Untuk MySQL diisi dengan Data Iris Petal Length dan Petal Width.</p></li>
+<li><p>Pilih Menu Get Data untuk mendapatkan suatu data dari database.</p></li>
+<li><p>Kemudian pilih Other -&gt; Python Scripting, setelah itu klik connect untuk memulai koneksi..</p></li>
+<li><p>Setelah itu masukkan script Python yang berisi library, kredensial dari aiven dan query ke tabel databasenya.</p></li>
 </ul>
-<p>Untuk PostgreSQL diisi dengan Data Iris Sepal Length dan Sepal Width.</p>
+<p>Untuk MySQL diisi dengan Data Iris Petal Length dan Petal Width.</p>
+<p><img alt="Screenshot" src="_images/141428.png" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pymysql</span>
@@ -486,7 +480,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_8708\2359332973.py:14: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_23240\2359332973.py:14: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   data_mysql = pd.read_sql(query_mysql, mysql_conn)
 </pre></div>
 </div>
@@ -598,6 +592,7 @@ document.write(`
 </div></div></div>
 </div>
 <p>Dan ini adalah Script PostgreSQL dengan Data Iris Sepal Length dan Sepal Width menggunakan POWER BI:</p>
+<p><img alt="Screenshot" src="_images/141451.png" /></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -619,7 +614,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_8708\1682131863.py:13: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_23240\1682131863.py:13: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
   data_pg = pd.read_sql(query_pg, pg_conn)
 </pre></div>
 </div>
@@ -738,8 +733,17 @@ document.write(`
 <li><p>Setelah itu pilih fitur Merge Queries, kemudian pilih Merge Queries as New untuk hasil penggabungan kolom dibuat tabel baru.</p></li>
 <li><p>Pilih tabel yang akan digabungkan dengan memilih tabel pada dropdown.</p></li>
 <li><p>Pilih kolom yang akan digabungkan, pada dataset iris data memiliki id yang sama disebabkan jumlah data yang sama, sehingga untuk menggabungkannya cukup menggunakan inner join, konsep inner join akan menggabungkan data yang memiliki id yang sama. Setelah memilih kolom klik Ok untuk melanjutkan proses.</p></li>
+</ul>
+<p><img alt="Screenshot" src="_images/142922.png" /></p>
+<ul class="simple">
 <li><p>Kemudian akan muncul tabel hasil penggabungan, pada kolom yang digabungkan klik tanda panah untuk menyeleksi kolom apa saja yang akan digabungkan.</p></li>
 </ul>
+<p><img alt="Screenshot" src="_images/143018.png" /></p>
+<ul class="simple">
+<li><p>Berikut hasil penggabungan kolom dari kedua tabel.</p></li>
+</ul>
+<p><img alt="Screenshot" src="_images/143040.png" /></p>
+<p>Penggabungan data menggunakan Script Python pada Web Statis</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pymysql</span>
@@ -1050,6 +1054,7 @@ dtype: float64
 </ul>
 </li>
 </ul>
+<p><img alt="Screenshot" src="_images/150255.png" /></p>
 </section>
 <section id="nilai-rata-rata-mean">
 <h3>2. Nilai Rata-rata (Mean)<a class="headerlink" href="#nilai-rata-rata-mean" title="Link to this heading">#</a></h3>
@@ -1078,6 +1083,7 @@ dtype: float64
 <li><p>Rata-rata sepal lebih besar dibanding petal.</p></li>
 <li><p>Rata-rata membantu perbandingan antar fitur.</p></li>
 </ul>
+<p><img alt="Screenshot" src="_images/150433.png" /></p>
 </section>
 <section id="distribusi-jumlah-data-tiap-kelas">
 <h3>3. Distribusi Jumlah Data Tiap Kelas<a class="headerlink" href="#distribusi-jumlah-data-tiap-kelas" title="Link to this heading">#</a></h3>
@@ -1107,7 +1113,7 @@ Iris-virginica     50
 Name: count, dtype: int64
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_8708\764761306.py:7: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_23240\764761306.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
@@ -1121,276 +1127,15 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 <li><p>Dataset iris seimbang → masing-masing kelas ± 50 data.</p></li>
 <li><p>Tidak ada kelas yang dominan → cocok untuk model klasifikasi.</p></li>
 </ul>
+<p><img alt="Screenshot" src="_images/151208.png" /></p>
 </section>
 </section>
 <section id="verifikasi-kualitas-data">
 <h2>Verifikasi Kualitas Data<a class="headerlink" href="#verifikasi-kualitas-data" title="Link to this heading">#</a></h2>
 <p>Tahap ini bertujuan untuk memastikan bahwa data yang digunakan benar-benar berkualitas, bebas dari masalah yang dapat mengganggu analisis maupun pemodelan.<br />
 Verifikasi kualitas data mencakup beberapa aspek, yaitu:</p>
-<section id="cek-missing-values">
-<h3>1. Cek Missing Values<a class="headerlink" href="#cek-missing-values" title="Link to this heading">#</a></h3>
-<p>Langkah pertama adalah mengecek apakah ada data yang hilang (missing values).<br />
-Jika ada, bisa dilakukan imputasi (mengisi dengan rata-rata/median) atau penghapusan data.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cek missing values</span>
-<span class="n">df_combined</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>id             0
-class          0
-petallength    0
-petalwidth     0
-sepallength    0
-sepalwidth     0
-dtype: int64
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="cek-duplikasi-data">
-<h3>2. Cek Duplikasi Data<a class="headerlink" href="#cek-duplikasi-data" title="Link to this heading">#</a></h3>
-<p>Data ganda dapat memengaruhi hasil analisis karena satu observasi dihitung lebih dari sekali.<br />
-Oleh karena itu, kita cek apakah ada baris duplikat.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cek data duplikat</span>
-<span class="n">df_combined</span><span class="o">.</span><span class="n">duplicated</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.int64(0)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="cek-tipe-data">
-<h3>3. Cek Tipe Data<a class="headerlink" href="#cek-tipe-data" title="Link to this heading">#</a></h3>
-<p>Pastikan tipe data setiap kolom sudah sesuai:</p>
-<ul class="simple">
-<li><p>Kolom numerik (<code class="docutils literal notranslate"><span class="pre">sepallength</span></code>, <code class="docutils literal notranslate"><span class="pre">sepalwidth</span></code>, <code class="docutils literal notranslate"><span class="pre">petallength</span></code>, <code class="docutils literal notranslate"><span class="pre">petalwidth</span></code>) harus berupa numerik (<code class="docutils literal notranslate"><span class="pre">int</span></code> atau <code class="docutils literal notranslate"><span class="pre">float</span></code>).</p></li>
-<li><p>Kolom kategori (<code class="docutils literal notranslate"><span class="pre">class</span></code>) harus berupa <code class="docutils literal notranslate"><span class="pre">object</span></code> atau <code class="docutils literal notranslate"><span class="pre">category</span></code>.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cek tipe data</span>
-<span class="n">df_combined</span><span class="o">.</span><span class="n">dtypes</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>id               int64
-class           object
-petallength    float64
-petalwidth     float64
-sepallength    float64
-sepalwidth     float64
-dtype: object
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="cek-nilai-unik-pada-kolom-kategori">
-<h3>4. Cek Nilai Unik pada Kolom Kategori<a class="headerlink" href="#cek-nilai-unik-pada-kolom-kategori" title="Link to this heading">#</a></h3>
-<p>Kolom <code class="docutils literal notranslate"><span class="pre">class</span></code> seharusnya hanya berisi tiga label:</p>
-<ul class="simple">
-<li><p>setosa</p></li>
-<li><p>versicolor</p></li>
-<li><p>virginica</p></li>
-</ul>
-<p>Jika ada ejaan berbeda atau label tambahan, maka data perlu dibersihkan.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Nilai unik pada kolom class</span>
-<span class="n">df_combined</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;Iris-setosa&#39;, &#39;Iris-versicolor&#39;, &#39;Iris-virginica&#39;], dtype=object)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="cek-statistik-deskriptif">
-<h3>5. Cek Statistik Deskriptif<a class="headerlink" href="#cek-statistik-deskriptif" title="Link to this heading">#</a></h3>
-<p>Dengan melihat statistik deskriptif, kita dapat mengetahui apakah ada nilai yang tidak wajar (di luar range normal).</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Statistik deskriptif untuk melihat range nilai</span>
-<span class="n">df_combined</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>id</th>
-      <th>petallength</th>
-      <th>petalwidth</th>
-      <th>sepallength</th>
-      <th>sepalwidth</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>count</th>
-      <td>150.000000</td>
-      <td>150.000000</td>
-      <td>150.000000</td>
-      <td>150.000000</td>
-      <td>150.000000</td>
-    </tr>
-    <tr>
-      <th>mean</th>
-      <td>75.500000</td>
-      <td>3.758667</td>
-      <td>1.198667</td>
-      <td>5.843333</td>
-      <td>3.054000</td>
-    </tr>
-    <tr>
-      <th>std</th>
-      <td>43.445368</td>
-      <td>1.764420</td>
-      <td>0.763161</td>
-      <td>0.828066</td>
-      <td>0.433594</td>
-    </tr>
-    <tr>
-      <th>min</th>
-      <td>1.000000</td>
-      <td>1.000000</td>
-      <td>0.100000</td>
-      <td>4.300000</td>
-      <td>2.000000</td>
-    </tr>
-    <tr>
-      <th>25%</th>
-      <td>38.250000</td>
-      <td>1.600000</td>
-      <td>0.300000</td>
-      <td>5.100000</td>
-      <td>2.800000</td>
-    </tr>
-    <tr>
-      <th>50%</th>
-      <td>75.500000</td>
-      <td>4.350000</td>
-      <td>1.300000</td>
-      <td>5.800000</td>
-      <td>3.000000</td>
-    </tr>
-    <tr>
-      <th>75%</th>
-      <td>112.750000</td>
-      <td>5.100000</td>
-      <td>1.800000</td>
-      <td>6.400000</td>
-      <td>3.300000</td>
-    </tr>
-    <tr>
-      <th>max</th>
-      <td>150.000000</td>
-      <td>6.900000</td>
-      <td>2.500000</td>
-      <td>7.900000</td>
-      <td>4.400000</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-</section>
-<section id="visualisasi-outlier">
-<h3>6. Visualisasi Outlier<a class="headerlink" href="#visualisasi-outlier" title="Link to this heading">#</a></h3>
-<p>Boxplot digunakan untuk melihat apakah terdapat nilai ekstrem (outlier) pada setiap fitur numerik.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">&quot;sepallength&quot;</span><span class="p">,</span> <span class="s2">&quot;sepalwidth&quot;</span><span class="p">,</span> <span class="s2">&quot;petallength&quot;</span><span class="p">,</span> <span class="s2">&quot;petalwidth&quot;</span><span class="p">],</span> <span class="mi">1</span><span class="p">):</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">)</span>
-    <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_combined</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">col</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;Set3&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Outlier check - </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_8708\3944055742.py:7: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_8708\3944055742.py:7: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_8708\3944055742.py:7: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_8708\3944055742.py:7: FutureWarning: 
-
-Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
-
-  sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-</pre></div>
-</div>
-<img alt="_images/4fdf36cb9336216c0053354e710969e2981d20707fb905438581a748bb85f541.png" src="_images/4fdf36cb9336216c0053354e710969e2981d20707fb905438581a748bb85f541.png" />
-</div>
-</div>
-</section>
-<section id="cek-konsistensi-id">
-<h3>7. Cek Konsistensi ID<a class="headerlink" href="#cek-konsistensi-id" title="Link to this heading">#</a></h3>
-<p>Setiap data harus memiliki <code class="docutils literal notranslate"><span class="pre">id</span></code> unik.<br />
-Jika ada <code class="docutils literal notranslate"><span class="pre">id</span></code> yang duplikat atau hilang, maka data perlu diperiksa ulang.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah total baris:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_combined</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah ID unik:&quot;</span><span class="p">,</span> <span class="n">df_combined</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah total baris: 150
-Jumlah ID unik: 150
-</pre></div>
-</div>
-</div>
-</div>
-<p>Dengan verifikasi ini, diharapkan dataset menjadi <strong>bersih, konsisten, dan dapat dipercaya</strong> untuk tahap analisis selanjutnya.</p>
+<section id="mendeteksi-outlier">
+<h3>Mendeteksi Outlier<a class="headerlink" href="#mendeteksi-outlier" title="Link to this heading">#</a></h3>
 </section>
 </section>
 </section>
@@ -1475,13 +1220,7 @@ Jumlah ID unik: 150
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verifikasi-kualitas-data">Verifikasi Kualitas Data</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-missing-values">1. Cek Missing Values</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-duplikasi-data">2. Cek Duplikasi Data</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-tipe-data">3. Cek Tipe Data</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-nilai-unik-pada-kolom-kategori">4. Cek Nilai Unik pada Kolom Kategori</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-statistik-deskriptif">5. Cek Statistik Deskriptif</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-outlier">6. Visualisasi Outlier</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cek-konsistensi-id">7. Cek Konsistensi ID</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeteksi-outlier">Mendeteksi Outlier</a></li>
 </ul>
 </li>
 </ul>
