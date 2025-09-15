@@ -378,7 +378,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengumpulkan-data-awal">Mengumpulkan Data Awal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengumpulkan-data-awal">Mengumpulkan Data Awal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-service-mysql-dan-postgresql-pada-aiven-io">Membuat Service MySQL dan PostgreSQL pada aiven.io</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-database-mysql-dan-postgresql-dan-insert-data-di-dbeaver">Membuat Database MySQL dan PostgreSQL dan Insert Data di DBeaver</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menarik-data-mysql-dan-postgresql-ke-power-bi">Menarik Data MySQL dan PostgreSQL ke Power BI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menggabungkan-data-di-power-bi">Menggabungkan Data di Power BI</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeskripsikan-data">Mendeskripsikan Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data-menyelidiki-data">Eksplorasi Data / Menyelidiki Data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-setiap-fitur-numerik">1. Histogram setiap fitur numerik</a></li>
@@ -421,14 +427,53 @@ document.write(`
 </ol>
 <section id="mengumpulkan-data-awal">
 <h2>Mengumpulkan Data Awal<a class="headerlink" href="#mengumpulkan-data-awal" title="Link to this heading">#</a></h2>
-<p>Data Iris berada di <a class="reference external" href="http://aiven.io">aiven.io</a> menggunakan 2 database MySQL dan PostgreSQL.</p>
-<p>Berikut tahapan proses pengumpulan data dari MySQL dengan Data Iris Petal Length dan Petal Width:</p>
+<p>Data Iris berada di <a class="reference external" href="http://aiven.io">aiven.io</a> menggunakan 2 database MySQL dan PostgreSQL yang disimpan pada DBeaver.</p>
+<section id="membuat-service-mysql-dan-postgresql-pada-aiven-io">
+<h3>Membuat Service MySQL dan PostgreSQL pada <a class="reference external" href="http://aiven.io">aiven.io</a><a class="headerlink" href="#membuat-service-mysql-dan-postgresql-pada-aiven-io" title="Link to this heading">#</a></h3>
+<p>Berikut merupakan langkkah-langkah dalam membuat service dalam <a class="reference external" href="http://aiven.io">aiven.io</a>:</p>
+<ul class="simple">
+<li><p>Kunjungi laman situs <a class="reference external" href="http://aiven.io">aiven.io</a> melalui link <a class="reference external" href="https://aiven.io/">https://aiven.io/</a></p></li>
+<li><p>Silahkan login terlebih dahulu jika belum memiliki akun aiven</p></li>
+<li><p>Buat Project terlebih dahulu sebelum membuat servicenya.</p></li>
+<li><p>Klik “Create Service” dan pilih databse Postgre sebagai databasenya.</p></li>
+<li><p>Buat Service untuk MySQL dan PostgreSQL.</p></li>
+</ul>
+<p><img alt="image.png" src="attachment:image.png" /></p>
+<p><img alt="image-2.png" src="attachment:image-2.png" /></p>
+</section>
+<section id="membuat-database-mysql-dan-postgresql-dan-insert-data-di-dbeaver">
+<h3>Membuat Database MySQL dan PostgreSQL dan Insert Data di DBeaver<a class="headerlink" href="#membuat-database-mysql-dan-postgresql-dan-insert-data-di-dbeaver" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Install Dbeaver melalui sites resmi <a class="reference external" href="https://dbeaver.io/download/">https://dbeaver.io/download/</a>.</p></li>
+<li><p>Buat Database baru dengan source MySQL dan PostgreSQL pada Dbeaver.</p></li>
+<li><p>Koneksikan Database dengan cloud Database aiven melalui kredensial service MySQL dan PostgreSQL yang disediakan <a class="reference external" href="http://aiven.io">aiven.io</a>.</p></li>
+<li><p>Buat tabel database terlebih dahulu dengan “SQL Editor -&gt; Open SQL Script”.</p></li>
+<li><p>Setelah tabel terbuat. Insert data MySQL dan PostgreSQL dengan data IRIS,</p>
+<ul>
+<li><p>Untuk MySQL diisi dengan Data Iris Petal Length dan Petal Width.</p></li>
+<li><p>Untuk PostgreSQL diisi dengan Data Iris Sepal Length dan Sepal Width.</p></li>
+</ul>
+</li>
+</ul>
+<p><img alt="image.png" src="attachment:image.png" /></p>
+<p><img alt="image-2.png" src="attachment:image-2.png" /></p>
+</section>
+<section id="menarik-data-mysql-dan-postgresql-ke-power-bi">
+<h3>Menarik Data MySQL dan PostgreSQL ke Power BI<a class="headerlink" href="#menarik-data-mysql-dan-postgresql-ke-power-bi" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Siapkan tools Power BI yang telah teristall melalui site resmi yakni melalui Microsoft.</p></li>
+<li><p>Setelah itu buat blank baru atau project baru.</p></li>
+<li><p>Pilih Fitur Get Data pada Navbar Power BI.</p></li>
+<li><p>Pada menu “ALL” atau “Database” pilih MySQL dan PostgreSQL Database, setelah itu klik “Connect”.</p></li>
+<li><p>Kemudian pilih Other -&gt; Python Scripting, setelah itu klik connect untuk memulai koneksi.</p></li>
+<li><p>Setelah itu masukkan script Python yang berisi library, kredensial dari aiven dan query ke tabel databasenya.</p></li>
+</ul>
+<p>Dan ini adalah Script MySQL dengan Data Iris Sepal Length dan Sepal Width menggunakan POWER BI:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install pymysql
-<span class="kn">import</span><span class="w"> </span><span class="nn">pymysql</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pymysql</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>   
 
-<span class="c1"># Koneksi ke MySQL</span>
 <span class="n">mysql_conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
     <span class="n">host</span><span class="o">=</span><span class="s2">&quot;mysql-3c768195-aqbilbaraka.d.aivencloud.com&quot;</span><span class="p">,</span>
     <span class="n">user</span><span class="o">=</span><span class="s2">&quot;avnadmin&quot;</span><span class="p">,</span>
@@ -437,194 +482,133 @@ document.write(`
     <span class="n">port</span><span class="o">=</span><span class="mi">16932</span><span class="p">,</span>
     <span class="n">ssl</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ssl&quot;</span><span class="p">:</span> <span class="p">{}}</span>
 <span class="p">)</span>
-<span class="n">mysql_cur</span> <span class="o">=</span> <span class="n">mysql_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
 
-<span class="c1"># Eksekusi query untuk mengambil data dari MySQL</span>
-<span class="n">query_mysql</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM irismysql&quot;</span>
-<span class="n">mysql_cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query_mysql</span><span class="p">)</span>
-<span class="n">data_mysql</span> <span class="o">=</span> <span class="n">mysql_cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<span class="n">query_mysql</span> <span class="o">=</span> <span class="s2">&quot;select * from defaultdb.irismysql&quot;</span>
+<span class="n">data_mysql</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">query_mysql</span><span class="p">,</span> <span class="n">mysql_conn</span><span class="p">)</span>
 
-<span class="c1"># Menampilkan data dari MySQL</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DATA SQL&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data_mysql</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-
-<span class="c1"># Tutup kursor dan koneksi</span>
-<span class="n">mysql_cur</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="n">mysql_conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">data_mysql</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 25.1.1 -&gt; 25.2
-[notice] To update, run: C:\Users\acer\AppData\Local\Programs\Python\Python39\python.exe -m pip install --upgrade pip
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_7848\2359332973.py:14: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  data_mysql = pd.read_sql(query_mysql, mysql_conn)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: pymysql in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (1.1.1)Note: you may need to restart the kernel to use updated packages.
-</pre></div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>class</th>
+      <th>petallength</th>
+      <th>petalwidth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>146</td>
+      <td>Iris-virginica</td>
+      <td>5.2</td>
+      <td>2.3</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>147</td>
+      <td>Iris-virginica</td>
+      <td>5.0</td>
+      <td>1.9</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>148</td>
+      <td>Iris-virginica</td>
+      <td>5.2</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>149</td>
+      <td>Iris-virginica</td>
+      <td>5.4</td>
+      <td>2.3</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>150</td>
+      <td>Iris-virginica</td>
+      <td>5.1</td>
+      <td>1.8</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 4 columns</p>
+</div></div></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DATA SQL
-(1, &#39;Iris-setosa&#39;, 1.4, 0.2)
-(2, &#39;Iris-setosa&#39;, 1.4, 0.2)
-(3, &#39;Iris-setosa&#39;, 1.3, 0.2)
-(4, &#39;Iris-setosa&#39;, 1.5, 0.2)
-(5, &#39;Iris-setosa&#39;, 1.4, 0.2)
-(6, &#39;Iris-setosa&#39;, 1.7, 0.4)
-(7, &#39;Iris-setosa&#39;, 1.4, 0.3)
-(8, &#39;Iris-setosa&#39;, 1.5, 0.2)
-(9, &#39;Iris-setosa&#39;, 1.4, 0.2)
-(10, &#39;Iris-setosa&#39;, 1.5, 0.1)
-(11, &#39;Iris-setosa&#39;, 1.5, 0.2)
-(12, &#39;Iris-setosa&#39;, 1.6, 0.2)
-(13, &#39;Iris-setosa&#39;, 1.4, 0.1)
-(14, &#39;Iris-setosa&#39;, 1.1, 0.1)
-(15, &#39;Iris-setosa&#39;, 1.2, 0.2)
-(16, &#39;Iris-setosa&#39;, 1.5, 0.4)
-(17, &#39;Iris-setosa&#39;, 1.3, 0.4)
-(18, &#39;Iris-setosa&#39;, 1.4, 0.3)
-(19, &#39;Iris-setosa&#39;, 1.7, 0.3)
-(20, &#39;Iris-setosa&#39;, 1.5, 0.3)
-(21, &#39;Iris-setosa&#39;, 1.7, 0.2)
-(22, &#39;Iris-setosa&#39;, 1.5, 0.4)
-(23, &#39;Iris-setosa&#39;, 1.0, 0.2)
-(24, &#39;Iris-setosa&#39;, 1.7, 0.5)
-(25, &#39;Iris-setosa&#39;, 1.9, 0.2)
-(26, &#39;Iris-setosa&#39;, 1.6, 0.2)
-(27, &#39;Iris-setosa&#39;, 1.6, 0.4)
-(28, &#39;Iris-setosa&#39;, 1.5, 0.2)
-(29, &#39;Iris-setosa&#39;, 1.4, 0.2)
-(30, &#39;Iris-setosa&#39;, 1.6, 0.2)
-(31, &#39;Iris-setosa&#39;, 1.6, 0.2)
-(32, &#39;Iris-setosa&#39;, 1.5, 0.4)
-(33, &#39;Iris-setosa&#39;, 1.5, 0.1)
-(34, &#39;Iris-setosa&#39;, 1.4, 0.2)
-(35, &#39;Iris-setosa&#39;, 1.5, 0.1)
-(36, &#39;Iris-setosa&#39;, 1.2, 0.2)
-(37, &#39;Iris-setosa&#39;, 1.3, 0.2)
-(38, &#39;Iris-setosa&#39;, 1.5, 0.1)
-(39, &#39;Iris-setosa&#39;, 1.3, 0.2)
-(40, &#39;Iris-setosa&#39;, 1.5, 0.2)
-(41, &#39;Iris-setosa&#39;, 1.3, 0.3)
-(42, &#39;Iris-setosa&#39;, 1.3, 0.3)
-(43, &#39;Iris-setosa&#39;, 1.3, 0.2)
-(44, &#39;Iris-setosa&#39;, 1.6, 0.6)
-(45, &#39;Iris-setosa&#39;, 1.9, 0.4)
-(46, &#39;Iris-setosa&#39;, 1.4, 0.3)
-(47, &#39;Iris-setosa&#39;, 1.6, 0.2)
-(48, &#39;Iris-setosa&#39;, 1.4, 0.2)
-(49, &#39;Iris-setosa&#39;, 1.5, 0.2)
-(50, &#39;Iris-setosa&#39;, 1.4, 0.2)
-(51, &#39;Iris-versicolor&#39;, 4.7, 1.4)
-(52, &#39;Iris-versicolor&#39;, 4.5, 1.5)
-(53, &#39;Iris-versicolor&#39;, 4.9, 1.5)
-(54, &#39;Iris-versicolor&#39;, 4.0, 1.3)
-(55, &#39;Iris-versicolor&#39;, 4.6, 1.5)
-(56, &#39;Iris-versicolor&#39;, 4.5, 1.3)
-(57, &#39;Iris-versicolor&#39;, 4.7, 1.6)
-(58, &#39;Iris-versicolor&#39;, 3.3, 1.0)
-(59, &#39;Iris-versicolor&#39;, 4.6, 1.3)
-(60, &#39;Iris-versicolor&#39;, 3.9, 1.4)
-(61, &#39;Iris-versicolor&#39;, 3.5, 1.0)
-(62, &#39;Iris-versicolor&#39;, 4.2, 1.5)
-(63, &#39;Iris-versicolor&#39;, 4.0, 1.0)
-(64, &#39;Iris-versicolor&#39;, 4.7, 1.4)
-(65, &#39;Iris-versicolor&#39;, 3.6, 1.3)
-(66, &#39;Iris-versicolor&#39;, 4.4, 1.4)
-(67, &#39;Iris-versicolor&#39;, 4.5, 1.5)
-(68, &#39;Iris-versicolor&#39;, 4.1, 1.0)
-(69, &#39;Iris-versicolor&#39;, 4.5, 1.5)
-(70, &#39;Iris-versicolor&#39;, 3.9, 1.1)
-(71, &#39;Iris-versicolor&#39;, 4.8, 1.8)
-(72, &#39;Iris-versicolor&#39;, 4.0, 1.3)
-(73, &#39;Iris-versicolor&#39;, 4.9, 1.5)
-(74, &#39;Iris-versicolor&#39;, 4.7, 1.2)
-(75, &#39;Iris-versicolor&#39;, 4.3, 1.3)
-(76, &#39;Iris-versicolor&#39;, 4.4, 1.4)
-(77, &#39;Iris-versicolor&#39;, 4.8, 1.4)
-(78, &#39;Iris-versicolor&#39;, 5.0, 1.7)
-(79, &#39;Iris-versicolor&#39;, 4.5, 1.5)
-(80, &#39;Iris-versicolor&#39;, 3.5, 1.0)
-(81, &#39;Iris-versicolor&#39;, 3.8, 1.1)
-(82, &#39;Iris-versicolor&#39;, 3.7, 1.0)
-(83, &#39;Iris-versicolor&#39;, 3.9, 1.2)
-(84, &#39;Iris-versicolor&#39;, 5.1, 1.6)
-(85, &#39;Iris-versicolor&#39;, 4.5, 1.5)
-(86, &#39;Iris-versicolor&#39;, 4.5, 1.6)
-(87, &#39;Iris-versicolor&#39;, 4.7, 1.5)
-(88, &#39;Iris-versicolor&#39;, 4.4, 1.3)
-(89, &#39;Iris-versicolor&#39;, 4.1, 1.3)
-(90, &#39;Iris-versicolor&#39;, 4.0, 1.3)
-(91, &#39;Iris-versicolor&#39;, 4.4, 1.2)
-(92, &#39;Iris-versicolor&#39;, 4.6, 1.4)
-(93, &#39;Iris-versicolor&#39;, 4.0, 1.2)
-(94, &#39;Iris-versicolor&#39;, 3.3, 1.0)
-(95, &#39;Iris-versicolor&#39;, 4.2, 1.3)
-(96, &#39;Iris-versicolor&#39;, 4.2, 1.2)
-(97, &#39;Iris-versicolor&#39;, 4.2, 1.3)
-(98, &#39;Iris-versicolor&#39;, 4.3, 1.3)
-(99, &#39;Iris-versicolor&#39;, 3.0, 1.1)
-(100, &#39;Iris-versicolor&#39;, 4.1, 1.3)
-(101, &#39;Iris-virginica&#39;, 6.0, 2.5)
-(102, &#39;Iris-virginica&#39;, 5.1, 1.9)
-(103, &#39;Iris-virginica&#39;, 5.9, 2.1)
-(104, &#39;Iris-virginica&#39;, 5.6, 1.8)
-(105, &#39;Iris-virginica&#39;, 5.8, 2.2)
-(106, &#39;Iris-virginica&#39;, 6.6, 2.1)
-(107, &#39;Iris-virginica&#39;, 4.5, 1.7)
-(108, &#39;Iris-virginica&#39;, 6.3, 1.8)
-(109, &#39;Iris-virginica&#39;, 5.8, 1.8)
-(110, &#39;Iris-virginica&#39;, 6.1, 2.5)
-(111, &#39;Iris-virginica&#39;, 5.1, 2.0)
-(112, &#39;Iris-virginica&#39;, 5.3, 1.9)
-(113, &#39;Iris-virginica&#39;, 5.5, 2.1)
-(114, &#39;Iris-virginica&#39;, 5.0, 2.0)
-(115, &#39;Iris-virginica&#39;, 5.1, 2.4)
-(116, &#39;Iris-virginica&#39;, 5.3, 2.3)
-(117, &#39;Iris-virginica&#39;, 5.5, 1.8)
-(118, &#39;Iris-virginica&#39;, 6.7, 2.2)
-(119, &#39;Iris-virginica&#39;, 6.9, 2.3)
-(120, &#39;Iris-virginica&#39;, 5.0, 1.5)
-(121, &#39;Iris-virginica&#39;, 5.7, 2.3)
-(122, &#39;Iris-virginica&#39;, 4.9, 2.0)
-(123, &#39;Iris-virginica&#39;, 6.7, 2.0)
-(124, &#39;Iris-virginica&#39;, 4.9, 1.8)
-(125, &#39;Iris-virginica&#39;, 5.7, 2.1)
-(126, &#39;Iris-virginica&#39;, 6.0, 1.8)
-(127, &#39;Iris-virginica&#39;, 4.8, 1.8)
-(128, &#39;Iris-virginica&#39;, 4.9, 1.8)
-(129, &#39;Iris-virginica&#39;, 5.6, 2.1)
-(130, &#39;Iris-virginica&#39;, 5.8, 1.6)
-(131, &#39;Iris-virginica&#39;, 6.1, 1.9)
-(132, &#39;Iris-virginica&#39;, 6.4, 2.0)
-(133, &#39;Iris-virginica&#39;, 5.6, 2.2)
-(134, &#39;Iris-virginica&#39;, 5.1, 1.5)
-(135, &#39;Iris-virginica&#39;, 5.6, 1.4)
-(136, &#39;Iris-virginica&#39;, 6.1, 2.3)
-(137, &#39;Iris-virginica&#39;, 5.6, 2.4)
-(138, &#39;Iris-virginica&#39;, 5.5, 1.8)
-(139, &#39;Iris-virginica&#39;, 4.8, 1.8)
-(140, &#39;Iris-virginica&#39;, 5.4, 2.1)
-(141, &#39;Iris-virginica&#39;, 5.6, 2.4)
-(142, &#39;Iris-virginica&#39;, 5.1, 2.3)
-(143, &#39;Iris-virginica&#39;, 5.1, 1.9)
-(144, &#39;Iris-virginica&#39;, 5.9, 2.3)
-(145, &#39;Iris-virginica&#39;, 5.7, 2.5)
-(146, &#39;Iris-virginica&#39;, 5.2, 2.3)
-(147, &#39;Iris-virginica&#39;, 5.0, 1.9)
-(148, &#39;Iris-virginica&#39;, 5.2, 2.0)
-(149, &#39;Iris-virginica&#39;, 5.4, 2.3)
-(150, &#39;Iris-virginica&#39;, 5.1, 1.8)
-</pre></div>
-</div>
-</div>
-</div>
-<p>Dan ini adalah proses pengumpulan data dari PostgreSQL dengan Data Iris Sepal Length dan Sepal Width:</p>
+<p><img alt="image.png" src="attachment:image.png" /></p>
+<p>Dan ini adalah Script PostgreSQL dengan Data Iris Sepal Length dan Sepal Width menggunakan POWER BI:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install psycopg2-binary
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">psycopg2</span>
 
-<span class="c1"># Koneksi ke PostgreSQL</span>
 <span class="n">pg_conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
     <span class="n">dbname</span><span class="o">=</span><span class="s2">&quot;defaultdb&quot;</span><span class="p">,</span>
     <span class="n">user</span><span class="o">=</span><span class="s2">&quot;avnadmin&quot;</span><span class="p">,</span>
@@ -632,189 +616,146 @@ document.write(`
     <span class="n">host</span><span class="o">=</span><span class="s2">&quot;pg-17afc059-aqbilbaraka.d.aivencloud.com&quot;</span><span class="p">,</span>
     <span class="n">port</span><span class="o">=</span><span class="s2">&quot;16932&quot;</span>
 <span class="p">)</span>
-<span class="n">pg_cur</span> <span class="o">=</span> <span class="n">pg_conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
 
-<span class="c1"># Eksekusi query untuk mengambil data dari PostgreSQL</span>
-<span class="n">query_pg</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM irispostgresql&quot;</span>
-<span class="n">pg_cur</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query_pg</span><span class="p">)</span>
-<span class="n">data_postgresql</span> <span class="o">=</span> <span class="n">pg_cur</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+<span class="n">query_pg</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM public.irispostgresql&quot;</span>
+<span class="n">data_pg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">query_pg</span><span class="p">,</span> <span class="n">pg_conn</span><span class="p">)</span>
 
-<span class="c1"># Menampilkan data dari PostgreSQL</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DATA POSTGRESQL&quot;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">data_postgresql</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-
-<span class="c1"># Tutup kursor dan koneksi</span>
-<span class="n">pg_cur</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
-<span class="n">pg_conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+<span class="n">data_pg</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: psycopg2-binary in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (2.9.10)
-Note: you may need to restart the kernel to use updated packages.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_7848\1682131863.py:13: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  data_pg = pd.read_sql(query_pg, pg_conn)
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 25.1.1 -&gt; 25.2
-[notice] To update, run: C:\Users\acer\AppData\Local\Programs\Python\Python39\python.exe -m pip install --upgrade pip
-</pre></div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>class</th>
+      <th>sepallength</th>
+      <th>sepalwidth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Iris-setosa</td>
+      <td>5.1</td>
+      <td>3.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Iris-setosa</td>
+      <td>4.9</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Iris-setosa</td>
+      <td>4.7</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Iris-setosa</td>
+      <td>4.6</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Iris-setosa</td>
+      <td>5.0</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>146</td>
+      <td>Iris-virginica</td>
+      <td>6.7</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>147</td>
+      <td>Iris-virginica</td>
+      <td>6.3</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>148</td>
+      <td>Iris-virginica</td>
+      <td>6.5</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>149</td>
+      <td>Iris-virginica</td>
+      <td>6.2</td>
+      <td>3.4</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>150</td>
+      <td>Iris-virginica</td>
+      <td>5.9</td>
+      <td>3.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 4 columns</p>
+</div></div></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DATA POSTGRESQL
-(1, &#39;Iris-setosa&#39;, 5.1, 3.5)
-(2, &#39;Iris-setosa&#39;, 4.9, 3.0)
-(3, &#39;Iris-setosa&#39;, 4.7, 3.2)
-(4, &#39;Iris-setosa&#39;, 4.6, 3.1)
-(5, &#39;Iris-setosa&#39;, 5.0, 3.6)
-(6, &#39;Iris-setosa&#39;, 5.4, 3.9)
-(7, &#39;Iris-setosa&#39;, 4.6, 3.4)
-(8, &#39;Iris-setosa&#39;, 5.0, 3.4)
-(9, &#39;Iris-setosa&#39;, 4.4, 2.9)
-(10, &#39;Iris-setosa&#39;, 4.9, 3.1)
-(11, &#39;Iris-setosa&#39;, 5.4, 3.7)
-(12, &#39;Iris-setosa&#39;, 4.8, 3.4)
-(13, &#39;Iris-setosa&#39;, 4.8, 3.0)
-(14, &#39;Iris-setosa&#39;, 4.3, 3.0)
-(15, &#39;Iris-setosa&#39;, 5.8, 4.0)
-(16, &#39;Iris-setosa&#39;, 5.7, 4.4)
-(17, &#39;Iris-setosa&#39;, 5.4, 3.9)
-(18, &#39;Iris-setosa&#39;, 5.1, 3.5)
-(19, &#39;Iris-setosa&#39;, 5.7, 3.8)
-(20, &#39;Iris-setosa&#39;, 5.1, 3.8)
-(21, &#39;Iris-setosa&#39;, 5.4, 3.4)
-(22, &#39;Iris-setosa&#39;, 5.1, 3.7)
-(23, &#39;Iris-setosa&#39;, 4.6, 3.6)
-(24, &#39;Iris-setosa&#39;, 5.1, 3.3)
-(25, &#39;Iris-setosa&#39;, 4.8, 3.4)
-(26, &#39;Iris-setosa&#39;, 5.0, 3.0)
-(27, &#39;Iris-setosa&#39;, 5.0, 3.4)
-(28, &#39;Iris-setosa&#39;, 5.2, 3.5)
-(29, &#39;Iris-setosa&#39;, 5.2, 3.4)
-(30, &#39;Iris-setosa&#39;, 4.7, 3.2)
-(31, &#39;Iris-setosa&#39;, 4.8, 3.1)
-(32, &#39;Iris-setosa&#39;, 5.4, 3.4)
-(33, &#39;Iris-setosa&#39;, 5.2, 4.1)
-(34, &#39;Iris-setosa&#39;, 5.5, 4.2)
-(35, &#39;Iris-setosa&#39;, 4.9, 3.1)
-(36, &#39;Iris-setosa&#39;, 5.0, 3.2)
-(37, &#39;Iris-setosa&#39;, 5.5, 3.5)
-(38, &#39;Iris-setosa&#39;, 4.9, 3.1)
-(39, &#39;Iris-setosa&#39;, 4.4, 3.0)
-(40, &#39;Iris-setosa&#39;, 5.1, 3.4)
-(41, &#39;Iris-setosa&#39;, 5.0, 3.5)
-(42, &#39;Iris-setosa&#39;, 4.5, 2.3)
-(43, &#39;Iris-setosa&#39;, 4.4, 3.2)
-(44, &#39;Iris-setosa&#39;, 5.0, 3.5)
-(45, &#39;Iris-setosa&#39;, 5.1, 3.8)
-(46, &#39;Iris-setosa&#39;, 4.8, 3.0)
-(47, &#39;Iris-setosa&#39;, 5.1, 3.8)
-(48, &#39;Iris-setosa&#39;, 4.6, 3.2)
-(49, &#39;Iris-setosa&#39;, 5.3, 3.7)
-(50, &#39;Iris-setosa&#39;, 5.0, 3.3)
-(51, &#39;Iris-versicolor&#39;, 7.0, 3.2)
-(52, &#39;Iris-versicolor&#39;, 6.4, 3.2)
-(53, &#39;Iris-versicolor&#39;, 6.9, 3.1)
-(54, &#39;Iris-versicolor&#39;, 5.5, 2.3)
-(55, &#39;Iris-versicolor&#39;, 6.5, 2.8)
-(56, &#39;Iris-versicolor&#39;, 5.7, 2.8)
-(57, &#39;Iris-versicolor&#39;, 6.3, 3.3)
-(58, &#39;Iris-versicolor&#39;, 4.9, 2.4)
-(59, &#39;Iris-versicolor&#39;, 6.6, 2.9)
-(60, &#39;Iris-versicolor&#39;, 5.2, 2.7)
-(61, &#39;Iris-versicolor&#39;, 5.0, 2.0)
-(62, &#39;Iris-versicolor&#39;, 5.9, 3.0)
-(63, &#39;Iris-versicolor&#39;, 6.0, 2.2)
-(64, &#39;Iris-versicolor&#39;, 6.1, 2.9)
-(65, &#39;Iris-versicolor&#39;, 5.6, 2.9)
-(66, &#39;Iris-versicolor&#39;, 6.7, 3.1)
-(67, &#39;Iris-versicolor&#39;, 5.6, 3.0)
-(68, &#39;Iris-versicolor&#39;, 5.8, 2.7)
-(69, &#39;Iris-versicolor&#39;, 6.2, 2.2)
-(70, &#39;Iris-versicolor&#39;, 5.6, 2.5)
-(71, &#39;Iris-versicolor&#39;, 5.9, 3.2)
-(72, &#39;Iris-versicolor&#39;, 6.1, 2.8)
-(73, &#39;Iris-versicolor&#39;, 6.3, 2.5)
-(74, &#39;Iris-versicolor&#39;, 6.1, 2.8)
-(75, &#39;Iris-versicolor&#39;, 6.4, 2.9)
-(76, &#39;Iris-versicolor&#39;, 6.6, 3.0)
-(77, &#39;Iris-versicolor&#39;, 6.8, 2.8)
-(78, &#39;Iris-versicolor&#39;, 6.7, 3.0)
-(79, &#39;Iris-versicolor&#39;, 6.0, 2.9)
-(80, &#39;Iris-versicolor&#39;, 5.7, 2.6)
-(81, &#39;Iris-versicolor&#39;, 5.5, 2.4)
-(82, &#39;Iris-versicolor&#39;, 5.5, 2.4)
-(83, &#39;Iris-versicolor&#39;, 5.8, 2.7)
-(84, &#39;Iris-versicolor&#39;, 6.0, 2.7)
-(85, &#39;Iris-versicolor&#39;, 5.4, 3.0)
-(86, &#39;Iris-versicolor&#39;, 6.0, 3.4)
-(87, &#39;Iris-versicolor&#39;, 6.7, 3.1)
-(88, &#39;Iris-versicolor&#39;, 6.3, 2.3)
-(89, &#39;Iris-versicolor&#39;, 5.6, 3.0)
-(90, &#39;Iris-versicolor&#39;, 5.5, 2.5)
-(91, &#39;Iris-versicolor&#39;, 5.5, 2.6)
-(92, &#39;Iris-versicolor&#39;, 6.1, 3.0)
-(93, &#39;Iris-versicolor&#39;, 5.8, 2.6)
-(94, &#39;Iris-versicolor&#39;, 5.0, 2.3)
-(95, &#39;Iris-versicolor&#39;, 5.6, 2.7)
-(96, &#39;Iris-versicolor&#39;, 5.7, 3.0)
-(97, &#39;Iris-versicolor&#39;, 5.7, 2.9)
-(98, &#39;Iris-versicolor&#39;, 6.2, 2.9)
-(99, &#39;Iris-versicolor&#39;, 5.1, 2.5)
-(100, &#39;Iris-versicolor&#39;, 5.7, 2.8)
-(101, &#39;Iris-virginica&#39;, 6.3, 3.3)
-(102, &#39;Iris-virginica&#39;, 5.8, 2.7)
-(103, &#39;Iris-virginica&#39;, 7.1, 3.0)
-(104, &#39;Iris-virginica&#39;, 6.3, 2.9)
-(105, &#39;Iris-virginica&#39;, 6.5, 3.0)
-(106, &#39;Iris-virginica&#39;, 7.6, 3.0)
-(107, &#39;Iris-virginica&#39;, 4.9, 2.5)
-(108, &#39;Iris-virginica&#39;, 7.3, 2.9)
-(109, &#39;Iris-virginica&#39;, 6.7, 2.5)
-(110, &#39;Iris-virginica&#39;, 7.2, 3.6)
-(111, &#39;Iris-virginica&#39;, 6.5, 3.2)
-(112, &#39;Iris-virginica&#39;, 6.4, 2.7)
-(113, &#39;Iris-virginica&#39;, 6.8, 3.0)
-(114, &#39;Iris-virginica&#39;, 5.7, 2.5)
-(115, &#39;Iris-virginica&#39;, 5.8, 2.8)
-(116, &#39;Iris-virginica&#39;, 6.4, 3.2)
-(117, &#39;Iris-virginica&#39;, 6.5, 3.0)
-(118, &#39;Iris-virginica&#39;, 7.7, 3.8)
-(119, &#39;Iris-virginica&#39;, 7.7, 2.6)
-(120, &#39;Iris-virginica&#39;, 6.0, 2.2)
-(121, &#39;Iris-virginica&#39;, 6.9, 3.2)
-(122, &#39;Iris-virginica&#39;, 5.6, 2.8)
-(123, &#39;Iris-virginica&#39;, 7.7, 2.8)
-(124, &#39;Iris-virginica&#39;, 6.3, 2.7)
-(125, &#39;Iris-virginica&#39;, 6.7, 3.3)
-(126, &#39;Iris-virginica&#39;, 7.2, 3.2)
-(127, &#39;Iris-virginica&#39;, 6.2, 2.8)
-(128, &#39;Iris-virginica&#39;, 6.1, 3.0)
-(129, &#39;Iris-virginica&#39;, 6.4, 2.8)
-(130, &#39;Iris-virginica&#39;, 7.2, 3.0)
-(131, &#39;Iris-virginica&#39;, 7.4, 2.8)
-(132, &#39;Iris-virginica&#39;, 7.9, 3.8)
-(133, &#39;Iris-virginica&#39;, 6.4, 2.8)
-(134, &#39;Iris-virginica&#39;, 6.3, 2.8)
-(135, &#39;Iris-virginica&#39;, 6.1, 2.6)
-(136, &#39;Iris-virginica&#39;, 7.7, 3.0)
-(137, &#39;Iris-virginica&#39;, 6.3, 3.4)
-(138, &#39;Iris-virginica&#39;, 6.4, 3.1)
-(139, &#39;Iris-virginica&#39;, 6.0, 3.0)
-(140, &#39;Iris-virginica&#39;, 6.9, 3.1)
-(141, &#39;Iris-virginica&#39;, 6.7, 3.1)
-(142, &#39;Iris-virginica&#39;, 6.9, 3.1)
-(143, &#39;Iris-virginica&#39;, 5.8, 2.7)
-(144, &#39;Iris-virginica&#39;, 6.8, 3.2)
-(145, &#39;Iris-virginica&#39;, 6.7, 3.3)
-(146, &#39;Iris-virginica&#39;, 6.7, 3.0)
-(147, &#39;Iris-virginica&#39;, 6.3, 2.5)
-(148, &#39;Iris-virginica&#39;, 6.5, 3.0)
-(149, &#39;Iris-virginica&#39;, 6.2, 3.4)
-(150, &#39;Iris-virginica&#39;, 5.9, 3.0)
-</pre></div>
-</div>
-</div>
-</div>
-<p>Berikut cara menggabungkan kedua data:</p>
+<p><img alt="image.png" src="attachment:image.png" /></p>
+</section>
+<section id="menggabungkan-data-di-power-bi">
+<h3>Menggabungkan Data di Power BI<a class="headerlink" href="#menggabungkan-data-di-power-bi" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Pada Menu Home, pilih menu Transform Data.</p></li>
+<li><p>Setelah itu pilih fitur Merge Queries, kemudian pilih Merge Queries as New untuk hasil penggabungan kolom dibuat tabel baru.</p></li>
+<li><p>Pilih tabel yang akan digabungkan dengan memilih tabel pada dropdown.</p></li>
+<li><p>Pilih kolom yang akan digabungkan, pada dataset iris data memiliki id yang sama disebabkan jumlah data yang sama, sehingga untuk menggabungkannya cukup menggunakan inner join, konsep inner join akan menggabungkan data yang memiliki id yang sama. Setelah memilih kolom klik Ok untuk melanjutkan proses.</p></li>
+</ul>
+<p><img alt="image.png" src="attachment:image.png" /></p>
+<ul class="simple">
+<li><p>Kemudian akan muncul tabel hasil penggabungan, pada kolom yang digabungkan klik tanda panah untuk menyeleksi kolom apa saja yang akan digabungkan.</p></li>
+</ul>
+<p><img alt="image-2.png" src="attachment:image-2.png" /></p>
+<ul class="simple">
+<li><p>Berikut hasil penggabungan kolom dari kedua tabel.</p></li>
+</ul>
+<p><img alt="image-3.png" src="attachment:image-3.png" /></p>
+<p>Penggabungan Data MySQL dan PostgreSQL dengan Script langsung pada Web Statis:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pymysql</span>
@@ -862,6 +803,7 @@ Note: you may need to restart the kernel to use updated packages.
 </div>
 </div>
 </div>
+</section>
 </section>
 <section id="mendeskripsikan-data">
 <h2>Mendeskripsikan Data<a class="headerlink" href="#mendeskripsikan-data" title="Link to this heading">#</a></h2>
@@ -1021,22 +963,22 @@ Tujuannya adalah untuk melihat pola dasar, kemungkinan outlier, serta gambaran u
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_14636\94481480.py:4: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_7848\94481480.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Set2&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_14636\94481480.py:4: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_7848\94481480.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Set2&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_14636\94481480.py:4: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_7848\94481480.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Set2&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_14636\94481480.py:4: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_7848\94481480.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
@@ -1133,24 +1075,22 @@ Passing `palette` without assigning `hue` is deprecated and will be removed in v
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_14636\1975838105.py:4: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_7848\1975838105.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.violinplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Pastel1&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_14636\1975838105.py:4: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_7848\1975838105.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.violinplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Pastel1&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_14636\1975838105.py:4: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_7848\1975838105.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.violinplot(data=df_combined, x=&quot;class&quot;, y=col, palette=&quot;Pastel1&quot;)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_14636\1975838105.py:4: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_7848\1975838105.py:4: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
@@ -1389,22 +1329,22 @@ dtype: object
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_14636\3944055742.py:7: FutureWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_7848\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_14636\3944055742.py:7: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_7848\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_14636\3944055742.py:7: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_7848\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
   sns.boxplot(data=df_combined, y=col, palette=&quot;Set3&quot;)
-C:\Users\acer\AppData\Local\Temp\ipykernel_14636\3944055742.py:7: FutureWarning: 
+C:\Users\acer\AppData\Local\Temp\ipykernel_7848\3944055742.py:7: FutureWarning: 
 
 Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
 
@@ -1502,7 +1442,13 @@ Jumlah ID unik: 150
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengumpulkan-data-awal">Mengumpulkan Data Awal</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengumpulkan-data-awal">Mengumpulkan Data Awal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-service-mysql-dan-postgresql-pada-aiven-io">Membuat Service MySQL dan PostgreSQL pada aiven.io</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-database-mysql-dan-postgresql-dan-insert-data-di-dbeaver">Membuat Database MySQL dan PostgreSQL dan Insert Data di DBeaver</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menarik-data-mysql-dan-postgresql-ke-power-bi">Menarik Data MySQL dan PostgreSQL ke Power BI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menggabungkan-data-di-power-bi">Menggabungkan Data di Power BI</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeskripsikan-data">Mendeskripsikan Data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data-menyelidiki-data">Eksplorasi Data / Menyelidiki Data</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-setiap-fitur-numerik">1. Histogram setiap fitur numerik</a></li>
