@@ -398,6 +398,20 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-klasifikasi-random-forest">Perbandingan Klasifikasi Random Forest</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-naive-bayes">Bagging Classifier Naive Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-naive-bayes-data-belum-diseimbangkan-original">Bagging Classifier Naive Bayes Data belum diseimbangkan (Original)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-naive-bayes-menggunakan-adasyn">Bagging Classifier Naive Bayes Menggunakan ADASYN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-naive-bayes-menggunakan-smote">Bagging Classifier Naive Bayes Menggunakan SMOTE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-bagging-classifier-naive-bayes-original-vs-adasyn-vs-smote">Perbandingan Bagging Classifier Naive Bayes (Original vs ADASYN vs SMOTE)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-random-forest">Bagging Classifier Random Forest</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#baggingclassifier-decision-tree-data-belum-diseimbangkan-original">BaggingClassifier Decision Tree Data belum diseimbangkan (Original)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-decison-tree-menggunakan-adasyn">Bagging Classifier Decison Tree Menggunakan ADASYN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-decison-tree-menggunakan-smote">Bagging Classifier Decison Tree Menggunakan SMOTE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-bagging-classifier-decision-tree-original-vs-adasyn-vs-smote">Perbandingan Bagging Classifier Decision Tree (Original vs ADASYN vs SMOTE)</a></li>
+</ul>
+</li>
 </ul>
             </nav>
         </div>
@@ -909,17 +923,23 @@ ADASYN: Accuracy=0.8035, F1_macro=0.7927
 </div>
 </div>
 </div>
-<p>Load &amp; Preprocessing Data</p>
+<p>Load Dataset (E-Coli)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Membaca data</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;ecoli_dataset.csv&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Baca dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;ecoli_dataset.csv&quot;</span><span class="p">)</span>
 
-<span class="c1"># Pisahkan fitur dan target</span>
+<span class="c1"># Misal kolom terakhir adalah target</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-
-<span class="c1"># Encode target</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Preprocessing</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Label encoding target</span>
 <span class="n">le</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
 <span class="n">y_enc</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
 
@@ -1059,9 +1079,7 @@ Jumlah Data Test : 229 (20.02%)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>===== HASIL RANDOM FOREST (SMOTE) =====
 Accuracy: 0.9519650655021834
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              precision    recall  f1-score   support
+              precision    recall  f1-score   support
 
           cp       0.88      1.00      0.93        28
           im       0.92      0.86      0.89        28
@@ -1799,6 +1817,844 @@ ADASYN: Accuracy=0.9913, F1_macro=0.9912
 </div>
 </section>
 </section>
+<section id="bagging-classifier-naive-bayes">
+<h2>Bagging Classifier Naive Bayes<a class="headerlink" href="#bagging-classifier-naive-bayes" title="Link to this heading">#</a></h2>
+<p>Import Library</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.model_selection</span><span class="w"> </span><span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.naive_bayes</span><span class="w"> </span><span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.tree</span><span class="w"> </span><span class="kn">import</span> <span class="n">DecisionTreeClassifier</span> 
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">classification_report</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaggingClassifier</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">confusion_matrix</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Baca Dataset</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Baca dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;ecoli_dataset.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># Misal kolom terakhir adalah target</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>mcg</th>
+      <th>gvh</th>
+      <th>lip</th>
+      <th>chg</th>
+      <th>aac</th>
+      <th>alm1</th>
+      <th>alm2</th>
+      <th>class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.49</td>
+      <td>0.29</td>
+      <td>0.48</td>
+      <td>0.5</td>
+      <td>0.56</td>
+      <td>0.24</td>
+      <td>0.35</td>
+      <td>cp</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.07</td>
+      <td>0.40</td>
+      <td>0.48</td>
+      <td>0.5</td>
+      <td>0.54</td>
+      <td>0.35</td>
+      <td>0.44</td>
+      <td>cp</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.56</td>
+      <td>0.40</td>
+      <td>0.48</td>
+      <td>0.5</td>
+      <td>0.49</td>
+      <td>0.37</td>
+      <td>0.46</td>
+      <td>cp</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.59</td>
+      <td>0.49</td>
+      <td>0.48</td>
+      <td>0.5</td>
+      <td>0.52</td>
+      <td>0.45</td>
+      <td>0.36</td>
+      <td>cp</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.23</td>
+      <td>0.32</td>
+      <td>0.48</td>
+      <td>0.5</td>
+      <td>0.55</td>
+      <td>0.25</td>
+      <td>0.35</td>
+      <td>cp</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>331</th>
+      <td>0.74</td>
+      <td>0.56</td>
+      <td>0.48</td>
+      <td>0.5</td>
+      <td>0.47</td>
+      <td>0.68</td>
+      <td>0.30</td>
+      <td>pp</td>
+    </tr>
+    <tr>
+      <th>332</th>
+      <td>0.71</td>
+      <td>0.57</td>
+      <td>0.48</td>
+      <td>0.5</td>
+      <td>0.48</td>
+      <td>0.35</td>
+      <td>0.32</td>
+      <td>pp</td>
+    </tr>
+    <tr>
+      <th>333</th>
+      <td>0.61</td>
+      <td>0.60</td>
+      <td>0.48</td>
+      <td>0.5</td>
+      <td>0.44</td>
+      <td>0.39</td>
+      <td>0.38</td>
+      <td>pp</td>
+    </tr>
+    <tr>
+      <th>334</th>
+      <td>0.59</td>
+      <td>0.61</td>
+      <td>0.48</td>
+      <td>0.5</td>
+      <td>0.42</td>
+      <td>0.42</td>
+      <td>0.37</td>
+      <td>pp</td>
+    </tr>
+    <tr>
+      <th>335</th>
+      <td>0.74</td>
+      <td>0.74</td>
+      <td>0.48</td>
+      <td>0.5</td>
+      <td>0.31</td>
+      <td>0.53</td>
+      <td>0.52</td>
+      <td>pp</td>
+    </tr>
+  </tbody>
+</table>
+<p>336 rows × 8 columns</p>
+</div></div></div>
+</div>
+<p>Preprocessing</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Label encoding target</span>
+<span class="n">le</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">y_enc</span> <span class="o">=</span> <span class="n">le</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Normalisasi fitur</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="bagging-classifier-naive-bayes-data-belum-diseimbangkan-original">
+<h3>Bagging Classifier Naive Bayes Data belum diseimbangkan (Original)<a class="headerlink" href="#bagging-classifier-naive-bayes-data-belum-diseimbangkan-original" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_enc</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+
+<span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">bagging</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">prediksi</span> <span class="o">=</span> <span class="n">bagging</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Akurasi:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">))</span>
+<span class="n">acc_orig_nb_bag</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="c1"># Confusion Matrix - Bagging NB Original</span>
+<span class="n">cm_bagging_nb_original</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Confusion Matrix - Bagging NB Original:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cm_bagging_nb_original</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">labels</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_test</span><span class="p">))</span>
+
+<span class="n">cm_bagging_nb_original</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_bagging_nb_original</span><span class="p">,</span>
+            <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+            <span class="n">xticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix Bagging NB - Original&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Actual&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Akurasi: 0.75
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.91      0.94      0.92        32
+           1       0.59      0.77      0.67        13
+           3       0.00      0.00      0.00         1
+           4       0.00      0.00      0.00         4
+           5       1.00      0.33      0.50         6
+           6       1.00      1.00      1.00         1
+           7       0.57      0.73      0.64        11
+
+    accuracy                           0.75        68
+   macro avg       0.58      0.54      0.53        68
+weighted avg       0.74      0.75      0.72        68
+
+
+Confusion Matrix - Bagging NB Original:
+[[30  1  0  0  0  0  1]
+ [ 2 10  0  1  0  0  0]
+ [ 0  0  0  0  0  0  1]
+ [ 0  4  0  0  0  0  0]
+ [ 0  0  0  0  2  0  4]
+ [ 0  0  0  0  0  1  0]
+ [ 1  2  0  0  0  0  8]]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\sklearn\naive_bayes.py:509: RuntimeWarning: divide by zero encountered in log
+  jointi = np.log(self.class_prior_[i])
+</pre></div>
+</div>
+<img alt="_images/036601bd0ea50467d4e11b644cf58c87a781df55e56a764b81a07afba5b7b753.png" src="_images/036601bd0ea50467d4e11b644cf58c87a781df55e56a764b81a07afba5b7b753.png" />
+</div>
+</div>
+</section>
+<section id="bagging-classifier-naive-bayes-menggunakan-adasyn">
+<h3>Bagging Classifier Naive Bayes Menggunakan ADASYN<a class="headerlink" href="#bagging-classifier-naive-bayes-menggunakan-adasyn" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ros</span> <span class="o">=</span> <span class="n">RandomOverSampler</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_ros</span><span class="p">,</span> <span class="n">y_ros</span> <span class="o">=</span> <span class="n">ros</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_enc</span><span class="p">)</span>
+
+<span class="n">adasyn</span> <span class="o">=</span> <span class="n">ADASYN</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X_adasyn</span><span class="p">,</span> <span class="n">y_adasyn</span> <span class="o">=</span> <span class="n">adasyn</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_ros</span><span class="p">,</span> <span class="n">y_ros</span><span class="p">)</span>
+
+<span class="n">X_train_adasyn</span><span class="p">,</span> <span class="n">X_test_adasyn</span><span class="p">,</span> <span class="n">y_train_adasyn</span><span class="p">,</span> <span class="n">y_test_adasyn</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_adasyn</span><span class="p">,</span> <span class="n">y_adasyn</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+
+<span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">bagging</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_adasyn</span><span class="p">,</span> <span class="n">y_train_adasyn</span><span class="p">)</span>
+
+<span class="n">prediksi</span> <span class="o">=</span> <span class="n">bagging</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_adasyn</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Akurasi:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_adasyn</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">))</span>
+<span class="n">acc_adasyn_nb_bag</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_adasyn</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test_adasyn</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="c1"># Confusion Matrix - Bagging NB ADASYN</span>
+<span class="n">cm_bagging_nb_adasyn</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test_adasyn</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Confusion Matrix - Bagging NB ADASYN:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cm_bagging_nb_adasyn</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_adasyn</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_bagging_nb_adasyn</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+            <span class="n">xticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix Bagging NB - ADASYN&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Actual&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Akurasi: 0.8034934497816594
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.97      0.97      0.97        32
+           1       0.59      0.61      0.60        28
+           2       1.00      1.00      1.00        29
+           3       0.89      1.00      0.94        31
+           4       0.74      0.52      0.61        27
+           5       1.00      0.38      0.55        29
+           6       1.00      1.00      1.00        19
+           7       0.58      0.94      0.72        34
+
+    accuracy                           0.80       229
+   macro avg       0.84      0.80      0.80       229
+weighted avg       0.84      0.80      0.79       229
+
+
+Confusion Matrix - Bagging NB ADASYN:
+[[31  0  0  0  0  0  0  1]
+ [ 0 17  0  4  5  0  0  2]
+ [ 0  0 29  0  0  0  0  0]
+ [ 0  0  0 31  0  0  0  0]
+ [ 0 11  0  0 14  0  0  2]
+ [ 0  0  0  0  0 11  0 18]
+ [ 0  0  0  0  0  0 19  0]
+ [ 1  1  0  0  0  0  0 32]]
+</pre></div>
+</div>
+<img alt="_images/dcaf14bf609c87d2f7228dfbc66bb8dbd3aa09d86761f520c29083f9c5051b38.png" src="_images/dcaf14bf609c87d2f7228dfbc66bb8dbd3aa09d86761f520c29083f9c5051b38.png" />
+</div>
+</div>
+</section>
+<section id="bagging-classifier-naive-bayes-menggunakan-smote">
+<h3>Bagging Classifier Naive Bayes Menggunakan SMOTE<a class="headerlink" href="#bagging-classifier-naive-bayes-menggunakan-smote" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">smote</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">k_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X_smote</span><span class="p">,</span> <span class="n">y_smote</span> <span class="o">=</span> <span class="n">smote</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_enc</span><span class="p">)</span>
+
+<span class="n">X_train_smote</span><span class="p">,</span> <span class="n">X_test_smote</span><span class="p">,</span> <span class="n">y_train_smote</span><span class="p">,</span> <span class="n">y_test_smote</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_smote</span><span class="p">,</span> <span class="n">y_smote</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">GaussianNB</span><span class="p">()</span>
+
+<span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">bagging</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_smote</span><span class="p">,</span> <span class="n">y_train_smote</span><span class="p">)</span>
+
+<span class="n">prediksi</span> <span class="o">=</span> <span class="n">bagging</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_smote</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Akurasi:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_smote</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">))</span>
+<span class="n">acc_smote_nb_bag</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_smote</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test_smote</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="c1"># Confusion Matrix - Bagging NB SMOTE</span>
+<span class="n">cm_bagging_nb_smote</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test_smote</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Confusion Matrix - Bagging NB SMOTE:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cm_bagging_nb_smote</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_bagging_nb_smote</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+            <span class="n">xticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix Bagging NB - SMOTE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Actual&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Akurasi: 0.834061135371179
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       1.00      0.97      0.98        32
+           1       0.71      0.79      0.75        28
+           2       1.00      1.00      1.00        29
+           3       1.00      1.00      1.00        31
+           4       0.68      0.63      0.65        27
+           5       1.00      0.28      0.43        29
+           6       1.00      1.00      1.00        19
+           7       0.62      1.00      0.76        34
+
+    accuracy                           0.83       229
+   macro avg       0.88      0.83      0.82       229
+weighted avg       0.87      0.83      0.82       229
+
+
+Confusion Matrix - Bagging NB SMOTE:
+[[31  0  0  0  0  0  0  1]
+ [ 0 22  0  0  6  0  0  0]
+ [ 0  0 29  0  0  0  0  0]
+ [ 0  0  0 31  0  0  0  0]
+ [ 0  9  0  0 17  0  0  1]
+ [ 0  0  0  0  2  8  0 19]
+ [ 0  0  0  0  0  0 19  0]
+ [ 0  0  0  0  0  0  0 34]]
+</pre></div>
+</div>
+<img alt="_images/8f05b96fb0af4def23211cc5fb6b05a1e4b31738e8f6b844c01aa8c4966646f2.png" src="_images/8f05b96fb0af4def23211cc5fb6b05a1e4b31738e8f6b844c01aa8c4966646f2.png" />
+</div>
+</div>
+</section>
+<section id="perbandingan-bagging-classifier-naive-bayes-original-vs-adasyn-vs-smote">
+<h3>Perbandingan Bagging Classifier Naive Bayes (Original vs ADASYN vs SMOTE)<a class="headerlink" href="#perbandingan-bagging-classifier-naive-bayes-original-vs-adasyn-vs-smote" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="s1">&#39;ADASYN&#39;</span><span class="p">,</span> <span class="s1">&#39;SMOTE&#39;</span><span class="p">]</span>
+<span class="n">accuracies</span> <span class="o">=</span> <span class="p">[</span><span class="n">acc_orig_nb_bag</span><span class="p">,</span> <span class="n">acc_adasyn_nb_bag</span><span class="p">,</span> <span class="n">acc_smote_nb_bag</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi Original  : </span><span class="si">{</span><span class="n">acc_orig_nb_bag</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi ADASYN    : </span><span class="si">{</span><span class="n">acc_adasyn_nb_bag</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi SMOTE     : </span><span class="si">{</span><span class="n">acc_smote_nb_bag</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># === VISUALISASI BAR CHART ===</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#FF6B6B&#39;</span><span class="p">,</span> <span class="s1">&#39;#4ECDC4&#39;</span><span class="p">,</span> <span class="s1">&#39;#45B7D1&#39;</span><span class="p">]</span>  <span class="c1"># Coral, Teal, Blue</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">methods</span><span class="p">,</span> <span class="n">accuracies</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Perbandingan Akurasi BaggingClassifier Naive Bayes</span><span class="se">\n</span><span class="s1">(Original vs ADASYN vs SMOTE)&#39;</span><span class="p">,</span> 
+          <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">bar</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">accuracies</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.02</span><span class="p">,</span> 
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> 
+            <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> 
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> 
+            <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Akurasi Original  : 0.7500
+Akurasi ADASYN    : 0.8035
+Akurasi SMOTE     : 0.8341
+</pre></div>
+</div>
+<img alt="_images/5d3bae40eccc27f7602f2a3e1c4995e496d2ca7563fa31da87eed2e2656cb044.png" src="_images/5d3bae40eccc27f7602f2a3e1c4995e496d2ca7563fa31da87eed2e2656cb044.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="bagging-classifier-random-forest">
+<h2>Bagging Classifier Random Forest<a class="headerlink" href="#bagging-classifier-random-forest" title="Link to this heading">#</a></h2>
+<section id="baggingclassifier-decision-tree-data-belum-diseimbangkan-original">
+<h3>BaggingClassifier Decision Tree Data belum diseimbangkan (Original)<a class="headerlink" href="#baggingclassifier-decision-tree-data-belum-diseimbangkan-original" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_enc</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+
+<span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">bagging</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">prediksi</span> <span class="o">=</span> <span class="n">bagging</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Akurasi:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">))</span>
+<span class="n">acc_orig_dt_bag</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="c1"># Confusion Matrix - Bagging DT Original</span>
+<span class="n">cm_bagging_dt_original</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Confusion Matrix - Bagging DT Original:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cm_bagging_dt_original</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="n">labels</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_test</span><span class="p">))</span>
+
+<span class="n">cm_bagging_dt_original</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_bagging_nb_original</span><span class="p">,</span>
+            <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+            <span class="n">xticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix Bagging DT - Original&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Actual&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Akurasi: 0.8676470588235294
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.91      1.00      0.96        32
+           1       0.75      0.69      0.72        13
+           3       0.00      0.00      0.00         1
+           4       0.60      0.75      0.67         4
+           5       1.00      1.00      1.00         6
+           6       1.00      1.00      1.00         1
+           7       0.89      0.73      0.80        11
+
+    accuracy                           0.87        68
+   macro avg       0.74      0.74      0.73        68
+weighted avg       0.86      0.87      0.86        68
+
+
+Confusion Matrix - Bagging DT Original:
+[[32  0  0  0  0  0  0]
+ [ 2  9  0  2  0  0  0]
+ [ 0  0  0  0  0  0  1]
+ [ 0  1  0  3  0  0  0]
+ [ 0  0  0  0  6  0  0]
+ [ 0  0  0  0  0  1  0]
+ [ 1  2  0  0  0  0  8]]
+</pre></div>
+</div>
+<img alt="_images/2099f4c2283875aa4a4a0b3fdb2d538e17c818fe78edb23f8a0cad4a55f1f4ad.png" src="_images/2099f4c2283875aa4a4a0b3fdb2d538e17c818fe78edb23f8a0cad4a55f1f4ad.png" />
+</div>
+</div>
+</section>
+<section id="bagging-classifier-decison-tree-menggunakan-adasyn">
+<h3>Bagging Classifier Decison Tree Menggunakan ADASYN<a class="headerlink" href="#bagging-classifier-decison-tree-menggunakan-adasyn" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ros</span> <span class="o">=</span> <span class="n">RandomOverSampler</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_ros</span><span class="p">,</span> <span class="n">y_ros</span> <span class="o">=</span> <span class="n">ros</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_enc</span><span class="p">)</span>
+
+<span class="n">adasyn</span> <span class="o">=</span> <span class="n">ADASYN</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X_adasyn</span><span class="p">,</span> <span class="n">y_adasyn</span> <span class="o">=</span> <span class="n">adasyn</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_ros</span><span class="p">,</span> <span class="n">y_ros</span><span class="p">)</span>
+
+<span class="n">X_train_adasyn</span><span class="p">,</span> <span class="n">X_test_adasyn</span><span class="p">,</span> <span class="n">y_train_adasyn</span><span class="p">,</span> <span class="n">y_test_adasyn</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_adasyn</span><span class="p">,</span> <span class="n">y_adasyn</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+
+<span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">bagging</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_adasyn</span><span class="p">,</span> <span class="n">y_train_adasyn</span><span class="p">)</span>
+
+<span class="n">prediksi</span> <span class="o">=</span> <span class="n">bagging</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_adasyn</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Akurasi:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_adasyn</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">))</span>
+<span class="n">acc_adasyn_dt_bag</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_adasyn</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test_adasyn</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="c1"># Confusion Matrix - Bagging DT ADASYN</span>
+<span class="n">cm_bagging_dt_adasyn</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test_adasyn</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Confusion Matrix - Bagging DT ADASYN:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cm_bagging_dt_adasyn</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_adasyn</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_bagging_dt_adasyn</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+            <span class="n">xticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix Bagging DT - ADASYN&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Actual&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Akurasi: 0.982532751091703
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        32
+           1       1.00      0.86      0.92        28
+           2       1.00      1.00      1.00        29
+           3       1.00      1.00      1.00        31
+           4       0.87      1.00      0.93        27
+           5       1.00      1.00      1.00        29
+           6       1.00      1.00      1.00        19
+           7       1.00      1.00      1.00        34
+
+    accuracy                           0.98       229
+   macro avg       0.98      0.98      0.98       229
+weighted avg       0.98      0.98      0.98       229
+
+
+Confusion Matrix - Bagging DT ADASYN:
+[[32  0  0  0  0  0  0  0]
+ [ 0 24  0  0  4  0  0  0]
+ [ 0  0 29  0  0  0  0  0]
+ [ 0  0  0 31  0  0  0  0]
+ [ 0  0  0  0 27  0  0  0]
+ [ 0  0  0  0  0 29  0  0]
+ [ 0  0  0  0  0  0 19  0]
+ [ 0  0  0  0  0  0  0 34]]
+</pre></div>
+</div>
+<img alt="_images/445c71f731370ecb801eee5335021afd778b766f8b90421565260fb992ec76e6.png" src="_images/445c71f731370ecb801eee5335021afd778b766f8b90421565260fb992ec76e6.png" />
+</div>
+</div>
+</section>
+<section id="bagging-classifier-decison-tree-menggunakan-smote">
+<h3>Bagging Classifier Decison Tree Menggunakan SMOTE<a class="headerlink" href="#bagging-classifier-decison-tree-menggunakan-smote" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">smote</span> <span class="o">=</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">k_neighbors</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">X_smote</span><span class="p">,</span> <span class="n">y_smote</span> <span class="o">=</span> <span class="n">smote</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">y_enc</span><span class="p">)</span>
+
+<span class="n">X_train_smote</span><span class="p">,</span> <span class="n">X_test_smote</span><span class="p">,</span> <span class="n">y_train_smote</span><span class="p">,</span> <span class="n">y_test_smote</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_smote</span><span class="p">,</span> <span class="n">y_smote</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">()</span>
+
+<span class="n">bagging</span> <span class="o">=</span> <span class="n">BaggingClassifier</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">bagging</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_smote</span><span class="p">,</span> <span class="n">y_train_smote</span><span class="p">)</span>
+
+<span class="n">prediksi</span> <span class="o">=</span> <span class="n">bagging</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_smote</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Akurasi:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_smote</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">))</span>
+<span class="n">acc_smote_dt_bag</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_smote</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test_smote</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+<span class="c1"># Confusion Matrix - Bagging DT SMOTE</span>
+<span class="n">cm_bagging_dt_smote</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test_smote</span><span class="p">,</span> <span class="n">prediksi</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Confusion Matrix - Bagging DT SMOTE:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cm_bagging_dt_smote</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_smote</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_bagging_dt_smote</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span>
+            <span class="n">xticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span>
+            <span class="n">yticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix Bagging DT - SMOTE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Actual&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Akurasi: 0.9563318777292577
+Classification Report:
+               precision    recall  f1-score   support
+
+           0       0.94      1.00      0.97        32
+           1       0.96      0.79      0.86        28
+           2       1.00      1.00      1.00        29
+           3       1.00      1.00      1.00        31
+           4       0.81      0.96      0.88        27
+           5       1.00      0.97      0.98        29
+           6       0.95      1.00      0.97        19
+           7       1.00      0.94      0.97        34
+
+    accuracy                           0.96       229
+   macro avg       0.96      0.96      0.96       229
+weighted avg       0.96      0.96      0.96       229
+
+
+Confusion Matrix - Bagging DT SMOTE:
+[[32  0  0  0  0  0  0  0]
+ [ 0 22  0  0  6  0  0  0]
+ [ 0  0 29  0  0  0  0  0]
+ [ 0  0  0 31  0  0  0  0]
+ [ 0  1  0  0 26  0  0  0]
+ [ 0  0  0  0  0 28  1  0]
+ [ 0  0  0  0  0  0 19  0]
+ [ 2  0  0  0  0  0  0 32]]
+</pre></div>
+</div>
+<img alt="_images/3433fccf93251e69c028b493825db73ea11599d3a933b71c82f6637cf8d07c73.png" src="_images/3433fccf93251e69c028b493825db73ea11599d3a933b71c82f6637cf8d07c73.png" />
+</div>
+</div>
+</section>
+<section id="perbandingan-bagging-classifier-decision-tree-original-vs-adasyn-vs-smote">
+<h3>Perbandingan Bagging Classifier Decision Tree (Original vs ADASYN vs SMOTE)<a class="headerlink" href="#perbandingan-bagging-classifier-decision-tree-original-vs-adasyn-vs-smote" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Original&#39;</span><span class="p">,</span> <span class="s1">&#39;ADASYN&#39;</span><span class="p">,</span> <span class="s1">&#39;SMOTE&#39;</span><span class="p">]</span>
+<span class="n">accuracies</span> <span class="o">=</span> <span class="p">[</span><span class="n">acc_orig_dt_bag</span><span class="p">,</span> <span class="n">acc_adasyn_dt_bag</span><span class="p">,</span> <span class="n">acc_smote_dt_bag</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi Original  : </span><span class="si">{</span><span class="n">acc_orig_dt_bag</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi ADASYN    : </span><span class="si">{</span><span class="n">acc_adasyn_dt_bag</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Akurasi SMOTE     : </span><span class="si">{</span><span class="n">acc_smote_dt_bag</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># === VISUALISASI BAR CHART ===</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;#FF6B6B&#39;</span><span class="p">,</span> <span class="s1">&#39;#4ECDC4&#39;</span><span class="p">,</span> <span class="s1">&#39;#45B7D1&#39;</span><span class="p">]</span>  <span class="c1"># Coral, Teal, Blue</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">methods</span><span class="p">,</span> <span class="n">accuracies</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Perbandingan Akurasi BaggingClassifier Decision Tree</span><span class="se">\n</span><span class="s1">(Original vs ADASYN vs SMOTE)&#39;</span><span class="p">,</span> 
+          <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">pad</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">bar</span><span class="p">,</span> <span class="n">acc</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">accuracies</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">+</span> <span class="mf">0.02</span><span class="p">,</span> 
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s1">.4f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> 
+            <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span> <span class="o">-</span> <span class="mf">0.05</span><span class="p">,</span> 
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">acc</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> 
+            <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Akurasi Original  : 0.8676
+Akurasi ADASYN    : 0.9825
+Akurasi SMOTE     : 0.9563
+</pre></div>
+</div>
+<img alt="_images/3c6b3d854f89e417e16ed87f03a5e907994c7c395ab877c233d7e225fbf66c48.png" src="_images/3c6b3d854f89e417e16ed87f03a5e907994c7c395ab877c233d7e225fbf66c48.png" />
+</div>
+</div>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1873,6 +2729,20 @@ ADASYN: Accuracy=0.9913, F1_macro=0.9912
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-tiap-model-klasifikasi">Perbandingan Tiap Model Klasifikasi</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-klasifikasi-naive-bayes">Perbandingan Klasifikasi Naive Bayes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-klasifikasi-random-forest">Perbandingan Klasifikasi Random Forest</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-naive-bayes">Bagging Classifier Naive Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-naive-bayes-data-belum-diseimbangkan-original">Bagging Classifier Naive Bayes Data belum diseimbangkan (Original)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-naive-bayes-menggunakan-adasyn">Bagging Classifier Naive Bayes Menggunakan ADASYN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-naive-bayes-menggunakan-smote">Bagging Classifier Naive Bayes Menggunakan SMOTE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-bagging-classifier-naive-bayes-original-vs-adasyn-vs-smote">Perbandingan Bagging Classifier Naive Bayes (Original vs ADASYN vs SMOTE)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-random-forest">Bagging Classifier Random Forest</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#baggingclassifier-decision-tree-data-belum-diseimbangkan-original">BaggingClassifier Decision Tree Data belum diseimbangkan (Original)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-decison-tree-menggunakan-adasyn">Bagging Classifier Decison Tree Menggunakan ADASYN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bagging-classifier-decison-tree-menggunakan-smote">Bagging Classifier Decison Tree Menggunakan SMOTE</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-bagging-classifier-decision-tree-original-vs-adasyn-vs-smote">Perbandingan Bagging Classifier Decision Tree (Original vs ADASYN vs SMOTE)</a></li>
 </ul>
 </li>
 </ul>
