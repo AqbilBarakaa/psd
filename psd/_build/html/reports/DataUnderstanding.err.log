@@ -15,76 +15,47 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import pymysql
-import pandas as pd   
+import pandas as pd
+import psycopg2
 
-mysql_conn = pymysql.connect(
-    host="mysql-3c768195-aqbilbaraka.d.aivencloud.com",
+pg_conn = psycopg2.connect(
+    dbname="defaultdb",
     user="avnadmin",
-    password="AVNS_WV9i6KvYoQZ3s6FclWP",
-    database="defaultdb",
-    port=16932,
-    ssl={"ssl": {}}
+    password="AVNS_Cq_rz3j4QTiiunKJ08p",
+    host="pg-17afc059-aqbilbaraka.d.aivencloud.com",
+    port="16932"
 )
 
-query_mysql = "select * from defaultdb.irismysql"
-data_mysql = pd.read_sql(query_mysql, mysql_conn)
+query_pg = "SELECT * FROM public.irispostgresql"
+data_pg = pd.read_sql(query_pg, pg_conn)
 
-data_mysql
+data_pg
 ------------------
 
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mgaierror[0m                                  Traceback (most recent call last)
-File [1;32m~\AppData\Local\Programs\Python\Python39\lib\site-packages\pymysql\connections.py:649[0m, in [0;36mConnection.connect[1;34m(self, sock)[0m
-[0;32m    648[0m [38;5;28;01mtry[39;00m:
-[1;32m--> 649[0m     sock [38;5;241m=[39m socket[38;5;241m.[39mcreate_connection(
-[0;32m    650[0m         ([38;5;28mself[39m[38;5;241m.[39mhost, [38;5;28mself[39m[38;5;241m.[39mport), [38;5;28mself[39m[38;5;241m.[39mconnect_timeout, [38;5;241m*[39m[38;5;241m*[39mkwargs
-[0;32m    651[0m     )
-[0;32m    652[0m     [38;5;28;01mbreak[39;00m
-
-File [1;32m~\AppData\Local\Programs\Python\Python39\lib\socket.py:823[0m, in [0;36mcreate_connection[1;34m(address, timeout, source_address)[0m
-[0;32m    822[0m err [38;5;241m=[39m [38;5;28;01mNone[39;00m
-[1;32m--> 823[0m [38;5;28;01mfor[39;00m res [38;5;129;01min[39;00m [43mgetaddrinfo[49m[43m([49m[43mhost[49m[43m,[49m[43m [49m[43mport[49m[43m,[49m[43m [49m[38;5;241;43m0[39;49m[43m,[49m[43m [49m[43mSOCK_STREAM[49m[43m)[49m:
-[0;32m    824[0m     af, socktype, proto, canonname, sa [38;5;241m=[39m res
-
-File [1;32m~\AppData\Local\Programs\Python\Python39\lib\socket.py:954[0m, in [0;36mgetaddrinfo[1;34m(host, port, family, type, proto, flags)[0m
-[0;32m    953[0m addrlist [38;5;241m=[39m []
-[1;32m--> 954[0m [38;5;28;01mfor[39;00m res [38;5;129;01min[39;00m [43m_socket[49m[38;5;241;43m.[39;49m[43mgetaddrinfo[49m[43m([49m[43mhost[49m[43m,[49m[43m [49m[43mport[49m[43m,[49m[43m [49m[43mfamily[49m[43m,[49m[43m [49m[38;5;28;43mtype[39;49m[43m,[49m[43m [49m[43mproto[49m[43m,[49m[43m [49m[43mflags[49m[43m)[49m:
-[0;32m    955[0m     af, socktype, proto, canonname, sa [38;5;241m=[39m res
-
-[1;31mgaierror[0m: [Errno 11001] getaddrinfo failed
-
-During handling of the above exception, another exception occurred:
-
 [1;31mOperationalError[0m                          Traceback (most recent call last)
-Cell [1;32mIn[1], line 4[0m
-[0;32m      1[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mpymysql[39;00m
-[0;32m      2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mpd[39;00m   
-[1;32m----> 4[0m mysql_conn [38;5;241m=[39m [43mpymysql[49m[38;5;241;43m.[39;49m[43mconnect[49m[43m([49m
-[0;32m      5[0m [43m    [49m[43mhost[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43mmysql-3c768195-aqbilbaraka.d.aivencloud.com[39;49m[38;5;124;43m"[39;49m[43m,[49m
+Cell [1;32mIn[2], line 4[0m
+[0;32m      1[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mpandas[39;00m[38;5;250m [39m[38;5;28;01mas[39;00m[38;5;250m [39m[38;5;21;01mpd[39;00m
+[0;32m      2[0m [38;5;28;01mimport[39;00m[38;5;250m [39m[38;5;21;01mpsycopg2[39;00m
+[1;32m----> 4[0m pg_conn [38;5;241m=[39m [43mpsycopg2[49m[38;5;241;43m.[39;49m[43mconnect[49m[43m([49m
+[0;32m      5[0m [43m    [49m[43mdbname[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43mdefaultdb[39;49m[38;5;124;43m"[39;49m[43m,[49m
 [0;32m      6[0m [43m    [49m[43muser[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43mavnadmin[39;49m[38;5;124;43m"[39;49m[43m,[49m
-[0;32m      7[0m [43m    [49m[43mpassword[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43mAVNS_WV9i6KvYoQZ3s6FclWP[39;49m[38;5;124;43m"[39;49m[43m,[49m
-[0;32m      8[0m [43m    [49m[43mdatabase[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43mdefaultdb[39;49m[38;5;124;43m"[39;49m[43m,[49m
-[0;32m      9[0m [43m    [49m[43mport[49m[38;5;241;43m=[39;49m[38;5;241;43m16932[39;49m[43m,[49m
-[0;32m     10[0m [43m    [49m[43mssl[49m[38;5;241;43m=[39;49m[43m{[49m[38;5;124;43m"[39;49m[38;5;124;43mssl[39;49m[38;5;124;43m"[39;49m[43m:[49m[43m [49m[43m{[49m[43m}[49m[43m}[49m
-[0;32m     11[0m [43m)[49m
-[0;32m     13[0m query_mysql [38;5;241m=[39m [38;5;124m"[39m[38;5;124mselect * from defaultdb.irismysql[39m[38;5;124m"[39m
-[0;32m     14[0m data_mysql [38;5;241m=[39m pd[38;5;241m.[39mread_sql(query_mysql, mysql_conn)
+[0;32m      7[0m [43m    [49m[43mpassword[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43mAVNS_Cq_rz3j4QTiiunKJ08p[39;49m[38;5;124;43m"[39;49m[43m,[49m
+[0;32m      8[0m [43m    [49m[43mhost[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43mpg-17afc059-aqbilbaraka.d.aivencloud.com[39;49m[38;5;124;43m"[39;49m[43m,[49m
+[0;32m      9[0m [43m    [49m[43mport[49m[38;5;241;43m=[39;49m[38;5;124;43m"[39;49m[38;5;124;43m16932[39;49m[38;5;124;43m"[39;49m
+[0;32m     10[0m [43m)[49m
+[0;32m     12[0m query_pg [38;5;241m=[39m [38;5;124m"[39m[38;5;124mSELECT * FROM public.irispostgresql[39m[38;5;124m"[39m
+[0;32m     13[0m data_pg [38;5;241m=[39m pd[38;5;241m.[39mread_sql(query_pg, pg_conn)
 
-File [1;32m~\AppData\Local\Programs\Python\Python39\lib\site-packages\pymysql\connections.py:361[0m, in [0;36mConnection.__init__[1;34m(self, user, password, host, database, unix_socket, port, charset, collation, sql_mode, read_default_file, conv, use_unicode, client_flag, cursorclass, init_command, connect_timeout, read_default_group, autocommit, local_infile, max_allowed_packet, defer_connect, auth_plugin_map, read_timeout, write_timeout, bind_address, binary_prefix, program_name, server_public_key, ssl, ssl_ca, ssl_cert, ssl_disabled, ssl_key, ssl_key_password, ssl_verify_cert, ssl_verify_identity, compress, named_pipe, passwd, db)[0m
-[0;32m    359[0m     [38;5;28mself[39m[38;5;241m.[39m_sock [38;5;241m=[39m [38;5;28;01mNone[39;00m
-[0;32m    360[0m [38;5;28;01melse[39;00m:
-[1;32m--> 361[0m     [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mconnect[49m[43m([49m[43m)[49m
+File [1;32m~\AppData\Local\Programs\Python\Python39\lib\site-packages\psycopg2\__init__.py:122[0m, in [0;36mconnect[1;34m(dsn, connection_factory, cursor_factory, **kwargs)[0m
+[0;32m    119[0m     kwasync[[38;5;124m'[39m[38;5;124masync_[39m[38;5;124m'[39m] [38;5;241m=[39m kwargs[38;5;241m.[39mpop([38;5;124m'[39m[38;5;124masync_[39m[38;5;124m'[39m)
+[0;32m    121[0m dsn [38;5;241m=[39m _ext[38;5;241m.[39mmake_dsn(dsn, [38;5;241m*[39m[38;5;241m*[39mkwargs)
+[1;32m--> 122[0m conn [38;5;241m=[39m _connect(dsn, connection_factory[38;5;241m=[39mconnection_factory, [38;5;241m*[39m[38;5;241m*[39mkwasync)
+[0;32m    123[0m [38;5;28;01mif[39;00m cursor_factory [38;5;129;01mis[39;00m [38;5;129;01mnot[39;00m [38;5;28;01mNone[39;00m:
+[0;32m    124[0m     conn[38;5;241m.[39mcursor_factory [38;5;241m=[39m cursor_factory
 
-File [1;32m~\AppData\Local\Programs\Python\Python39\lib\site-packages\pymysql\connections.py:716[0m, in [0;36mConnection.connect[1;34m(self, sock)[0m
-[0;32m    714[0m     [38;5;28;01mif[39;00m DEBUG:
-[0;32m    715[0m         [38;5;28mprint[39m(exc[38;5;241m.[39mtraceback)
-[1;32m--> 716[0m     [38;5;28;01mraise[39;00m exc
-[0;32m    718[0m [38;5;66;03m# If e is neither DatabaseError or IOError, It's a bug.[39;00m
-[0;32m    719[0m [38;5;66;03m# But raising AssertionError hides original error.[39;00m
-[0;32m    720[0m [38;5;66;03m# So just reraise it.[39;00m
-[0;32m    721[0m [38;5;28;01mraise[39;00m
+[1;31mOperationalError[0m: connection to server at "pg-17afc059-aqbilbaraka.d.aivencloud.com" (165.22.59.166), port 16932 failed: Connection timed out (0x0000274C/10060)
+	Is the server running on that host and accepting TCP/IP connections?
 
-[1;31mOperationalError[0m: (2003, "Can't connect to MySQL server on 'mysql-3c768195-aqbilbaraka.d.aivencloud.com' ([Errno 11001] getaddrinfo failed)")
 
