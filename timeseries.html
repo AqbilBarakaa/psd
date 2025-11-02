@@ -60,6 +60,7 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'timeseries';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Identifikasi Audio Buka Tutup" href="bukatutup.html" />
     <link rel="prev" title="PraUTS" href="PraUTS.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -186,6 +187,7 @@
 <li class="toctree-l1"><a class="reference internal" href="Modeling.html">Modeling</a></li>
 <li class="toctree-l1"><a class="reference internal" href="PraUTS.html">PraUTS</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Prediksi Nilai NO2 di Kota Depok, Jawa Barat dengan KNN Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bukatutup.html">Identifikasi Audio Buka Tutup</a></li>
 </ul>
 
     </div>
@@ -399,7 +401,14 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-regression-threshold-application">Evaluasi Regression &amp; Threshold Application</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-prediction-analysis">Visualization - Prediction Analysis</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prediksi-nilai-no2-satu-hari-ke-depan">Prediksi Nilai NO2 Satu Hari Ke Depan</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-model-deployment">IMPLEMENTASI MODEL (Deployment)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-model-deployment">IMPLEMENTASI MODEL (Deployment)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-dan-simpan-model-pada-folder-deploy">Load dan simpan model pada folder deploy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-file-app-py-dengan-code">Membuat file <code class="docutils literal notranslate"><span class="pre">app.py</span></code> dengan code:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mempersiapkan-lingkungan-aplikasi">Mempersiapkan lingkungan aplikasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menjalankan-aplikasi">Menjalankan Aplikasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-deploy">Hasil Deploy:</a></li>
 </ul>
 </li>
 </ul>
@@ -564,13 +573,47 @@ document.write(`
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Authenticated using refresh token.
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:00 Job &#39;j-2511021349194af5ad9b4c3c9ad2b42e&#39;: send &#39;start&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:00 Job &#39;j-2511021926004e53a9b64a9e2a50058c&#39;: send &#39;start&#39;
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:13 Job &#39;j-2511021349194af5ad9b4c3c9ad2b42e&#39;: created (progress 0%)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:16 Job &#39;j-2511021926004e53a9b64a9e2a50058c&#39;: created (progress 0%)
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0:00:19 Job &#39;j-2511021349194af5ad9b4c3c9ad2b42e&#39;: created (progress 0%)
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">44</span>
+<span class="g g-Whitespace">     </span><span class="mi">41</span> <span class="n">daily_mean_aoi</span> <span class="o">=</span> <span class="n">daily_mean</span><span class="o">.</span><span class="n">aggregate_spatial</span><span class="p">(</span><span class="n">geometries</span><span class="o">=</span><span class="n">aoi</span><span class="p">,</span> <span class="n">reducer</span><span class="o">=</span><span class="s2">&quot;mean&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">43</span> <span class="c1"># 7. Jalankan batch job</span>
+<span class="ne">---&gt; </span><span class="mi">44</span> <span class="n">job</span> <span class="o">=</span> <span class="n">daily_mean_aoi</span><span class="o">.</span><span class="n">execute_batch</span><span class="p">(</span><span class="n">out_format</span><span class="o">=</span><span class="s2">&quot;CSV&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">45</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Menunggu job OpenEO selesai...&quot;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">47</span> <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\openeo\rest\vectorcube.py:391,</span> in <span class="ni">VectorCube.execute_batch</span><span class="nt">(self, outputfile, out_format, title, description, plan, budget, print, max_poll_interval, connection_retry_interval, additional, job_options, validate, auto_add_save_result, show_error_logs, log_level, **format_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">378</span>     <span class="n">create_kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;auto_add_save_result&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<span class="g g-Whitespace">    </span><span class="mi">380</span> <span class="n">job</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">create_job</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">381</span>     <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">382</span>     <span class="n">description</span><span class="o">=</span><span class="n">description</span><span class="p">,</span>
+   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">389</span>     <span class="o">**</span><span class="n">create_kwargs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">390</span> <span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">391</span> <span class="n">job</span><span class="o">.</span><span class="n">start_and_wait</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">392</span>     <span class="nb">print</span><span class="o">=</span><span class="nb">print</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">393</span>     <span class="n">max_poll_interval</span><span class="o">=</span><span class="n">max_poll_interval</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">394</span>     <span class="n">connection_retry_interval</span><span class="o">=</span><span class="n">connection_retry_interval</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">395</span>     <span class="n">show_error_logs</span><span class="o">=</span><span class="n">show_error_logs</span><span class="p">,</span>
+<span class="g g-Whitespace">    </span><span class="mi">396</span> <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">397</span> <span class="k">if</span> <span class="n">outputfile</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">398</span>     <span class="n">job</span><span class="o">.</span><span class="n">download_result</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">outputfile</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\openeo\rest\job.py:371,</span> in <span class="ni">BatchJob.start_and_wait</span><span class="nt">(self, print, max_poll_interval, connection_retry_interval, soft_error_max, show_error_logs, require_success)</span>
+<span class="g g-Whitespace">    </span><span class="mi">368</span>         <span class="k">break</span>
+<span class="g g-Whitespace">    </span><span class="mi">370</span>     <span class="c1"># Sleep for next poll (and adaptively make polling less frequent)</span>
+<span class="ne">--&gt; </span><span class="mi">371</span>     <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">poll_interval</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">372</span>     <span class="n">poll_interval</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.25</span> <span class="o">*</span> <span class="n">poll_interval</span><span class="p">,</span> <span class="n">max_poll_interval</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">374</span> <span class="k">if</span> <span class="n">require_success</span> <span class="ow">and</span> <span class="n">status</span> <span class="o">!=</span> <span class="s2">&quot;finished&quot;</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">375</span>     <span class="c1"># TODO: render logs jupyter-aware in a notebook context?</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
@@ -1531,9 +1574,11 @@ HASIL PREDIKSI NO2 HARI BESOK (1 hari):
 </div>
 </div>
 </section>
+</section>
 <section id="implementasi-model-deployment">
-<h3>IMPLEMENTASI MODEL (Deployment)<a class="headerlink" href="#implementasi-model-deployment" title="Link to this heading">#</a></h3>
-<p>Load dan simpan model pada folder deploy</p>
+<h2>IMPLEMENTASI MODEL (Deployment)<a class="headerlink" href="#implementasi-model-deployment" title="Link to this heading">#</a></h2>
+<section id="load-dan-simpan-model-pada-folder-deploy">
+<h3>Load dan simpan model pada folder deploy<a class="headerlink" href="#load-dan-simpan-model-pada-folder-deploy" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -1567,7 +1612,9 @@ Model dan scaler berhasil disimpan di folder: ../../psd_deploy/models
 </div>
 </div>
 </div>
-<p>Membuat file <code class="docutils literal notranslate"><span class="pre">app.py</span></code> dengan code:</p>
+</section>
+<section id="membuat-file-app-py-dengan-code">
+<h3>Membuat file <code class="docutils literal notranslate"><span class="pre">app.py</span></code> dengan code:<a class="headerlink" href="#membuat-file-app-py-dengan-code" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">streamlit</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">st</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
@@ -1758,7 +1805,9 @@ Model dan scaler berhasil disimpan di folder: ../../psd_deploy/models
 </pre></div>
 </div>
 <p>Link GitHub: <a class="github reference external" href="https://github.com/AqbilBarakaa/psd_deploy">AqbilBarakaa/psd_deploy</a></p>
-<p>Mempersiapkan lingkungan aplikasi</p>
+</section>
+<section id="mempersiapkan-lingkungan-aplikasi">
+<h3>Mempersiapkan lingkungan aplikasi<a class="headerlink" href="#mempersiapkan-lingkungan-aplikasi" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">pip</span> install streamlit joblib numpy pandas scikit-learn
@@ -1817,9 +1866,13 @@ Note: you may need to restart the kernel to use updated packages.
 </div>
 </div>
 </div>
-<p>Menjalankan Aplikasi</p>
+</section>
+<section id="menjalankan-aplikasi">
+<h3>Menjalankan Aplikasi<a class="headerlink" href="#menjalankan-aplikasi" title="Link to this heading">#</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">streamlit</span> <span class="pre">run</span> <span class="pre">app.py</span></code></p>
-<p>Hasil Deploy:</p>
+</section>
+<section id="hasil-deploy">
+<h3>Hasil Deploy:<a class="headerlink" href="#hasil-deploy" title="Link to this heading">#</a></h3>
 <p><a class="reference external" href="https://tugaspsdtimeseries.streamlit.app/">https://tugaspsdtimeseries.streamlit.app/</a></p>
 </section>
 </section>
@@ -1864,6 +1917,15 @@ Note: you may need to restart the kernel to use updated packages.
         <p class="prev-next-title">PraUTS</p>
       </div>
     </a>
+    <a class="right-next"
+       href="bukatutup.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Identifikasi Audio Buka Tutup</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1898,7 +1960,14 @@ Note: you may need to restart the kernel to use updated packages.
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluasi-regression-threshold-application">Evaluasi Regression &amp; Threshold Application</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualization-prediction-analysis">Visualization - Prediction Analysis</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prediksi-nilai-no2-satu-hari-ke-depan">Prediksi Nilai NO2 Satu Hari Ke Depan</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-model-deployment">IMPLEMENTASI MODEL (Deployment)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-model-deployment">IMPLEMENTASI MODEL (Deployment)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-dan-simpan-model-pada-folder-deploy">Load dan simpan model pada folder deploy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-file-app-py-dengan-code">Membuat file <code class="docutils literal notranslate"><span class="pre">app.py</span></code> dengan code:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mempersiapkan-lingkungan-aplikasi">Mempersiapkan lingkungan aplikasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menjalankan-aplikasi">Menjalankan Aplikasi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-deploy">Hasil Deploy:</a></li>
 </ul>
 </li>
 </ul>
