@@ -409,6 +409,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediksi-pada-audio-buka-tutup-baru">Prediksi Pada Audio Buka Tutup Baru</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-model-deployment">IMPLEMENTASI MODEL (Deployment)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-dan-simpan-model-pada-folder-deploy">Load dan simpan model pada folder deploy</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-file-app-py-dengan-code">Membuat file <code class="docutils literal notranslate"><span class="pre">app.py</span></code> dengan code:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mempersiapkan-lingkungan-aplikasi">Mempersiapkan lingkungan aplikasi</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menjalankan-aplikasi">Menjalankan Aplikasi</a></li>
@@ -1023,9 +1024,7 @@ Total data disimpan: 100
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DATA TRAIN
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape Audio : (300, 22050)
+Shape Audio : (300, 22050)
 Label Sample: [&#39;buka&#39; &#39;buka&#39; &#39;buka&#39; &#39;buka&#39; &#39;buka&#39; &#39;buka&#39; &#39;buka&#39; &#39;buka&#39; &#39;buka&#39; &#39;buka&#39;]
 File Sample : [&#39;dataset48k/train\\buka\\buka48k-buka_0.wav.wav&#39;, &#39;dataset48k/train\\buka\\buka48k-buka_1.wav.wav&#39;, &#39;dataset48k/train\\buka\\buka48k-buka_10.wav.wav&#39;]
 
@@ -2328,6 +2327,8 @@ termasuk kategori <strong>buka</strong> atau <strong>tutup</strong> secara otoma
 </section>
 <section id="implementasi-model-deployment">
 <h2>IMPLEMENTASI MODEL (Deployment)<a class="headerlink" href="#implementasi-model-deployment" title="Link to this heading">#</a></h2>
+<section id="load-dan-simpan-model-pada-folder-deploy">
+<h3>Load dan simpan model pada folder deploy<a class="headerlink" href="#load-dan-simpan-model-pada-folder-deploy" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
@@ -2366,9 +2367,7 @@ termasuk kategori <strong>buka</strong> atau <strong>tutup</strong> secara otoma
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Semua .pkl berhasil diload.
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>random_forest_model.pkl berhasil disalin ke: ../../psd_deploy_bukatutup\random_forest_model.pkl
+random_forest_model.pkl berhasil disalin ke: ../../psd_deploy_bukatutup\random_forest_model.pkl
 scaler.pkl berhasil disalin ke: ../../psd_deploy_bukatutup\scaler.pkl
 label_encoder.pkl berhasil disalin ke: ../../psd_deploy_bukatutup\label_encoder.pkl
 
@@ -2377,6 +2376,7 @@ Semua file berhasil disalin ke folder deploy!
 </div>
 </div>
 </div>
+</section>
 <section id="membuat-file-app-py-dengan-code">
 <h3>Membuat file <code class="docutils literal notranslate"><span class="pre">app.py</span></code> dengan code:<a class="headerlink" href="#membuat-file-app-py-dengan-code" title="Link to this heading">#</a></h3>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">streamlit</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">st</span>
@@ -2732,6 +2732,7 @@ Note: you may need to restart the kernel to use updated packages.
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prediksi-pada-audio-buka-tutup-baru">Prediksi Pada Audio Buka Tutup Baru</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementasi-model-deployment">IMPLEMENTASI MODEL (Deployment)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-dan-simpan-model-pada-folder-deploy">Load dan simpan model pada folder deploy</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-file-app-py-dengan-code">Membuat file <code class="docutils literal notranslate"><span class="pre">app.py</span></code> dengan code:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mempersiapkan-lingkungan-aplikasi">Mempersiapkan lingkungan aplikasi</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menjalankan-aplikasi">Menjalankan Aplikasi</a></li>
