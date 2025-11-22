@@ -1,0 +1,97 @@
+Traceback (most recent call last):
+  File "C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+    executenb(
+  File "C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\nbclient\client.py", line 1319, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+  File "C:\Users\acer\AppData\Roaming\Python\Python39\site-packages\jupyter_core\utils\__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+  File "C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\asyncio\base_events.py", line 647, in run_until_complete
+    return future.result()
+  File "C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\nbclient\client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\nbclient\client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\acer\AppData\Local\Programs\Python\Python39\lib\site-packages\nbclient\client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+print("ANALISIS STRUKTUR DATASET")
+print("="*50)
+
+DATASET_PATH = r"C:\Semester5\psd\psd\dataset"
+print(f"Dataset Path: {DATASET_PATH}")
+
+# Cari semua subfolder (speaker)
+speakers = [spk for spk in os.listdir(DATASET_PATH)
+            if os.path.isdir(os.path.join(DATASET_PATH, spk))]
+
+print(f"\nJumlah Speaker: {len(speakers)}")
+print("Daftar Speaker:", speakers)
+
+total_files = 0
+
+print("\nSTATISTIK DATASET:")
+for spk in speakers:
+    spk_path = os.path.join(DATASET_PATH, spk, "buka")
+    wav_files_buka = glob.glob(os.path.join(spk_path, "*.wav"))
+    buka_count = len(wav_files_buka)
+
+    spk_path_tutup = os.path.join(DATASET_PATH, spk, "tutup")
+    wav_files_tutup = glob.glob(os.path.join(spk_path_tutup, "*.wav"))
+    tutup_count = len(wav_files_tutup)
+
+    total = buka_count + tutup_count
+    total_files += total
+
+    print(f"\nSpeaker: {spk}")
+    print(f"   - File 'Buka' : {buka_count}")
+    print(f"   - File 'Tutup': {tutup_count}")
+    print(f"   - Total       : {total}")
+
+print(f"\nTOTAL SEMUA FILE AUDIO: {total_files}")
+
+# Sample informasi file
+print("\nSAMPLE INFORMASI FILE:")
+sample_file = None
+for spk in speakers:
+    files = glob.glob(os.path.join(DATASET_PATH, spk, "buka", "*.wav")) + \
+            glob.glob(os.path.join(DATASET_PATH, spk, "tutup", "*.wav"))
+    if files:
+        sample_file = files[0]
+        break
+
+if sample_file:
+    audio, sr = librosa.load(sample_file, sr=None)
+    duration = len(audio) / sr
+
+    print(f"   File Sample: {os.path.basename(sample_file)}")
+    print(f"   Speaker    : {spk}")
+    print(f"\nINFORMASI AUDIO SAMPLE:")
+    print(f"   - Sample Rate : {sr} Hz")
+    print(f"   - Durasi      : {duration:.2f} detik")
+    print(f"   - Jumlah Sampel: {len(audio)}")
+    print(f"   - Range nilai : [{audio.min():.4f}, {audio.max():.4f}]")
+else:
+    print("   Tidak ada file ditemukan!")
+
+print("\nDataset exploration completed!")
+------------------
+
+----- stdout -----
+ANALISIS STRUKTUR DATASET
+==================================================
+Dataset Path: C:\Semester5\psd\psd\dataset
+------------------
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mFileNotFoundError[0m                         Traceback (most recent call last)
+Cell [1;32mIn[2], line 8[0m
+[0;32m      5[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mDataset Path: [39m[38;5;132;01m{[39;00mDATASET_PATH[38;5;132;01m}[39;00m[38;5;124m"[39m)
+[0;32m      7[0m [38;5;66;03m# Cari semua subfolder (speaker)[39;00m
+[1;32m----> 8[0m speakers [38;5;241m=[39m [spk [38;5;28;01mfor[39;00m spk [38;5;129;01min[39;00m [43mos[49m[38;5;241;43m.[39;49m[43mlistdir[49m[43m([49m[43mDATASET_PATH[49m[43m)[49m
+[0;32m      9[0m             [38;5;28;01mif[39;00m os[38;5;241m.[39mpath[38;5;241m.[39misdir(os[38;5;241m.[39mpath[38;5;241m.[39mjoin(DATASET_PATH, spk))]
+[0;32m     11[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;130;01m\n[39;00m[38;5;124mJumlah Speaker: [39m[38;5;132;01m{[39;00m[38;5;28mlen[39m(speakers)[38;5;132;01m}[39;00m[38;5;124m"[39m)
+[0;32m     12[0m [38;5;28mprint[39m([38;5;124m"[39m[38;5;124mDaftar Speaker:[39m[38;5;124m"[39m, speakers)
+
+[1;31mFileNotFoundError[0m: [WinError 3] The system cannot find the path specified: 'C:\\Semester5\\psd\\psd\\dataset'
+
