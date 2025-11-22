@@ -1,0 +1,1678 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Data Understanding dan Eksplorasi Data &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'DataUnderstanding';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Data Preprocessing" href="DataPreprocessing.html" />
+    <link rel="prev" title="Bussiness Understanding" href="BusinessUnderstanding.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.gif" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.gif" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to MyProfile
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="BusinessUnderstanding.html">Bussiness Understanding</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Understanding dan Eksplorasi Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataPreprocessing.html">Data Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCAdanADASYN.html">Penerapan PCA dan ADASYN pada Dataset Ecoli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Modeling.html">Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PraUTS.html">PraUTS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries.html">Prediksi Nilai NO2 di Kota Depok, Jawa Barat dengan KNN Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bukatutup.html">Identifikasi Audio “Buka Tutup”</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FDataUnderstanding.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/DataUnderstanding.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data Understanding dan Eksplorasi Data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengumpulkan-data-awal">Mengumpulkan Data Awal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-service-mysql-dan-postgresql-pada-aiven-io">Membuat Service MySQL dan PostgreSQL pada aiven.io</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-database-mysql-dan-postgresql-dan-insert-data-di-dbeaver">Membuat Database MySQL dan PostgreSQL dan Insert Data di DBeaver</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menarik-data-mysql-dan-postgresql-ke-power-bi">Menarik Data MySQL dan PostgreSQL ke Power BI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menggabungkan-data-di-power-bi">Menggabungkan Data di Power BI</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeskripsikan-data">Mendeskripsikan Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">Eksplorasi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-minimum-dan-maksimum">1. Nilai Minimum dan Maksimum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-rata-rata-mean">2. Nilai Rata-rata (Mean)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-jumlah-data-tiap-kelas">3. Distribusi Jumlah Data Tiap Kelas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mencari-missing-value">Mencari Missing Value</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-mencari-missing-value">Langkah-Langkah mencari Missing Value</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeteksi-outlier">Mendeteksi Outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeteksi-outlier-menggunakan-metode-abod">Mendeteksi Outlier Menggunakan Metode ABOD</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-mendeteksi-outlier-menggunakan-library-pycaret-metode-iforest">Langkah-Langkah mendeteksi outlier menggunakan Library Pycaret Metode Iforest</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="data-understanding-dan-eksplorasi-data">
+<h1>Data Understanding dan Eksplorasi Data<a class="headerlink" href="#data-understanding-dan-eksplorasi-data" title="Link to this heading">#</a></h1>
+<p>Tujuan dari memahami data adalah untuk mengenali karakteristik data yang akan digunakan, sehingga kita dapat menentukan metode dan teknik yang tepat untuk analisis lebih lanjut. Beberapa kegiatan yang termasuk dalam memahami data antara lain:</p>
+<ol class="arabic simple">
+<li><p><strong>Pengumpulan Data:</strong> Mengumpulkan data dari berbagai sumber yang relevan.</p></li>
+<li><p><strong>Mendiskripsikan Data:</strong> Menganalisis struktur, tipe, dan kualitas data.</p></li>
+<li><p><strong>Eksplorasi Data:</strong> Melakukan analisis awal untuk memahami pola, distribusi, dan hubungan antar variabel dalam data.</p></li>
+<li><p><strong>Verifikasi Kualitas Data:</strong> memastikan bahwa data yang kita pakai layak untuk dianalisis, tidak bermasalah, dan hasil analisis bisa dipercaya.</p></li>
+</ol>
+<section id="mengumpulkan-data-awal">
+<h2>Mengumpulkan Data Awal<a class="headerlink" href="#mengumpulkan-data-awal" title="Link to this heading">#</a></h2>
+<p>Data Iris berada di <a class="reference external" href="http://aiven.io">aiven.io</a> menggunakan 2 database MySQL dan PostgreSQL yang disimpan pada DBeaver.</p>
+<section id="membuat-service-mysql-dan-postgresql-pada-aiven-io">
+<h3>Membuat Service MySQL dan PostgreSQL pada <a class="reference external" href="http://aiven.io">aiven.io</a><a class="headerlink" href="#membuat-service-mysql-dan-postgresql-pada-aiven-io" title="Link to this heading">#</a></h3>
+<p>Berikut merupakan langkkah-langkah dalam membuat service dalam <a class="reference external" href="http://aiven.io">aiven.io</a>:</p>
+<ul class="simple">
+<li><p>Kunjungi laman situs <a class="reference external" href="http://aiven.io">aiven.io</a> melalui link <a class="reference external" href="https://aiven.io/">https://aiven.io/</a></p></li>
+<li><p>Silahkan login terlebih dahulu jika belum memiliki akun aiven</p></li>
+<li><p>Buat Project terlebih dahulu sebelum membuat servicenya.</p></li>
+<li><p>Klik “Create Service” dan pilih databse Postgre sebagai databasenya.</p></li>
+<li><p>Buat Service untuk MySQL dan PostgreSQL.</p></li>
+</ul>
+<p><img alt="Screenshot" src="_images/15135806.png" /></p>
+<p><img alt="Screenshot" src="_images/135901.png" /></p>
+</section>
+<section id="membuat-database-mysql-dan-postgresql-dan-insert-data-di-dbeaver">
+<h3>Membuat Database MySQL dan PostgreSQL dan Insert Data di DBeaver<a class="headerlink" href="#membuat-database-mysql-dan-postgresql-dan-insert-data-di-dbeaver" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Install Dbeaver melalui sites resmi <a class="reference external" href="https://dbeaver.io/download/">https://dbeaver.io/download/</a>.</p></li>
+<li><p>Buat Database baru dengan source MySQL dan PostgreSQL pada Dbeaver.</p></li>
+<li><p>Koneksikan Database dengan cloud Database aiven melalui kredensial service MySQL dan PostgreSQL yang disediakan <a class="reference external" href="http://aiven.io">aiven.io</a>.</p></li>
+<li><p>Buat tabel database terlebih dahulu dengan “SQL Editor -&gt; Open SQL Script”.</p></li>
+<li><p>Setelah tabel terbuat. Insert data MySQL dan PostgreSQL dengan data IRIS,</p>
+<ul>
+<li><p>Untuk MySQL diisi dengan Data Iris Petal Length dan Petal Width.</p></li>
+<li><p>Untuk PostgreSQL diisi dengan Data Iris Sepal Length dan Sepal Width.</p></li>
+</ul>
+</li>
+</ul>
+<p><img alt="Screenshot" src="_images/140708.png" /></p>
+<p><img alt="Screenshot" src="_images/140742.png" /></p>
+</section>
+<section id="menarik-data-mysql-dan-postgresql-ke-power-bi">
+<h3>Menarik Data MySQL dan PostgreSQL ke Power BI<a class="headerlink" href="#menarik-data-mysql-dan-postgresql-ke-power-bi" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Pilih Menu Get Data untuk mendapatkan suatu data dari database.</p></li>
+<li><p>Kemudian pilih Other -&gt; Python Scripting, setelah itu klik connect untuk memulai koneksi..</p></li>
+<li><p>Setelah itu masukkan script Python yang berisi library, kredensial dari aiven dan query ke tabel databasenya.</p></li>
+</ul>
+<p>Untuk MySQL diisi dengan Data Iris Petal Length dan Petal Width.</p>
+<p><img alt="Screenshot" src="_images/141428.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pymysql</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>   
+
+<span class="n">mysql_conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="s2">&quot;mysql-3c768195-aqbilbaraka.d.aivencloud.com&quot;</span><span class="p">,</span>
+    <span class="n">user</span><span class="o">=</span><span class="s2">&quot;avnadmin&quot;</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s2">&quot;AVNS_WV9i6KvYoQZ3s6FclWP&quot;</span><span class="p">,</span>
+    <span class="n">database</span><span class="o">=</span><span class="s2">&quot;defaultdb&quot;</span><span class="p">,</span>
+    <span class="n">port</span><span class="o">=</span><span class="mi">16932</span><span class="p">,</span>
+    <span class="n">ssl</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ssl&quot;</span><span class="p">:</span> <span class="p">{}}</span>
+<span class="p">)</span>
+
+<span class="n">query_mysql</span> <span class="o">=</span> <span class="s2">&quot;select * from defaultdb.irismysql&quot;</span>
+<span class="n">data_mysql</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">query_mysql</span><span class="p">,</span> <span class="n">mysql_conn</span><span class="p">)</span>
+
+<span class="n">data_mysql</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">gaierror</span><span class="g g-Whitespace">                                  </span>Traceback (most recent call last)
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pymysql\connections.py:649,</span> in <span class="ni">Connection.connect</span><span class="nt">(self, sock)</span>
+<span class="g g-Whitespace">    </span><span class="mi">648</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">649</span>     <span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">create_connection</span><span class="p">(</span>
+<span class="g g-Whitespace">    </span><span class="mi">650</span>         <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">host</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect_timeout</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+<span class="g g-Whitespace">    </span><span class="mi">651</span>     <span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">652</span>     <span class="k">break</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\socket.py:823,</span> in <span class="ni">create_connection</span><span class="nt">(address, timeout, source_address)</span>
+<span class="g g-Whitespace">    </span><span class="mi">822</span> <span class="n">err</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="ne">--&gt; </span><span class="mi">823</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">getaddrinfo</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">824</span>     <span class="n">af</span><span class="p">,</span> <span class="n">socktype</span><span class="p">,</span> <span class="n">proto</span><span class="p">,</span> <span class="n">canonname</span><span class="p">,</span> <span class="n">sa</span> <span class="o">=</span> <span class="n">res</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\socket.py:954,</span> in <span class="ni">getaddrinfo</span><span class="nt">(host, port, family, type, proto, flags)</span>
+<span class="g g-Whitespace">    </span><span class="mi">953</span> <span class="n">addrlist</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="ne">--&gt; </span><span class="mi">954</span> <span class="k">for</span> <span class="n">res</span> <span class="ow">in</span> <span class="n">_socket</span><span class="o">.</span><span class="n">getaddrinfo</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">family</span><span class="p">,</span> <span class="nb">type</span><span class="p">,</span> <span class="n">proto</span><span class="p">,</span> <span class="n">flags</span><span class="p">):</span>
+<span class="g g-Whitespace">    </span><span class="mi">955</span>     <span class="n">af</span><span class="p">,</span> <span class="n">socktype</span><span class="p">,</span> <span class="n">proto</span><span class="p">,</span> <span class="n">canonname</span><span class="p">,</span> <span class="n">sa</span> <span class="o">=</span> <span class="n">res</span>
+
+<span class="ne">gaierror</span>: [Errno 11001] getaddrinfo failed
+
+<span class="n">During</span> <span class="n">handling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">above</span> <span class="n">exception</span><span class="p">,</span> <span class="n">another</span> <span class="n">exception</span> <span class="n">occurred</span><span class="p">:</span>
+
+<span class="ne">OperationalError</span><span class="g g-Whitespace">                          </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pymysql</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>   
+<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">mysql_conn</span> <span class="o">=</span> <span class="n">pymysql</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span>     <span class="n">host</span><span class="o">=</span><span class="s2">&quot;mysql-3c768195-aqbilbaraka.d.aivencloud.com&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">6</span>     <span class="n">user</span><span class="o">=</span><span class="s2">&quot;avnadmin&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">7</span>     <span class="n">password</span><span class="o">=</span><span class="s2">&quot;AVNS_WV9i6KvYoQZ3s6FclWP&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">database</span><span class="o">=</span><span class="s2">&quot;defaultdb&quot;</span><span class="p">,</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="n">port</span><span class="o">=</span><span class="mi">16932</span><span class="p">,</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="n">ssl</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;ssl&quot;</span><span class="p">:</span> <span class="p">{}}</span>
+<span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">13</span> <span class="n">query_mysql</span> <span class="o">=</span> <span class="s2">&quot;select * from defaultdb.irismysql&quot;</span>
+<span class="g g-Whitespace">     </span><span class="mi">14</span> <span class="n">data_mysql</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">query_mysql</span><span class="p">,</span> <span class="n">mysql_conn</span><span class="p">)</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pymysql\connections.py:361,</span> in <span class="ni">Connection.__init__</span><span class="nt">(self, user, password, host, database, unix_socket, port, charset, collation, sql_mode, read_default_file, conv, use_unicode, client_flag, cursorclass, init_command, connect_timeout, read_default_group, autocommit, local_infile, max_allowed_packet, defer_connect, auth_plugin_map, read_timeout, write_timeout, bind_address, binary_prefix, program_name, server_public_key, ssl, ssl_ca, ssl_cert, ssl_disabled, ssl_key, ssl_key_password, ssl_verify_cert, ssl_verify_identity, compress, named_pipe, passwd, db)</span>
+<span class="g g-Whitespace">    </span><span class="mi">359</span>     <span class="bp">self</span><span class="o">.</span><span class="n">_sock</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="g g-Whitespace">    </span><span class="mi">360</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">361</span>     <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+<span class="nn">File ~\AppData\Local\Programs\Python\Python39\lib\site-packages\pymysql\connections.py:716,</span> in <span class="ni">Connection.connect</span><span class="nt">(self, sock)</span>
+<span class="g g-Whitespace">    </span><span class="mi">714</span>     <span class="k">if</span> <span class="n">DEBUG</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">715</span>         <span class="nb">print</span><span class="p">(</span><span class="n">exc</span><span class="o">.</span><span class="n">traceback</span><span class="p">)</span>
+<span class="ne">--&gt; </span><span class="mi">716</span>     <span class="k">raise</span> <span class="n">exc</span>
+<span class="g g-Whitespace">    </span><span class="mi">718</span> <span class="c1"># If e is neither DatabaseError or IOError, It&#39;s a bug.</span>
+<span class="g g-Whitespace">    </span><span class="mi">719</span> <span class="c1"># But raising AssertionError hides original error.</span>
+<span class="g g-Whitespace">    </span><span class="mi">720</span> <span class="c1"># So just reraise it.</span>
+<span class="g g-Whitespace">    </span><span class="mi">721</span> <span class="k">raise</span>
+
+<span class="ne">OperationalError</span>: (2003, &quot;Can&#39;t connect to MySQL server on &#39;mysql-3c768195-aqbilbaraka.d.aivencloud.com&#39; ([Errno 11001] getaddrinfo failed)&quot;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Dan ini adalah Script PostgreSQL dengan Data Iris Sepal Length dan Sepal Width menggunakan POWER BI:</p>
+<p><img alt="Screenshot" src="_images/141451.png" /></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">psycopg2</span>
+
+<span class="n">pg_conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">dbname</span><span class="o">=</span><span class="s2">&quot;defaultdb&quot;</span><span class="p">,</span>
+    <span class="n">user</span><span class="o">=</span><span class="s2">&quot;avnadmin&quot;</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s2">&quot;AVNS_Cq_rz3j4QTiiunKJ08p&quot;</span><span class="p">,</span>
+    <span class="n">host</span><span class="o">=</span><span class="s2">&quot;pg-17afc059-aqbilbaraka.d.aivencloud.com&quot;</span><span class="p">,</span>
+    <span class="n">port</span><span class="o">=</span><span class="s2">&quot;16932&quot;</span>
+<span class="p">)</span>
+
+<span class="n">query_pg</span> <span class="o">=</span> <span class="s2">&quot;SELECT * FROM public.irispostgresql&quot;</span>
+<span class="n">data_pg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">query_pg</span><span class="p">,</span> <span class="n">pg_conn</span><span class="p">)</span>
+
+<span class="n">data_pg</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_26736\1682131863.py:13: UserWarning: pandas only supports SQLAlchemy connectable (engine/connection) or database string URI or sqlite3 DBAPI2 connection. Other DBAPI2 objects are not tested. Please consider using SQLAlchemy.
+  data_pg = pd.read_sql(query_pg, pg_conn)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>class</th>
+      <th>sepallength</th>
+      <th>sepalwidth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Iris-setosa</td>
+      <td>5.1</td>
+      <td>3.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Iris-setosa</td>
+      <td>4.9</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Iris-setosa</td>
+      <td>4.7</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Iris-setosa</td>
+      <td>4.6</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Iris-setosa</td>
+      <td>5.0</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>146</td>
+      <td>Iris-virginica</td>
+      <td>6.7</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>147</td>
+      <td>Iris-virginica</td>
+      <td>6.3</td>
+      <td>2.5</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>148</td>
+      <td>Iris-virginica</td>
+      <td>6.5</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>149</td>
+      <td>Iris-virginica</td>
+      <td>6.2</td>
+      <td>3.4</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>150</td>
+      <td>Iris-virginica</td>
+      <td>5.9</td>
+      <td>3.0</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 4 columns</p>
+</div></div></div>
+</div>
+</section>
+<section id="menggabungkan-data-di-power-bi">
+<h3>Menggabungkan Data di Power BI<a class="headerlink" href="#menggabungkan-data-di-power-bi" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Pada Menu Home, pilih menu Transform Data.</p></li>
+<li><p>Setelah itu pilih fitur Merge Queries, kemudian pilih Merge Queries as New untuk hasil penggabungan kolom dibuat tabel baru.</p></li>
+<li><p>Pilih tabel yang akan digabungkan dengan memilih tabel pada dropdown.</p></li>
+<li><p>Pilih kolom yang akan digabungkan, pada dataset iris data memiliki id yang sama disebabkan jumlah data yang sama, sehingga untuk menggabungkannya cukup menggunakan inner join, konsep inner join akan menggabungkan data yang memiliki id yang sama. Setelah memilih kolom klik Ok untuk melanjutkan proses.</p></li>
+</ul>
+<p><img alt="Screenshot" src="_images/142922.png" /></p>
+<ul class="simple">
+<li><p>Kemudian akan muncul tabel hasil penggabungan, pada kolom yang digabungkan klik tanda panah untuk menyeleksi kolom apa saja yang akan digabungkan.</p></li>
+</ul>
+<p><img alt="Screenshot" src="_images/143018.png" /></p>
+<ul class="simple">
+<li><p>Berikut hasil penggabungan kolom dari kedua tabel.</p></li>
+</ul>
+<p><img alt="Screenshot" src="_images/143040.png" /></p>
+<p>Penggabungan data menggunakan Script Python pada Web Statis</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pymysql</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">psycopg2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sqlalchemy</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_engine</span>
+
+<span class="c1"># Buat engine SQLAlchemy untuk MySQL</span>
+<span class="n">mysql_engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span>
+    <span class="s2">&quot;mysql+pymysql://avnadmin:AVNS_WV9i6KvYoQZ3s6FclWP@mysql-3c768195-aqbilbaraka.d.aivencloud.com:16932/defaultdb&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Buat engine SQLAlchemy untuk PostgreSQL</span>
+<span class="n">postgres_engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span>
+    <span class="s2">&quot;postgresql+psycopg2://avnadmin:AVNS_Cq_rz3j4QTiiunKJ08p@pg-17afc059-aqbilbaraka.d.aivencloud.com:16932/defaultdb&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Query untuk mengambil data</span>
+<span class="n">mysql_query</span> <span class="o">=</span> <span class="s2">&quot;SELECT id, class, petallength, petalwidth FROM irismysql&quot;</span>
+<span class="n">postgres_query</span> <span class="o">=</span> <span class="s2">&quot;SELECT id, sepallength, sepalwidth FROM irispostgresql&quot;</span>
+
+<span class="c1"># Ambil data dari MySQL dan PostgreSQL sebagai DataFrame Pandas</span>
+<span class="n">df_mysql</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">mysql_query</span><span class="p">,</span> <span class="n">mysql_engine</span><span class="p">,</span> <span class="n">coerce_float</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df_postgresql</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">postgres_query</span><span class="p">,</span> <span class="n">postgres_engine</span><span class="p">,</span> <span class="n">coerce_float</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># **Gabungkan Data berdasarkan &#39;id&#39;**</span>
+<span class="n">df_combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df_mysql</span><span class="p">,</span> <span class="n">df_postgresql</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s2">&quot;inner&quot;</span><span class="p">)</span>
+
+<span class="c1"># Tampilkan hasil</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Jika ingin menyimpan hasil ke CSV</span>
+<span class="n">df_combined</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;data_gabungan_iris.csv&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   id        class  petallength  petalwidth  sepallength  sepalwidth
+0   1  Iris-setosa          1.4         0.2          5.1         3.5
+1   2  Iris-setosa          1.4         0.2          4.9         3.0
+2   3  Iris-setosa          1.3         0.2          4.7         3.2
+3   4  Iris-setosa          1.5         0.2          4.6         3.1
+4   5  Iris-setosa          1.4         0.2          5.0         3.6
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="mendeskripsikan-data">
+<h2>Mendeskripsikan Data<a class="headerlink" href="#mendeskripsikan-data" title="Link to this heading">#</a></h2>
+<p>Pada tahap ini, kita melakukan deskripsi awal terhadap dataset gabungan (MySQL + PostgreSQL).<br />
+Tujuannya adalah:</p>
+<ul class="simple">
+<li><p>Melihat struktur data (jumlah baris, kolom, tipe data).</p></li>
+<li><p>Mendeskripsikan statistik dasar (mean, min, max, dll).</p></li>
+<li><p>Mengecek apakah ada missing value.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Jumlah baris dan kolom</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah Baris dan Kolom:&quot;</span><span class="p">,</span> <span class="n">df_combined</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Nama kolom &amp; tipe data</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Nama Kolom dan Tipe Data:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">dtypes</span><span class="p">)</span>
+
+<span class="c1"># Statistik deskriptif dasar</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Statistik Deskriptif:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+
+<span class="c1"># Jumlah nilai unik tiap kolom</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah Nilai Unik Tiap Kolom:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">nunique</span><span class="p">())</span>
+
+<span class="c1"># Jumlah Missing Values</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Jumlah Missing Value:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+
+<span class="c1"># Distribusi awal kolom class</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Distribusi Kelas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_combined</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+
+<span class="c1"># Korelasi antar fitur numerik</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Korelasi antar Fitur Numerik:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah Baris dan Kolom: (150, 6)
+
+Nama Kolom dan Tipe Data:
+id               int64
+class           object
+petallength    float64
+petalwidth     float64
+sepallength    float64
+sepalwidth     float64
+dtype: object
+
+Statistik Deskriptif:
+               id  petallength  petalwidth  sepallength  sepalwidth
+count  150.000000   150.000000  150.000000   150.000000  150.000000
+mean    75.500000     3.758667    1.198667     5.843333    3.054000
+std     43.445368     1.764420    0.763161     0.828066    0.433594
+min      1.000000     1.000000    0.100000     4.300000    2.000000
+25%     38.250000     1.600000    0.300000     5.100000    2.800000
+50%     75.500000     4.350000    1.300000     5.800000    3.000000
+75%    112.750000     5.100000    1.800000     6.400000    3.300000
+max    150.000000     6.900000    2.500000     7.900000    4.400000
+
+Jumlah Nilai Unik Tiap Kolom:
+id             150
+class            3
+petallength     43
+petalwidth      22
+sepallength     35
+sepalwidth      23
+dtype: int64
+
+Jumlah Missing Value:
+id             0
+class          0
+petallength    0
+petalwidth     0
+sepallength    0
+sepalwidth     0
+dtype: int64
+
+Distribusi Kelas:
+class
+Iris-setosa        50
+Iris-versicolor    50
+Iris-virginica     50
+Name: count, dtype: int64
+
+Korelasi antar Fitur Numerik:
+                   id  petallength  petalwidth  sepallength  sepalwidth
+id           1.000000     0.882747    0.899759     0.716676   -0.397729
+petallength  0.882747     1.000000    0.962757     0.871754   -0.420516
+petalwidth   0.899759     0.962757    1.000000     0.817954   -0.356544
+sepallength  0.716676     0.871754    0.817954     1.000000   -0.109369
+sepalwidth  -0.397729    -0.420516   -0.356544    -0.109369    1.000000
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Heatmap korelasi</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Heatmap Korelasi Antar Fitur Numerik&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/22a49a4fecc21ce81f0f222041b410b8243f2d83d569eda395224edd19053e39.png" src="_images/22a49a4fecc21ce81f0f222041b410b8243f2d83d569eda395224edd19053e39.png" />
+</div>
+</div>
+</section>
+<section id="eksplorasi-data">
+<h2>Eksplorasi Data<a class="headerlink" href="#eksplorasi-data" title="Link to this heading">#</a></h2>
+<p>Eksplorasi data bertujuan untuk memahami karakteristik dataset sebelum dilakukan analisis lanjutan.<br />
+Tahapan ini meliputi analisis numerik, visualisasi, serta interpretasi.</p>
+<section id="load-data">
+<h3>Load Data<a class="headerlink" href="#load-data" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+
+<span class="c1"># Baca dataset gabungan</span>
+<span class="n">df_combined</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data_gabungan_iris.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># Lihat 5 baris pertama</span>
+<span class="n">df_combined</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>id</th>
+      <th>class</th>
+      <th>petallength</th>
+      <th>petalwidth</th>
+      <th>sepallength</th>
+      <th>sepalwidth</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.1</td>
+      <td>3.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>4.9</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3</td>
+      <td>Iris-setosa</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>4.7</td>
+      <td>3.2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4</td>
+      <td>Iris-setosa</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>4.6</td>
+      <td>3.1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5</td>
+      <td>Iris-setosa</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>5.0</td>
+      <td>3.6</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Berikut adalah beberapa analisis yang dilakukan:</p>
+</section>
+<section id="nilai-minimum-dan-maksimum">
+<h3>1. Nilai Minimum dan Maksimum<a class="headerlink" href="#nilai-minimum-dan-maksimum" title="Link to this heading">#</a></h3>
+<p>Nilai minimum dan maksimum digunakan untuk melihat <strong>rentang (range)</strong> dari setiap fitur numerik.<br />
+Hal ini membantu memahami seberapa lebar penyebaran data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nilai minimum tiap kolom:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Nilai maksimum tiap kolom:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Nilai minimum tiap kolom:
+id             1.0
+petallength    1.0
+petalwidth     0.1
+sepallength    4.3
+sepalwidth     2.0
+dtype: float64
+
+Nilai maksimum tiap kolom:
+id             150.0
+petallength      6.9
+petalwidth       2.5
+sepallength      7.9
+sepalwidth       4.4
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Menunjukkan rentang data tiap fitur.</p></li>
+<li><p>Pada dataset iris biasanya:</p>
+<ul>
+<li><p>Sepal length: 4.3 – 7.9</p></li>
+<li><p>Sepal width: 2.0 – 4.4</p></li>
+<li><p>Petal length: 1.0 – 6.9</p></li>
+<li><p>Petal width: 0.1 – 2.5</p></li>
+</ul>
+</li>
+</ul>
+<p><img alt="Screenshot" src="_images/150255.png" /></p>
+</section>
+<section id="nilai-rata-rata-mean">
+<h3>2. Nilai Rata-rata (Mean)<a class="headerlink" href="#nilai-rata-rata-mean" title="Link to this heading">#</a></h3>
+<p>Rata-rata memberikan gambaran <strong>titik tengah</strong> distribusi data.<br />
+Dengan ini, kita bisa tahu fitur mana yang memiliki skala lebih besar.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rata-rata tiap kolom:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_combined</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">numeric_only</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Rata-rata tiap kolom:
+id             75.500000
+petallength     3.758667
+petalwidth      1.198667
+sepallength     5.843333
+sepalwidth      3.054000
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Rata-rata sepal lebih besar dibanding petal.</p></li>
+<li><p>Rata-rata membantu perbandingan antar fitur.</p></li>
+</ul>
+<p><img alt="Screenshot" src="_images/150433.png" /></p>
+</section>
+<section id="distribusi-jumlah-data-tiap-kelas">
+<h3>3. Distribusi Jumlah Data Tiap Kelas<a class="headerlink" href="#distribusi-jumlah-data-tiap-kelas" title="Link to this heading">#</a></h3>
+<p>Distribusi kelas penting untuk memastikan dataset <strong>seimbang</strong> (tidak ada kelas yang dominan).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">class_counts</span> <span class="o">=</span> <span class="n">df_combined</span><span class="p">[</span><span class="s2">&quot;class&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Jumlah data tiap kelas:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">class_counts</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">class_counts</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">class_counts</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;viridis&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribusi Jumlah Data per Kelas&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Kelas&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Jumlah Data&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Jumlah data tiap kelas:
+class
+Iris-setosa        50
+Iris-versicolor    50
+Iris-virginica     50
+Name: count, dtype: int64
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_19580\764761306.py:7: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `x` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.barplot(x=class_counts.index, y=class_counts.values, palette=&quot;viridis&quot;)
+</pre></div>
+</div>
+<img alt="_images/98c11529ca3ed7b48f6f3c9772bf8d7b5d51fd279f6e09dbb60d409610174745.png" src="_images/98c11529ca3ed7b48f6f3c9772bf8d7b5d51fd279f6e09dbb60d409610174745.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>Dataset iris seimbang → masing-masing kelas ± 50 data.</p></li>
+<li><p>Tidak ada kelas yang dominan → cocok untuk model klasifikasi.</p></li>
+</ul>
+<p><img alt="Screenshot" src="_images/151208.png" /></p>
+</section>
+</section>
+<section id="mencari-missing-value">
+<h2>Mencari Missing Value<a class="headerlink" href="#mencari-missing-value" title="Link to this heading">#</a></h2>
+<section id="langkah-langkah-mencari-missing-value">
+<h3>Langkah-Langkah mencari Missing Value<a class="headerlink" href="#langkah-langkah-mencari-missing-value" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Install library yang dibutuhkan seperti pandas untuk mencari missing valuenya.</p></li>
+<li><p>Buka Power BI, kemudian pergi ke menu Home -&gt; Transform Data -&gt; Transform -&gt; Python Script.</p></li>
+<li><p>Kemudian Buat scipt Python untuk mendeteksi Missing Value.
+Contoh Code:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># baca dataset dari CSV</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data_gabungan_iris.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># copy ke variabel data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># cek missing value</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># hasil</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Column&#39;</span><span class="p">:</span> <span class="n">loss</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="s1">&#39;MissingCount&#39;</span><span class="p">:</span> <span class="n">loss</span><span class="o">.</span><span class="n">values</span>
+<span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>        Column  MissingCount
+0           id             0
+1        class             0
+2  petallength             0
+3   petalwidth             0
+4  sepallength             0
+5   sepalwidth             0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Penjelasan Code:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Kita import library yang digunakan misalnya pandas.
+- Kemudian load data menggunkan metod copy()
+- Setelah itu, untuk mencari data missing dapat menggunakan method isnull() dan sum() untuk menjumlahkan total missingnya.
+- Simpan Hasil dalam variabel yang berupa dataframe yang berisi indeks dari nilai missing dan nilai data atau veluenya.
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Ketika sudah muncul hasil script Python, pilih data result dan klik Table untuk melihat hasil dari pencarian missing valuenya.</p></li>
+<li><p>Berikut merupakan hasil dari pencarian missing value pada data Iris.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="c1"># load data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># cari missing value</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<span class="c1"># hasil</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;Column&#39;</span><span class="p">:</span> <span class="n">loss</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+    <span class="s1">&#39;MissingCount&#39;</span><span class="p">:</span> <span class="n">loss</span><span class="o">.</span><span class="n">values</span>
+<span class="p">})</span>
+<span class="n">result</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="Screenshot" src="_images/194522.png" /></p>
+<p>Berdasarkan gambar tersebut dapat disimpulkan bahwa setiap fitur tidak memiliki missing value.</p>
+</section>
+</section>
+<section id="mendeteksi-outlier">
+<h2>Mendeteksi Outlier<a class="headerlink" href="#mendeteksi-outlier" title="Link to this heading">#</a></h2>
+<section id="mendeteksi-outlier-menggunakan-metode-abod">
+<h3>Mendeteksi Outlier Menggunakan Metode ABOD<a class="headerlink" href="#mendeteksi-outlier-menggunakan-metode-abod" title="Link to this heading">#</a></h3>
+<p>Jalankan script Python untuk model dibawah ini:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycaret.anomaly</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1"># Load dataset</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data_gabungan_iris.csv&quot;</span><span class="p">)</span> 
+
+<span class="c1"># Setup PyCaret</span>
+<span class="n">abod_data</span> <span class="o">=</span> <span class="n">setup</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="mi">123</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Buat model ABOD</span>
+<span class="n">abod</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="s1">&#39;abod&#39;</span><span class="p">)</span>
+
+<span class="c1"># Assign prediksi</span>
+<span class="n">abod_predictions</span> <span class="o">=</span> <span class="n">assign_model</span><span class="p">(</span><span class="n">abod</span><span class="p">)</span>
+
+<span class="c1"># Ambil hanya anomali</span>
+<span class="n">anomali_only</span> <span class="o">=</span> <span class="n">abod_predictions</span><span class="p">[</span><span class="n">abod_predictions</span><span class="p">[</span><span class="s1">&#39;Anomaly&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">anomali_only</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+#T_dfa51_row5_col1, #T_dfa51_row11_col1 {
+  background-color: lightgreen;
+}
+</style>
+<table id="T_dfa51">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_dfa51_level0_col0" class="col_heading level0 col0" >Description</th>
+      <th id="T_dfa51_level0_col1" class="col_heading level0 col1" >Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_dfa51_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_dfa51_row0_col0" class="data row0 col0" >Session id</td>
+      <td id="T_dfa51_row0_col1" class="data row0 col1" >123</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_dfa51_row1_col0" class="data row1 col0" >Original data shape</td>
+      <td id="T_dfa51_row1_col1" class="data row1 col1" >(150, 6)</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row2" class="row_heading level0 row2" >2</th>
+      <td id="T_dfa51_row2_col0" class="data row2 col0" >Transformed data shape</td>
+      <td id="T_dfa51_row2_col1" class="data row2 col1" >(150, 8)</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row3" class="row_heading level0 row3" >3</th>
+      <td id="T_dfa51_row3_col0" class="data row3 col0" >Numeric features</td>
+      <td id="T_dfa51_row3_col1" class="data row3 col1" >5</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row4" class="row_heading level0 row4" >4</th>
+      <td id="T_dfa51_row4_col0" class="data row4 col0" >Categorical features</td>
+      <td id="T_dfa51_row4_col1" class="data row4 col1" >1</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row5" class="row_heading level0 row5" >5</th>
+      <td id="T_dfa51_row5_col0" class="data row5 col0" >Preprocess</td>
+      <td id="T_dfa51_row5_col1" class="data row5 col1" >True</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row6" class="row_heading level0 row6" >6</th>
+      <td id="T_dfa51_row6_col0" class="data row6 col0" >Imputation type</td>
+      <td id="T_dfa51_row6_col1" class="data row6 col1" >simple</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row7" class="row_heading level0 row7" >7</th>
+      <td id="T_dfa51_row7_col0" class="data row7 col0" >Numeric imputation</td>
+      <td id="T_dfa51_row7_col1" class="data row7 col1" >mean</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row8" class="row_heading level0 row8" >8</th>
+      <td id="T_dfa51_row8_col0" class="data row8 col0" >Categorical imputation</td>
+      <td id="T_dfa51_row8_col1" class="data row8 col1" >mode</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row9" class="row_heading level0 row9" >9</th>
+      <td id="T_dfa51_row9_col0" class="data row9 col0" >Maximum one-hot encoding</td>
+      <td id="T_dfa51_row9_col1" class="data row9 col1" >-1</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row10" class="row_heading level0 row10" >10</th>
+      <td id="T_dfa51_row10_col0" class="data row10 col0" >Encoding method</td>
+      <td id="T_dfa51_row10_col1" class="data row10 col1" >None</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row11" class="row_heading level0 row11" >11</th>
+      <td id="T_dfa51_row11_col0" class="data row11 col0" >Normalize</td>
+      <td id="T_dfa51_row11_col1" class="data row11 col1" >True</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row12" class="row_heading level0 row12" >12</th>
+      <td id="T_dfa51_row12_col0" class="data row12 col0" >Normalize method</td>
+      <td id="T_dfa51_row12_col1" class="data row12 col1" >zscore</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row13" class="row_heading level0 row13" >13</th>
+      <td id="T_dfa51_row13_col0" class="data row13 col0" >CPU Jobs</td>
+      <td id="T_dfa51_row13_col1" class="data row13 col1" >-1</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row14" class="row_heading level0 row14" >14</th>
+      <td id="T_dfa51_row14_col0" class="data row14 col0" >Use GPU</td>
+      <td id="T_dfa51_row14_col1" class="data row14 col1" >False</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row15" class="row_heading level0 row15" >15</th>
+      <td id="T_dfa51_row15_col0" class="data row15 col0" >Log Experiment</td>
+      <td id="T_dfa51_row15_col1" class="data row15 col1" >False</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row16" class="row_heading level0 row16" >16</th>
+      <td id="T_dfa51_row16_col0" class="data row16 col0" >Experiment Name</td>
+      <td id="T_dfa51_row16_col1" class="data row16 col1" >anomaly-default-name</td>
+    </tr>
+    <tr>
+      <th id="T_dfa51_level0_row17" class="row_heading level0 row17" >17</th>
+      <td id="T_dfa51_row17_col0" class="data row17 col0" >USI</td>
+      <td id="T_dfa51_row17_col1" class="data row17 col1" >f463</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="output text_html"></div><div class="output text_html"></div><div class="output text_html"></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>      id            class  petallength  petalwidth  sepallength  sepalwidth  \
+15    16      Iris-setosa          1.5         0.4          5.7         4.4   
+41    42      Iris-setosa          1.3         0.3          4.5         2.3   
+60    61  Iris-versicolor          3.5         1.0          5.0         2.0   
+85    86  Iris-versicolor          4.5         1.6          6.0         3.4   
+106  107   Iris-virginica          4.5         1.7          4.9         2.5   
+108  109   Iris-virginica          5.8         1.8          6.7         2.5   
+119  120   Iris-virginica          5.0         1.5          6.0         2.2   
+146  147   Iris-virginica          5.0         1.9          6.3         2.5   
+
+     Anomaly  Anomaly_Score  
+15         1      -0.039029  
+41         1      -0.000656  
+60         1      -0.011186  
+85         1      -0.074980  
+106        1      -0.021686  
+108        1      -0.082458  
+119        1      -0.009325  
+146        1      -0.069114  
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># &#39;dataset&#39; holds the input data for this script</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycaret.anomaly</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">abod_data</span> <span class="o">=</span> <span class="n">setup</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="n">abod</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="s1">&#39;abod&#39;</span><span class="p">)</span>
+<span class="n">abod_predictions</span> <span class="o">=</span> <span class="n">assign_model</span><span class="p">(</span><span class="n">abod</span><span class="p">)</span>
+<span class="n">anomali_only</span> <span class="o">=</span> <span class="n">abod_predictions</span><span class="p">[</span><span class="n">abod_predictions</span><span class="p">[</span><span class="s1">&#39;Anomaly&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">anomali_only</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="Screenshot" src="_images/image.png" /></p>
+</section>
+<section id="langkah-langkah-mendeteksi-outlier-menggunakan-library-pycaret-metode-iforest">
+<h3>Langkah-Langkah mendeteksi outlier menggunakan Library Pycaret Metode Iforest<a class="headerlink" href="#langkah-langkah-mendeteksi-outlier-menggunakan-library-pycaret-metode-iforest" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Install library Pycaret ke environment Python di PC/Laptop.</p></li>
+</ul>
+<p><img alt="Screenshot" src="_images/192522.png" /></p>
+<ul class="simple">
+<li><p>Pada Power BI ketika kita menggunakan script Python yang akan diterapkan pada suatu tabel seringkali mendapatkan suatu masalah pembatasan. Oleh karena itu solusinya kita menonaktifkannya pada menu File -&gt; Options and Settings -&gt; Option -&gt; Privacy dan pilih Always ignore Privacy Level Settings.</p></li>
+<li><p>Pada Power BI, pergi ke Menu Home -&gt; Transform Data -&gt; Transform -&gt; Script Python.</p></li>
+<li><p>Masukkan Script Python yang digunakan untuk mendeteksi Outlier data.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycaret.anomaly</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">create_model</span><span class="p">,</span> <span class="n">assign_model</span>
+
+<span class="c1"># Load dataset (ganti nama file sesuai lokasi dataset kamu)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;data_gabungan_iris.csv&quot;</span><span class="p">)</span>
+
+<span class="c1"># Copy dataset</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="c1"># Setup PyCaret</span>
+<span class="n">process</span> <span class="o">=</span> <span class="n">setup</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="c1"># Pilih model Isolation Forest</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="s1">&#39;iforest&#39;</span><span class="p">)</span>
+
+<span class="c1"># Assign hasil prediksi</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">assign_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+
+<span class="c1"># Lihat hasil</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style type="text/css">
+#T_262b8_row5_col1 {
+  background-color: lightgreen;
+}
+</style>
+<table id="T_262b8">
+  <thead>
+    <tr>
+      <th class="blank level0" >&nbsp;</th>
+      <th id="T_262b8_level0_col0" class="col_heading level0 col0" >Description</th>
+      <th id="T_262b8_level0_col1" class="col_heading level0 col1" >Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th id="T_262b8_level0_row0" class="row_heading level0 row0" >0</th>
+      <td id="T_262b8_row0_col0" class="data row0 col0" >Session id</td>
+      <td id="T_262b8_row0_col1" class="data row0 col1" >123</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row1" class="row_heading level0 row1" >1</th>
+      <td id="T_262b8_row1_col0" class="data row1 col0" >Original data shape</td>
+      <td id="T_262b8_row1_col1" class="data row1 col1" >(150, 6)</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row2" class="row_heading level0 row2" >2</th>
+      <td id="T_262b8_row2_col0" class="data row2 col0" >Transformed data shape</td>
+      <td id="T_262b8_row2_col1" class="data row2 col1" >(150, 8)</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row3" class="row_heading level0 row3" >3</th>
+      <td id="T_262b8_row3_col0" class="data row3 col0" >Numeric features</td>
+      <td id="T_262b8_row3_col1" class="data row3 col1" >5</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row4" class="row_heading level0 row4" >4</th>
+      <td id="T_262b8_row4_col0" class="data row4 col0" >Categorical features</td>
+      <td id="T_262b8_row4_col1" class="data row4 col1" >1</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row5" class="row_heading level0 row5" >5</th>
+      <td id="T_262b8_row5_col0" class="data row5 col0" >Preprocess</td>
+      <td id="T_262b8_row5_col1" class="data row5 col1" >True</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row6" class="row_heading level0 row6" >6</th>
+      <td id="T_262b8_row6_col0" class="data row6 col0" >Imputation type</td>
+      <td id="T_262b8_row6_col1" class="data row6 col1" >simple</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row7" class="row_heading level0 row7" >7</th>
+      <td id="T_262b8_row7_col0" class="data row7 col0" >Numeric imputation</td>
+      <td id="T_262b8_row7_col1" class="data row7 col1" >mean</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row8" class="row_heading level0 row8" >8</th>
+      <td id="T_262b8_row8_col0" class="data row8 col0" >Categorical imputation</td>
+      <td id="T_262b8_row8_col1" class="data row8 col1" >mode</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row9" class="row_heading level0 row9" >9</th>
+      <td id="T_262b8_row9_col0" class="data row9 col0" >Maximum one-hot encoding</td>
+      <td id="T_262b8_row9_col1" class="data row9 col1" >-1</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row10" class="row_heading level0 row10" >10</th>
+      <td id="T_262b8_row10_col0" class="data row10 col0" >Encoding method</td>
+      <td id="T_262b8_row10_col1" class="data row10 col1" >None</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row11" class="row_heading level0 row11" >11</th>
+      <td id="T_262b8_row11_col0" class="data row11 col0" >CPU Jobs</td>
+      <td id="T_262b8_row11_col1" class="data row11 col1" >-1</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row12" class="row_heading level0 row12" >12</th>
+      <td id="T_262b8_row12_col0" class="data row12 col0" >Use GPU</td>
+      <td id="T_262b8_row12_col1" class="data row12 col1" >False</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row13" class="row_heading level0 row13" >13</th>
+      <td id="T_262b8_row13_col0" class="data row13 col0" >Log Experiment</td>
+      <td id="T_262b8_row13_col1" class="data row13 col1" >False</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row14" class="row_heading level0 row14" >14</th>
+      <td id="T_262b8_row14_col0" class="data row14 col0" >Experiment Name</td>
+      <td id="T_262b8_row14_col1" class="data row14 col1" >anomaly-default-name</td>
+    </tr>
+    <tr>
+      <th id="T_262b8_level0_row15" class="row_heading level0 row15" >15</th>
+      <td id="T_262b8_row15_col0" class="data row15 col0" >USI</td>
+      <td id="T_262b8_row15_col1" class="data row15 col1" >4637</td>
+    </tr>
+  </tbody>
+</table>
+</div><div class="output text_html"></div><div class="output text_html"></div><div class="output text_html"></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   id        class  petallength  petalwidth  sepallength  sepalwidth  Anomaly  \
+0   1  Iris-setosa          1.4         0.2          5.1         3.5        0   
+1   2  Iris-setosa          1.4         0.2          4.9         3.0        0   
+2   3  Iris-setosa          1.3         0.2          4.7         3.2        0   
+3   4  Iris-setosa          1.5         0.2          4.6         3.1        0   
+4   5  Iris-setosa          1.4         0.2          5.0         3.6        0   
+
+   Anomaly_Score  
+0      -0.121310  
+1      -0.102751  
+2      -0.099540  
+3      -0.101161  
+4      -0.120895  
+</pre></div>
+</div>
+</div>
+</div>
+<p>Penjelasan code:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>- Pertama kita import librray yang dibutuhkan seperti pandas dan pycaret.
+- Kemudian Load dataset menggunakan libray pandas dengan method copy().
+- lalu gunakan built in function setup untuk memulai proses.
+- Pilih model yang digunakan untuk mendeteksi outlier, pada code tersebut menggunakan model iforest.
+- tampilkan hasil menggunakan fungsi assign_model.
+- Load hasil  
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>Setelah berhasil meload script, akan muncul tabel yang berisi data di antaranya data, dataset, dan result. Kemudian pilih result dan klik tulisan Table untuk melihat oulier yang telah diproses.</p></li>
+<li><p>Untuk data yang outlier direpresentasikan dengan nilai 1 dan 0 untuk data yang bukan oulier.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycaret.anomaly</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup</span><span class="p">,</span> <span class="n">create_model</span><span class="p">,</span> <span class="n">assign_model</span>
+
+<span class="c1">#mengambil data berbasis dataframe</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">process</span> <span class="o">=</span> <span class="n">setup</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">session_id</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+
+<span class="c1">#memilih model outlier</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">create_model</span><span class="p">(</span><span class="s1">&#39;iforest&#39;</span><span class="p">)</span>
+
+<span class="c1">#hasil</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">assign_model</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="n">result</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><img alt="Screenshot" src="_images/193306.png" /></p>
+<p>Berdasarkan gambar di atas terlihat bahwa outlier ditemukan pada data dengan id 14.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="BusinessUnderstanding.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Bussiness Understanding</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="DataPreprocessing.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Data Preprocessing</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengumpulkan-data-awal">Mengumpulkan Data Awal</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-service-mysql-dan-postgresql-pada-aiven-io">Membuat Service MySQL dan PostgreSQL pada aiven.io</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-database-mysql-dan-postgresql-dan-insert-data-di-dbeaver">Membuat Database MySQL dan PostgreSQL dan Insert Data di DBeaver</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menarik-data-mysql-dan-postgresql-ke-power-bi">Menarik Data MySQL dan PostgreSQL ke Power BI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#menggabungkan-data-di-power-bi">Menggabungkan Data di Power BI</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeskripsikan-data">Mendeskripsikan Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksplorasi-data">Eksplorasi Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-minimum-dan-maksimum">1. Nilai Minimum dan Maksimum</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nilai-rata-rata-mean">2. Nilai Rata-rata (Mean)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distribusi-jumlah-data-tiap-kelas">3. Distribusi Jumlah Data Tiap Kelas</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mencari-missing-value">Mencari Missing Value</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-mencari-missing-value">Langkah-Langkah mencari Missing Value</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeteksi-outlier">Mendeteksi Outlier</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mendeteksi-outlier-menggunakan-metode-abod">Mendeteksi Outlier Menggunakan Metode ABOD</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#langkah-langkah-mendeteksi-outlier-menggunakan-library-pycaret-metode-iforest">Langkah-Langkah mendeteksi outlier menggunakan Library Pycaret Metode Iforest</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
