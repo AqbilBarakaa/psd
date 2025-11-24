@@ -419,7 +419,7 @@ Note: you may need to restart the kernel to use updated packages.
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pydub</span><span class="w"> </span><span class="kn">import</span> <span class="n">AudioSegment</span>
 
-<span class="n">folder</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Semester5\psd\psd\uji\buka&quot;</span>
+<span class="n">folder</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Github\psd\uji\buka&quot;</span>
 <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.waptt&quot;</span><span class="p">)]</span>
 
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">fname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">files</span><span class="p">)):</span>
@@ -433,20 +433,6 @@ Note: you may need to restart the kernel to use updated packages.
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span><span class="w"> </span><span class="nn">pydub</span><span class="w"> </span><span class="kn">import</span> <span class="n">AudioSegment</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">folder</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Semester5\psd\psd\uji\buka&quot;</span>
-<span class="ne">----&gt; </span><span class="mi">5</span> <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.waptt&quot;</span><span class="p">)]</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">fname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">files</span><span class="p">)):</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span>     <span class="n">src_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">fname</span><span class="p">)</span>
-
-<span class="ne">FileNotFoundError</span>: [WinError 3] The system cannot find the path specified: &#39;C:\\Semester5\\psd\\psd\\uji\\buka&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <p>convert audio tutup</p>
 <div class="cell docutils container">
@@ -454,7 +440,7 @@ Note: you may need to restart the kernel to use updated packages.
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pydub</span><span class="w"> </span><span class="kn">import</span> <span class="n">AudioSegment</span>
 
-<span class="n">folder</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Semester5\psd\psd\uji\tutup&quot;</span>
+<span class="n">folder</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Github\psd\uji\tutup&quot;</span>
 <span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.waptt&quot;</span><span class="p">)]</span>
 
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">fname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">files</span><span class="p">)):</span>
@@ -476,12 +462,12 @@ Note: you may need to restart the kernel to use updated packages.
 <span class="kn">from</span><span class="w"> </span><span class="nn">pydub</span><span class="w"> </span><span class="kn">import</span> <span class="n">AudioSegment</span>
 
 <span class="c1"># Folder sebelumnya</span>
-<span class="n">folder1</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Semester5\psd\psd\dataset\aqbil\tutup&quot;</span>
+<span class="n">folder1</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Github\psd\dataset\aqbil\tutup&quot;</span>
 <span class="n">files1</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder1</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.wav&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;tutup_&quot;</span><span class="p">)]</span>
 <span class="n">start_idx</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">files1</span><span class="p">)</span>  <span class="c1"># Penomoran lanjutan</span>
 
 <span class="c1"># Folder baru</span>
-<span class="n">folder2</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Semester5\psd\psd\dataset\reni\tutup&quot;</span>
+<span class="n">folder2</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;C:\Github\psd\dataset\reni\tutup&quot;</span>
 <span class="n">files2</span> <span class="o">=</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">folder2</span><span class="p">)</span> <span class="k">if</span> <span class="n">f</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.waptt&quot;</span><span class="p">)]</span>
 
 <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">fname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">files2</span><span class="p">)):</span>
