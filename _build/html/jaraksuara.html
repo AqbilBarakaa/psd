@@ -1,0 +1,2384 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Menghitung jarak antara data lama (buka tutup) masing masing 100 data dengan data baru 1 data menggunakan Dynamic Time Warping (DTW) &#8212; My sample book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script type="application/vnd.jupyter.widget-state+json">{"state": {"62c222e9230d4490aa2abe9f81cec55d": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "5ed54ee322cd4451b3aff7b935292d04": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "56a719c4bc6645afaa32b5c627d44161": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "ProgressView", "bar_style": "success", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_62c222e9230d4490aa2abe9f81cec55d", "max": 100.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_5ed54ee322cd4451b3aff7b935292d04", "tabbable": null, "tooltip": null, "value": 100.0}}, "d30211e07ba34b0baf623aa50071050e": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "7be45e35b7ab4e7c8130af4fd76bbd8e": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "781fe6a1c9d540d98b3bbbb727e8d069": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_d30211e07ba34b0baf623aa50071050e", "placeholder": "\u200b", "style": "IPY_MODEL_7be45e35b7ab4e7c8130af4fd76bbd8e", "tabbable": null, "tooltip": null, "value": "100%"}}, "9a5f4248be00431593365b934fbb0da4": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "80cf48d4871e46a28bc50ec39ffadfed": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "c46e88ac2ec2432da8cedc147f63e457": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_9a5f4248be00431593365b934fbb0da4", "placeholder": "\u200b", "style": "IPY_MODEL_80cf48d4871e46a28bc50ec39ffadfed", "tabbable": null, "tooltip": null, "value": "\u2007100/100\u2007[00:01&lt;00:00,\u2007109.32it/s]"}}, "9dd5f73f47234d8bbdc40853d1c1b7e3": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "432378c659594c2dafaeed2fcbfcf7aa": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_781fe6a1c9d540d98b3bbbb727e8d069", "IPY_MODEL_56a719c4bc6645afaa32b5c627d44161", "IPY_MODEL_c46e88ac2ec2432da8cedc147f63e457"], "layout": "IPY_MODEL_9dd5f73f47234d8bbdc40853d1c1b7e3", "tabbable": null, "tooltip": null}}, "01d2296071fc4a13a26c9590b8dcd6a7": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "118b85c763eb456bbb08714548b90530": {"model_name": "ProgressStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "ProgressStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "bar_color": null, "description_width": ""}}, "3442d1985d2b430a8c2eb78fe4c135b8": {"model_name": "FloatProgressModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "FloatProgressModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "ProgressView", "bar_style": "success", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_01d2296071fc4a13a26c9590b8dcd6a7", "max": 100.0, "min": 0.0, "orientation": "horizontal", "style": "IPY_MODEL_118b85c763eb456bbb08714548b90530", "tabbable": null, "tooltip": null, "value": 100.0}}, "8ba914e0137d4b299d1219012cd824ec": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "863b542ce1ab47e385a85b048a3cff9c": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "d12d0d2825fd4282ba0f2f8b14851e71": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_8ba914e0137d4b299d1219012cd824ec", "placeholder": "\u200b", "style": "IPY_MODEL_863b542ce1ab47e385a85b048a3cff9c", "tabbable": null, "tooltip": null, "value": "100%"}}, "351b47b94d7548e596ffc4abb857bf61": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "8ab42cde282d40319178bab6da53234b": {"model_name": "HTMLStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "StyleView", "background": null, "description_width": "", "font_size": null, "text_color": null}}, "8503f763c9f84cb89446c97bda54bd49": {"model_name": "HTMLModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HTMLModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HTMLView", "description": "", "description_allow_html": false, "layout": "IPY_MODEL_351b47b94d7548e596ffc4abb857bf61", "placeholder": "\u200b", "style": "IPY_MODEL_8ab42cde282d40319178bab6da53234b", "tabbable": null, "tooltip": null, "value": "\u2007100/100\u2007[00:01&lt;00:00,\u200780.29it/s]"}}, "fb04b92cb2cc4b2ba644487c1c5d69dc": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "2.0.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "2.0.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border_bottom": null, "border_left": null, "border_right": null, "border_top": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "184fe251a8934ac88e27102509f25c42": {"model_name": "HBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "2.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "2.0.0", "_model_name": "HBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "2.0.0", "_view_name": "HBoxView", "box_style": "", "children": ["IPY_MODEL_d12d0d2825fd4282ba0f2f8b14851e71", "IPY_MODEL_3442d1985d2b430a8c2eb78fe4c135b8", "IPY_MODEL_8503f763c9f84cb89446c97bda54bd49"], "layout": "IPY_MODEL_fb04b92cb2cc4b2ba644487c1c5d69dc", "tabbable": null, "tooltip": null}}}, "version_major": 2, "version_minor": 0}</script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script crossorigin="anonymous" data-jupyter-widgets-cdn="https://cdn.jsdelivr.net/npm/" src="https://cdn.jsdelivr.net/npm/@jupyter-widgets/html-manager@1.0.6/dist/embed-amd.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'jaraksuara';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Identifikasi Audio “Buka Tutup”" href="bukatutup.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.gif" class="logo__image only-light" alt="My sample book - Home"/>
+    <script>document.write(`<img src="_static/logo.gif" class="logo__image only-dark" alt="My sample book - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Welcome to MyProfile
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="BusinessUnderstanding.html">Bussiness Understanding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataUnderstanding.html">Data Understanding dan Eksplorasi Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="DataPreprocessing.html">Data Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PCAdanADASYN.html">Penerapan PCA dan ADASYN pada Dataset Ecoli</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Modeling.html">Modeling</a></li>
+<li class="toctree-l1"><a class="reference internal" href="PraUTS.html">PraUTS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeseries.html">Prediksi Nilai NO2 di Kota Depok, Jawa Barat dengan KNN Regression</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bukatutup.html">Identifikasi Audio “Buka Tutup”</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Menghitung jarak antara data lama (buka tutup) masing masing 100 data dengan data baru 1 data menggunakan Dynamic Time Warping (DTW)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fjaraksuara.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/jaraksuara.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Menghitung jarak antara data lama (buka tutup) masing masing 100 data dengan data baru 1 data menggunakan Dynamic Time Warping (DTW)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#suara-buka">Suara Buka</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">Import Library</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-buka-visualisasi-waveform">Load Data “BUKA” &amp; Visualisasi Waveform</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-jarak-dtw-data-buka">Hitung Jarak (DTW) Data “BUKA”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-hasil-jarak-kelas-buka">Statistik Hasil Jarak (Kelas BUKA)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking-20-data-teratas-buka">Ranking 20 Data Teratas (BUKA)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-perbandingan">Visualisasi Perbandingan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking-100-data-terbaik-buka">Ranking 100 Data Terbaik (BUKA)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#suara-tutup">Suara TUTUP</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-tutup-visualisasi-waveform">Load Data “TUTUP” &amp; Visualisasi Waveform</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-jarak-dtw-data-tutup">Hitung Jarak (DTW) Data “TUTUP”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-hasil-jarak-tutup">Statistik Hasil Jarak (TUTUP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking-20-data-teratas-tutup">Ranking 20 Data Teratas (TUTUP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Visualisasi Perbandingan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking-100-data-terbaik-tutup">Ranking 100 Data Terbaik (TUTUP)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-antara-buka-dan-tutup">Perbandingan antara BUKA dan TUTUP</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="menghitung-jarak-antara-data-lama-buka-tutup-masing-masing-100-data-dengan-data-baru-1-data-menggunakan-dynamic-time-warping-dtw">
+<h1>Menghitung jarak antara data lama (buka tutup) masing masing 100 data dengan data baru 1 data menggunakan Dynamic Time Warping (DTW)<a class="headerlink" href="#menghitung-jarak-antara-data-lama-buka-tutup-masing-masing-100-data-dengan-data-baru-1-data-menggunakan-dynamic-time-warping-dtw" title="Link to this heading">#</a></h1>
+<section id="suara-buka">
+<h2>Suara Buka<a class="headerlink" href="#suara-buka" title="Link to this heading">#</a></h2>
+<section id="import-library">
+<h3>Import Library<a class="headerlink" href="#import-library" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">librosa.display</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">fastdtw</span><span class="w"> </span><span class="kn">import</span> <span class="n">fastdtw</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">euclidean</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tqdm.notebook</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">ipd</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Libraries siap digunakan.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Libraries siap digunakan.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="load-data-buka-visualisasi-waveform">
+<h3>Load Data “BUKA” &amp; Visualisasi Waveform<a class="headerlink" href="#load-data-buka-visualisasi-waveform" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DATASET_PATH</span> <span class="o">=</span> <span class="s2">&quot;dataset/&quot;</span> 
+<span class="n">TARGET_SR</span> <span class="o">=</span> <span class="mi">22050</span>
+
+<span class="c1"># Load file BUKA</span>
+<span class="n">files_buka</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATASET_PATH</span><span class="p">,</span> <span class="s2">&quot;**&quot;</span><span class="p">,</span> <span class="s2">&quot;buka&quot;</span><span class="p">,</span> <span class="s2">&quot;*.wav&quot;</span><span class="p">),</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total file referensi &#39;BUKA&#39; dimuat: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">files_buka</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Visualisasi Data</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span> 
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Visualisasi Waveform: 10 Data Referensi &quot;BUKA&quot;&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">files_buka</span><span class="p">):</span>
+        <span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">files_buka</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">sr</span><span class="o">=</span><span class="n">TARGET_SR</span><span class="p">)</span>
+        <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ref Buka #</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">files_buka</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Amp&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total file referensi &#39;BUKA&#39; dimuat: 100
+</pre></div>
+</div>
+<img alt="_images/f1fd844e1c9a5899e8f632898babbfb7761af7c36fe3228f321ba822162561a0.png" src="_images/f1fd844e1c9a5899e8f632898babbfb7761af7c36fe3228f321ba822162561a0.png" />
+</div>
+</div>
+</section>
+<section id="hitung-jarak-dtw-data-buka">
+<h3>Hitung Jarak (DTW) Data “BUKA”<a class="headerlink" href="#hitung-jarak-dtw-data-buka" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FILE_BARU</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;uji&quot;</span><span class="p">,</span> <span class="s2">&quot;buka&quot;</span><span class="p">,</span> <span class="s2">&quot;buka_baru.wav&quot;</span><span class="p">)</span>
+
+<span class="c1"># Fungsi Ekstraksi</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">extract_mfcc_dtw</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">TARGET_SR</span><span class="p">,</span> <span class="n">mono</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">y</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">effects</span><span class="o">.</span><span class="n">trim</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">top_db</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span> <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">librosa</span><span class="o">.</span><span class="n">feature</span><span class="o">.</span><span class="n">mfcc</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">n_mfcc</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> 
+    <span class="k">except</span><span class="p">:</span> <span class="k">return</span> <span class="kc">None</span>
+
+<span class="c1"># Ekstrak Input Baru</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Menganalisis Input: </span><span class="si">{</span><span class="n">FILE_BARU</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">input_seq</span> <span class="o">=</span> <span class="n">extract_mfcc_dtw</span><span class="p">(</span><span class="n">FILE_BARU</span><span class="p">)</span>
+
+<span class="n">results_buka</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">if</span> <span class="n">input_seq</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Menghitung jarak terhadap 100 data &#39;Buka&#39;&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ref_file</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">files_buka</span><span class="p">):</span>
+        <span class="n">ref_seq</span> <span class="o">=</span> <span class="n">extract_mfcc_dtw</span><span class="p">(</span><span class="n">ref_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ref_seq</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dist</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">fastdtw</span><span class="p">(</span><span class="n">input_seq</span><span class="p">,</span> <span class="n">ref_seq</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="n">euclidean</span><span class="p">)</span>
+            <span class="n">results_buka</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">ref_file</span><span class="p">),</span>
+                <span class="s1">&#39;path_full&#39;</span><span class="p">:</span> <span class="n">ref_file</span><span class="p">,</span>
+                <span class="s1">&#39;jarak&#39;</span><span class="p">:</span> <span class="n">dist</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="c1"># Normalisasi</span>
+            <span class="p">})</span>
+            
+    <span class="n">df_buka</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results_buka</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Perhitungan Selesai.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gagal memproses file input baru.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menganalisis Input: uji\buka\buka_baru.wav
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menghitung jarak terhadap 100 data &#39;Buka&#39;
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "432378c659594c2dafaeed2fcbfcf7aa"}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Perhitungan Selesai.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="statistik-hasil-jarak-kelas-buka">
+<h3>Statistik Hasil Jarak (Kelas BUKA)<a class="headerlink" href="#statistik-hasil-jarak-kelas-buka" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">df_buka</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;STATISTIK JARAK (BUKA)&quot;</span><span class="p">)</span>
+    <span class="n">stats</span> <span class="o">=</span> <span class="n">df_buka</span><span class="p">[</span><span class="s1">&#39;jarak&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jarak Terdekat (Min) : </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jarak Terjauh (Max)  : </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rata-rata Jarak      : </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Standar Deviasi      : </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Visualisasi Histogram</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df_buka</span><span class="p">[</span><span class="s1">&#39;jarak&#39;</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Terdekat&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribusi Jarak DTW (Buka dengan Data Baru)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>STATISTIK JARAK (BUKA)
+Jarak Terdekat (Min) : 57.6976
+Jarak Terjauh (Max)  : 156.8671
+Rata-rata Jarak      : 89.2654
+Standar Deviasi      : 15.1315
+</pre></div>
+</div>
+<img alt="_images/77943234fca4601a74aca5cd0f246598e66dfb09582a91fa16859e9ad09263f9.png" src="_images/77943234fca4601a74aca5cd0f246598e66dfb09582a91fa16859e9ad09263f9.png" />
+</div>
+</div>
+</section>
+<section id="ranking-20-data-teratas-buka">
+<h3>Ranking 20 Data Teratas (BUKA)<a class="headerlink" href="#ranking-20-data-teratas-buka" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">df_buka</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+    <span class="c1"># Ranking</span>
+    <span class="n">df_buka_sorted</span> <span class="o">=</span> <span class="n">df_buka</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;jarak&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df_buka_sorted</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TOP 20 PERINGKAT KEMIRIPAN:&quot;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">df_buka_sorted</span><span class="p">[[</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;jarak&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
+    
+    <span class="c1"># Visualisasi Bar Plot</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">top_20</span> <span class="o">=</span> <span class="n">df_buka_sorted</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;jarak&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">top_20</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Top 20 Jarak Terdekat (Buka Dengan Data Baru)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Jarak DTW&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TOP 20 PERINGKAT KEMIRIPAN:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>file</th>
+      <th>jarak</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>buka_34.wav</td>
+      <td>57.697561</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>buka_40.wav</td>
+      <td>61.626497</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>buka_42.wav</td>
+      <td>62.423257</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>buka_35.wav</td>
+      <td>66.244141</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>buka_1.wav</td>
+      <td>66.451202</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>buka_28.wav</td>
+      <td>68.786437</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>buka_3.wav</td>
+      <td>69.323130</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>buka_38.wav</td>
+      <td>69.335570</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>buka_36.wav</td>
+      <td>69.593213</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>buka_10.wav</td>
+      <td>70.976407</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>buka_41.wav</td>
+      <td>71.640346</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>buka_15.wav</td>
+      <td>72.355123</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>buka_39.wav</td>
+      <td>72.657445</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>buka_4.wav</td>
+      <td>72.867903</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>buka_37.wav</td>
+      <td>73.218216</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>buka_33.wav</td>
+      <td>74.322979</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>buka_7.wav</td>
+      <td>76.728637</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>buka_6.wav</td>
+      <td>76.949367</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>buka_25.wav</td>
+      <td>77.716830</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>buka_27.wav</td>
+      <td>77.775777</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_36132\3644687597.py:12: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.barplot(x=&#39;jarak&#39;, y=&#39;file&#39;, data=top_20, palette=&#39;viridis&#39;)
+</pre></div>
+</div>
+<img alt="_images/cf8267b41ff1a1ad35da0fc847bfccb65470087dd014be684915a1977c3717f3.png" src="_images/cf8267b41ff1a1ad35da0fc847bfccb65470087dd014be684915a1977c3717f3.png" />
+</div>
+</div>
+</section>
+<section id="visualisasi-perbandingan">
+<h3>Visualisasi Perbandingan<a class="headerlink" href="#visualisasi-perbandingan" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">df_buka</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+    <span class="c1"># Load Audio Baru</span>
+    <span class="n">y_new</span><span class="p">,</span> <span class="n">sr_new</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">FILE_BARU</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">TARGET_SR</span><span class="p">)</span>
+    
+    <span class="c1"># Siapkan Plot</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Perbandingan: Data Baru dengan Data Termirip&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    
+    <span class="c1"># Plot Data Baru</span>
+    <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">y_new</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr_new</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DATA BARU</span><span class="se">\n</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">FILE_BARU</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;#f0f0f0&#39;</span><span class="p">)</span> <span class="c1"># Highlight background</span>
+    
+    <span class="c1"># Plot 9 Data Terbaik</span>
+    <span class="n">top_9_paths</span> <span class="o">=</span> <span class="n">df_buka_sorted</span><span class="p">[</span><span class="s1">&#39;path_full&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">top_9_dists</span> <span class="o">=</span> <span class="n">df_buka_sorted</span><span class="p">[</span><span class="s1">&#39;jarak&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+        <span class="n">ax_idx</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">ref_path</span> <span class="o">=</span> <span class="n">top_9_paths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">top_9_dists</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        
+        <span class="n">y_ref</span><span class="p">,</span> <span class="n">sr_ref</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ref_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">TARGET_SR</span><span class="p">)</span>
+        <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">y_ref</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr_ref</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="n">ax_idx</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">ax_idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rank #</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> (Jarak: </span><span class="si">{</span><span class="n">dist</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">ref_path</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">ax_idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/b3de532807cb0686deb1ece5b4539ce395b9909cc7e195ac04dc607cb2f1e32d.png" src="_images/b3de532807cb0686deb1ece5b4539ce395b9909cc7e195ac04dc607cb2f1e32d.png" />
+</div>
+</div>
+</section>
+<section id="ranking-100-data-terbaik-buka">
+<h3>Ranking 100 Data Terbaik (BUKA)<a class="headerlink" href="#ranking-100-data-terbaik-buka" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">df_buka</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DAFTAR LENGKAP 100 PERINGKAT (BUKA):&quot;</span><span class="p">)</span>
+    <span class="c1"># Menampilkan 100 data</span>
+    <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">option_context</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">df_buka_sorted</span><span class="p">[[</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;jarak&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+    
+    <span class="c1"># Menampilkan dara terbaik Buka</span>
+    <span class="n">best_buka_score</span> <span class="o">=</span> <span class="n">df_buka_sorted</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;jarak&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data Terbaik BUKA: </span><span class="si">{</span><span class="n">best_buka_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DAFTAR LENGKAP 100 PERINGKAT (BUKA):
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>file</th>
+      <th>jarak</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>buka_34.wav</td>
+      <td>57.697561</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>buka_40.wav</td>
+      <td>61.626497</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>buka_42.wav</td>
+      <td>62.423257</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>buka_35.wav</td>
+      <td>66.244141</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>buka_1.wav</td>
+      <td>66.451202</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>buka_28.wav</td>
+      <td>68.786437</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>buka_3.wav</td>
+      <td>69.323130</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>buka_38.wav</td>
+      <td>69.335570</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>buka_36.wav</td>
+      <td>69.593213</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>buka_10.wav</td>
+      <td>70.976407</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>buka_41.wav</td>
+      <td>71.640346</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>buka_15.wav</td>
+      <td>72.355123</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>buka_39.wav</td>
+      <td>72.657445</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>buka_4.wav</td>
+      <td>72.867903</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>buka_37.wav</td>
+      <td>73.218216</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>buka_33.wav</td>
+      <td>74.322979</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>buka_7.wav</td>
+      <td>76.728637</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>buka_6.wav</td>
+      <td>76.949367</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>buka_25.wav</td>
+      <td>77.716830</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>buka_27.wav</td>
+      <td>77.775777</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>buka_56.wav</td>
+      <td>78.919666</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>buka_91.wav</td>
+      <td>80.407314</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>buka_63.wav</td>
+      <td>80.423870</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>buka_5.wav</td>
+      <td>80.550505</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>buka_62.wav</td>
+      <td>80.589221</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>buka_32.wav</td>
+      <td>81.363353</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>buka_94.wav</td>
+      <td>82.130724</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>buka_13.wav</td>
+      <td>82.227393</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>buka_17.wav</td>
+      <td>82.324993</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>buka_47.wav</td>
+      <td>82.684483</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>buka_69.wav</td>
+      <td>82.952681</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>buka_16.wav</td>
+      <td>83.403599</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>buka_90.wav</td>
+      <td>83.685339</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>buka_65.wav</td>
+      <td>83.700822</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>buka_60.wav</td>
+      <td>84.431605</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>buka_2.wav</td>
+      <td>84.766348</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>buka_88.wav</td>
+      <td>84.999784</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>buka_87.wav</td>
+      <td>85.115905</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>buka_71.wav</td>
+      <td>85.681510</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>buka_55.wav</td>
+      <td>86.522584</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>buka_66.wav</td>
+      <td>87.489897</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>buka_95.wav</td>
+      <td>87.792061</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>buka_14.wav</td>
+      <td>87.908873</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>buka_8.wav</td>
+      <td>88.204615</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>buka_92.wav</td>
+      <td>88.903207</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>buka_50.wav</td>
+      <td>88.969134</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>buka_77.wav</td>
+      <td>88.972181</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>buka_84.wav</td>
+      <td>89.053195</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>buka_78.wav</td>
+      <td>89.175025</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>buka_58.wav</td>
+      <td>89.411708</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>buka_43.wav</td>
+      <td>89.420453</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>buka_57.wav</td>
+      <td>89.675621</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>buka_44.wav</td>
+      <td>89.705546</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>buka_26.wav</td>
+      <td>89.919073</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>buka_93.wav</td>
+      <td>90.008040</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>buka_83.wav</td>
+      <td>90.726748</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>buka_72.wav</td>
+      <td>90.788344</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>buka_61.wav</td>
+      <td>90.823653</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>buka_73.wav</td>
+      <td>91.341877</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>buka_64.wav</td>
+      <td>91.642229</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>buka_98.wav</td>
+      <td>91.854165</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>buka_85.wav</td>
+      <td>91.860069</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>buka_20.wav</td>
+      <td>91.896394</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>buka_46.wav</td>
+      <td>91.955479</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>buka_86.wav</td>
+      <td>92.027540</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>buka_79.wav</td>
+      <td>92.062845</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>buka_68.wav</td>
+      <td>92.160432</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>buka_70.wav</td>
+      <td>92.416937</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>buka_81.wav</td>
+      <td>92.593318</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>buka_45.wav</td>
+      <td>92.637655</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>buka_75.wav</td>
+      <td>93.183987</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>buka_67.wav</td>
+      <td>93.218437</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>buka_99.wav</td>
+      <td>94.046579</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>buka_97.wav</td>
+      <td>94.764793</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>buka_11.wav</td>
+      <td>95.523642</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>buka_9.wav</td>
+      <td>95.546964</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>buka_96.wav</td>
+      <td>95.596626</td>
+    </tr>
+    <tr>
+      <th>78</th>
+      <td>buka_23.wav</td>
+      <td>96.386039</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>buka_59.wav</td>
+      <td>96.712566</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>buka_18.wav</td>
+      <td>96.996647</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>buka_54.wav</td>
+      <td>97.670915</td>
+    </tr>
+    <tr>
+      <th>82</th>
+      <td>buka_12.wav</td>
+      <td>97.719195</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>buka_89.wav</td>
+      <td>97.792085</td>
+    </tr>
+    <tr>
+      <th>84</th>
+      <td>buka_80.wav</td>
+      <td>97.832124</td>
+    </tr>
+    <tr>
+      <th>85</th>
+      <td>buka_74.wav</td>
+      <td>98.447017</td>
+    </tr>
+    <tr>
+      <th>86</th>
+      <td>buka_49.wav</td>
+      <td>99.436180</td>
+    </tr>
+    <tr>
+      <th>87</th>
+      <td>buka_76.wav</td>
+      <td>99.661770</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>buka_82.wav</td>
+      <td>100.156342</td>
+    </tr>
+    <tr>
+      <th>89</th>
+      <td>buka_19.wav</td>
+      <td>101.844801</td>
+    </tr>
+    <tr>
+      <th>90</th>
+      <td>buka_51.wav</td>
+      <td>102.060739</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td>buka_29.wav</td>
+      <td>105.892536</td>
+    </tr>
+    <tr>
+      <th>92</th>
+      <td>buka_48.wav</td>
+      <td>106.629017</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>buka_53.wav</td>
+      <td>107.670195</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>buka_0.wav</td>
+      <td>108.280195</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>buka_24.wav</td>
+      <td>111.844758</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>buka_30.wav</td>
+      <td>112.204765</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>buka_22.wav</td>
+      <td>120.302407</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>buka_31.wav</td>
+      <td>131.846556</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>buka_52.wav</td>
+      <td>143.433216</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>buka_21.wav</td>
+      <td>156.867094</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data Terbaik BUKA: 57.6976
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="suara-tutup">
+<h2>Suara TUTUP<a class="headerlink" href="#suara-tutup" title="Link to this heading">#</a></h2>
+<section id="load-data-tutup-visualisasi-waveform">
+<h3>Load Data “TUTUP” &amp; Visualisasi Waveform<a class="headerlink" href="#load-data-tutup-visualisasi-waveform" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">DATASET_PATH</span> <span class="o">=</span> <span class="s2">&quot;dataset/&quot;</span> 
+<span class="n">TARGET_SR</span> <span class="o">=</span> <span class="mi">22050</span>
+
+<span class="c1"># Load file TUTUP</span>
+<span class="n">files_tutup</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATASET_PATH</span><span class="p">,</span> <span class="s2">&quot;**&quot;</span><span class="p">,</span> <span class="s2">&quot;tutup&quot;</span><span class="p">,</span> <span class="s2">&quot;*.wav&quot;</span><span class="p">),</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total file referensi &#39;TUTUP&#39; dimuat: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">files_tutup</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Visualisasi 10 Data Pertama</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Visualisasi Waveform: 10 Data &quot;TUTUP&quot;&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">files_tutup</span><span class="p">):</span>
+        <span class="n">y</span><span class="p">,</span> <span class="n">sr</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">files_tutup</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">sr</span><span class="o">=</span><span class="n">TARGET_SR</span><span class="p">)</span>
+        <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tutup #</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">files_tutup</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Amp&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Total file referensi &#39;TUTUP&#39; dimuat: 100
+</pre></div>
+</div>
+<img alt="_images/eded805449cd45f116856bd546f84ddceacde241379655ce315ef290133e058e.png" src="_images/eded805449cd45f116856bd546f84ddceacde241379655ce315ef290133e058e.png" />
+</div>
+</div>
+</section>
+<section id="hitung-jarak-dtw-data-tutup">
+<h3>Hitung Jarak (DTW) Data “TUTUP”<a class="headerlink" href="#hitung-jarak-dtw-data-tutup" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">FILE_BARU_TUTUP</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;uji&quot;</span><span class="p">,</span> <span class="s2">&quot;tutup&quot;</span><span class="p">,</span> <span class="s2">&quot;tutup_baru.wav&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Menganalisis Input: </span><span class="si">{</span><span class="n">FILE_BARU_TUTUP</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Ekstrak Fitur Input</span>
+<span class="n">input_seq_tutup</span> <span class="o">=</span> <span class="n">extract_mfcc_dtw</span><span class="p">(</span><span class="n">FILE_BARU_TUTUP</span><span class="p">)</span>
+<span class="n">results_tutup</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">if</span> <span class="n">input_seq_tutup</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Menghitung jarak terhadap 100 data &#39;TUTUP&#39;&quot;</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">ref_file</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">files_tutup</span><span class="p">):</span>
+        <span class="n">ref_seq</span> <span class="o">=</span> <span class="n">extract_mfcc_dtw</span><span class="p">(</span><span class="n">ref_file</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ref_seq</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dist</span><span class="p">,</span> <span class="n">path</span> <span class="o">=</span> <span class="n">fastdtw</span><span class="p">(</span><span class="n">input_seq_tutup</span><span class="p">,</span> <span class="n">ref_seq</span><span class="p">,</span> <span class="n">dist</span><span class="o">=</span><span class="n">euclidean</span><span class="p">)</span>
+            <span class="n">results_tutup</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+                <span class="s1">&#39;file&#39;</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">ref_file</span><span class="p">),</span>
+                <span class="s1">&#39;path_full&#39;</span><span class="p">:</span> <span class="n">ref_file</span><span class="p">,</span>
+                <span class="s1">&#39;jarak&#39;</span><span class="p">:</span> <span class="n">dist</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">path</span><span class="p">)</span> <span class="c1"># Normalisasi</span>
+            <span class="p">})</span>
+            
+    <span class="n">df_tutup</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results_tutup</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Perhitungan Selesai.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Gagal memproses file input baru.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Menganalisis Input: uji\tutup\tutup_baru.wav
+Menghitung jarak terhadap 100 data &#39;TUTUP&#39;
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "184fe251a8934ac88e27102509f25c42"}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Perhitungan Selesai.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="statistik-hasil-jarak-tutup">
+<h3>Statistik Hasil Jarak (TUTUP)<a class="headerlink" href="#statistik-hasil-jarak-tutup" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">df_tutup</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;STATISTIK JARAK (TUTUP)&quot;</span><span class="p">)</span>
+    <span class="n">stats_t</span> <span class="o">=</span> <span class="n">df_tutup</span><span class="p">[</span><span class="s1">&#39;jarak&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jarak Terdekat (Min) : </span><span class="si">{</span><span class="n">stats_t</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jarak Terjauh (Max)  : </span><span class="si">{</span><span class="n">stats_t</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rata-rata Jarak      : </span><span class="si">{</span><span class="n">stats_t</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Standar Deviasi      : </span><span class="si">{</span><span class="n">stats_t</span><span class="p">[</span><span class="s1">&#39;std&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Visualisasi Histogram</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">df_tutup</span><span class="p">[</span><span class="s1">&#39;jarak&#39;</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">stats_t</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Terdekat&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distribusi Jarak DTW (Tutup dengan Data Baru)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>STATISTIK JARAK (TUTUP)
+Jarak Terdekat (Min) : 40.7186
+Jarak Terjauh (Max)  : 207.5256
+Rata-rata Jarak      : 88.5454
+Standar Deviasi      : 29.3410
+</pre></div>
+</div>
+<img alt="_images/9e480fc5743c8fcf4811c7cd8849042d873d1ed17b611d93d56aae4e821726bf.png" src="_images/9e480fc5743c8fcf4811c7cd8849042d873d1ed17b611d93d56aae4e821726bf.png" />
+</div>
+</div>
+</section>
+<section id="ranking-20-data-teratas-tutup">
+<h3>Ranking 20 Data Teratas (TUTUP)<a class="headerlink" href="#ranking-20-data-teratas-tutup" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">df_tutup</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+    <span class="c1"># Ranking</span>
+    <span class="n">df_tutup_sorted</span> <span class="o">=</span> <span class="n">df_tutup</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;jarak&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">df_tutup_sorted</span><span class="o">.</span><span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;TOP 20 PERINGKAT KEMIRIPAN (TUTUP):&quot;</span><span class="p">)</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">df_tutup_sorted</span><span class="p">[[</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;jarak&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">))</span>
+    
+    <span class="c1"># Visualisasi Bar Plot</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;jarak&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_tutup_sorted</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;magma&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Top 20 Jarak Terdekat (Input vs TUTUP)&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Jarak DTW&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TOP 20 PERINGKAT KEMIRIPAN (TUTUP):
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>file</th>
+      <th>jarak</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>tutup_39.wav</td>
+      <td>40.718628</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>tutup_41.wav</td>
+      <td>41.643533</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>tutup_23.wav</td>
+      <td>44.717701</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>tutup_45.wav</td>
+      <td>45.191224</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>tutup_37.wav</td>
+      <td>48.022011</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>tutup_32.wav</td>
+      <td>49.037932</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>tutup_22.wav</td>
+      <td>50.010410</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>tutup_21.wav</td>
+      <td>50.233050</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>tutup_42.wav</td>
+      <td>50.278033</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>tutup_38.wav</td>
+      <td>50.623916</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>tutup_48.wav</td>
+      <td>50.980950</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>tutup_34.wav</td>
+      <td>50.982600</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>tutup_43.wav</td>
+      <td>51.197513</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>tutup_33.wav</td>
+      <td>51.532126</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>tutup_44.wav</td>
+      <td>51.694770</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>tutup_36.wav</td>
+      <td>51.989748</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>tutup_31.wav</td>
+      <td>53.005730</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>tutup_26.wav</td>
+      <td>53.547456</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>tutup_46.wav</td>
+      <td>55.128863</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>tutup_14.wav</td>
+      <td>55.513128</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\Users\acer\AppData\Local\Temp\ipykernel_36132\1799456013.py:11: FutureWarning: 
+
+Passing `palette` without assigning `hue` is deprecated and will be removed in v0.14.0. Assign the `y` variable to `hue` and set `legend=False` for the same effect.
+
+  sns.barplot(x=&#39;jarak&#39;, y=&#39;file&#39;, data=df_tutup_sorted.head(20), palette=&#39;magma&#39;)
+</pre></div>
+</div>
+<img alt="_images/4115339aa682a5a2d0c8bfeceb42f0d363e469fb8fa87a7fcc516827a32242d3.png" src="_images/4115339aa682a5a2d0c8bfeceb42f0d363e469fb8fa87a7fcc516827a32242d3.png" />
+</div>
+</div>
+</section>
+<section id="id1">
+<h3>Visualisasi Perbandingan<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">df_tutup</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+    <span class="c1"># Load Audio Baru</span>
+    <span class="n">y_new_t</span><span class="p">,</span> <span class="n">sr_new_t</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">FILE_BARU_TUTUP</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">TARGET_SR</span><span class="p">)</span>
+    
+    <span class="c1"># Siapkan Plot</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Perbandingan: Data Baru dengan Data TUTUP Termirip&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    
+    <span class="c1"># Plot Data Baru</span>
+    <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">y_new_t</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr_new_t</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;DATA BARU</span><span class="se">\n</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">FILE_BARU_TUTUP</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_facecolor</span><span class="p">(</span><span class="s1">&#39;#f0f0f0&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Plot 9 Data Terbaik</span>
+    <span class="n">top_9_paths</span> <span class="o">=</span> <span class="n">df_tutup_sorted</span><span class="p">[</span><span class="s1">&#39;path_full&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">top_9_dists</span> <span class="o">=</span> <span class="n">df_tutup_sorted</span><span class="p">[</span><span class="s1">&#39;jarak&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">9</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">):</span>
+        <span class="n">ax_idx</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">ref_path</span> <span class="o">=</span> <span class="n">top_9_paths</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">top_9_dists</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        
+        <span class="n">y_ref</span><span class="p">,</span> <span class="n">sr_ref</span> <span class="o">=</span> <span class="n">librosa</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ref_path</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">TARGET_SR</span><span class="p">)</span>
+        <span class="n">librosa</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">waveshow</span><span class="p">(</span><span class="n">y_ref</span><span class="p">,</span> <span class="n">sr</span><span class="o">=</span><span class="n">sr_ref</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="n">ax_idx</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">ax_idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Rank #</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2"> (Jarak: </span><span class="si">{</span><span class="n">dist</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)</span><span class="se">\n</span><span class="si">{</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">ref_path</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">)</span>
+        <span class="n">axes</span><span class="p">[</span><span class="n">ax_idx</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/7af1138ea0a577c9dd1a6e2c8a82a0f4aaf94f9bf4ee27f45666b794792a7f0b.png" src="_images/7af1138ea0a577c9dd1a6e2c8a82a0f4aaf94f9bf4ee27f45666b794792a7f0b.png" />
+</div>
+</div>
+</section>
+<section id="ranking-100-data-terbaik-tutup">
+<h3>Ranking 100 Data Terbaik (TUTUP)<a class="headerlink" href="#ranking-100-data-terbaik-tutup" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="ow">not</span> <span class="n">df_tutup</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DAFTAR LENGKAP 100 PERINGKAT (TUTUP):&quot;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">option_context</span><span class="p">(</span><span class="s1">&#39;display.max_rows&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+        <span class="n">display</span><span class="p">(</span><span class="n">df_tutup_sorted</span><span class="p">[[</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;jarak&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">100</span><span class="p">))</span>
+    
+    <span class="n">best_tutup_score</span> <span class="o">=</span> <span class="n">df_tutup_sorted</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;jarak&#39;</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data Terbaik TUTUP: </span><span class="si">{</span><span class="n">best_tutup_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DAFTAR LENGKAP 100 PERINGKAT (TUTUP):
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>file</th>
+      <th>jarak</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>tutup_39.wav</td>
+      <td>40.718628</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>tutup_41.wav</td>
+      <td>41.643533</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>tutup_23.wav</td>
+      <td>44.717701</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>tutup_45.wav</td>
+      <td>45.191224</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>tutup_37.wav</td>
+      <td>48.022011</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>tutup_32.wav</td>
+      <td>49.037932</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>tutup_22.wav</td>
+      <td>50.010410</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>tutup_21.wav</td>
+      <td>50.233050</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>tutup_42.wav</td>
+      <td>50.278033</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>tutup_38.wav</td>
+      <td>50.623916</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>tutup_48.wav</td>
+      <td>50.980950</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>tutup_34.wav</td>
+      <td>50.982600</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>tutup_43.wav</td>
+      <td>51.197513</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>tutup_33.wav</td>
+      <td>51.532126</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>tutup_44.wav</td>
+      <td>51.694770</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>tutup_36.wav</td>
+      <td>51.989748</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>tutup_31.wav</td>
+      <td>53.005730</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>tutup_26.wav</td>
+      <td>53.547456</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>tutup_46.wav</td>
+      <td>55.128863</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>tutup_14.wav</td>
+      <td>55.513128</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>tutup_47.wav</td>
+      <td>58.556780</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>tutup_10.wav</td>
+      <td>58.864322</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>tutup_3.wav</td>
+      <td>59.723319</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>tutup_40.wav</td>
+      <td>59.933779</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>tutup_19.wav</td>
+      <td>60.423827</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>tutup_9.wav</td>
+      <td>61.369230</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>tutup_1.wav</td>
+      <td>61.399377</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>tutup_18.wav</td>
+      <td>62.291842</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>tutup_20.wav</td>
+      <td>62.394029</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>tutup_7.wav</td>
+      <td>64.273910</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>tutup_0.wav</td>
+      <td>65.259236</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>tutup_24.wav</td>
+      <td>67.865785</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>tutup_5.wav</td>
+      <td>68.038343</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>tutup_35.wav</td>
+      <td>68.273171</td>
+    </tr>
+    <tr>
+      <th>35</th>
+      <td>tutup_8.wav</td>
+      <td>69.723229</td>
+    </tr>
+    <tr>
+      <th>36</th>
+      <td>tutup_27.wav</td>
+      <td>70.627889</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>tutup_4.wav</td>
+      <td>70.927811</td>
+    </tr>
+    <tr>
+      <th>38</th>
+      <td>tutup_6.wav</td>
+      <td>70.982669</td>
+    </tr>
+    <tr>
+      <th>39</th>
+      <td>tutup_15.wav</td>
+      <td>72.864475</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>tutup_17.wav</td>
+      <td>76.617185</td>
+    </tr>
+    <tr>
+      <th>41</th>
+      <td>tutup_49.wav</td>
+      <td>76.779312</td>
+    </tr>
+    <tr>
+      <th>42</th>
+      <td>tutup_28.wav</td>
+      <td>77.381085</td>
+    </tr>
+    <tr>
+      <th>43</th>
+      <td>tutup_16.wav</td>
+      <td>77.896388</td>
+    </tr>
+    <tr>
+      <th>44</th>
+      <td>tutup_11.wav</td>
+      <td>79.217029</td>
+    </tr>
+    <tr>
+      <th>45</th>
+      <td>tutup_30.wav</td>
+      <td>82.278863</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>tutup_29.wav</td>
+      <td>86.582102</td>
+    </tr>
+    <tr>
+      <th>47</th>
+      <td>tutup_2.wav</td>
+      <td>90.655882</td>
+    </tr>
+    <tr>
+      <th>48</th>
+      <td>tutup_59.wav</td>
+      <td>95.312443</td>
+    </tr>
+    <tr>
+      <th>49</th>
+      <td>tutup_82.wav</td>
+      <td>99.524834</td>
+    </tr>
+    <tr>
+      <th>50</th>
+      <td>tutup_88.wav</td>
+      <td>99.691540</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>tutup_50.wav</td>
+      <td>100.416314</td>
+    </tr>
+    <tr>
+      <th>52</th>
+      <td>tutup_72.wav</td>
+      <td>100.733691</td>
+    </tr>
+    <tr>
+      <th>53</th>
+      <td>tutup_63.wav</td>
+      <td>101.346151</td>
+    </tr>
+    <tr>
+      <th>54</th>
+      <td>tutup_70.wav</td>
+      <td>101.404612</td>
+    </tr>
+    <tr>
+      <th>55</th>
+      <td>tutup_67.wav</td>
+      <td>102.719829</td>
+    </tr>
+    <tr>
+      <th>56</th>
+      <td>tutup_96.wav</td>
+      <td>103.065553</td>
+    </tr>
+    <tr>
+      <th>57</th>
+      <td>tutup_94.wav</td>
+      <td>103.162376</td>
+    </tr>
+    <tr>
+      <th>58</th>
+      <td>tutup_98.wav</td>
+      <td>103.416004</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>tutup_66.wav</td>
+      <td>103.603209</td>
+    </tr>
+    <tr>
+      <th>60</th>
+      <td>tutup_25.wav</td>
+      <td>103.700444</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>tutup_97.wav</td>
+      <td>104.914363</td>
+    </tr>
+    <tr>
+      <th>62</th>
+      <td>tutup_58.wav</td>
+      <td>105.007556</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>tutup_62.wav</td>
+      <td>105.043105</td>
+    </tr>
+    <tr>
+      <th>64</th>
+      <td>tutup_93.wav</td>
+      <td>105.069059</td>
+    </tr>
+    <tr>
+      <th>65</th>
+      <td>tutup_13.wav</td>
+      <td>106.932454</td>
+    </tr>
+    <tr>
+      <th>66</th>
+      <td>tutup_52.wav</td>
+      <td>107.018208</td>
+    </tr>
+    <tr>
+      <th>67</th>
+      <td>tutup_71.wav</td>
+      <td>108.629561</td>
+    </tr>
+    <tr>
+      <th>68</th>
+      <td>tutup_53.wav</td>
+      <td>109.097668</td>
+    </tr>
+    <tr>
+      <th>69</th>
+      <td>tutup_69.wav</td>
+      <td>109.673559</td>
+    </tr>
+    <tr>
+      <th>70</th>
+      <td>tutup_55.wav</td>
+      <td>110.124833</td>
+    </tr>
+    <tr>
+      <th>71</th>
+      <td>tutup_51.wav</td>
+      <td>110.577050</td>
+    </tr>
+    <tr>
+      <th>72</th>
+      <td>tutup_92.wav</td>
+      <td>110.645500</td>
+    </tr>
+    <tr>
+      <th>73</th>
+      <td>tutup_68.wav</td>
+      <td>110.857398</td>
+    </tr>
+    <tr>
+      <th>74</th>
+      <td>tutup_84.wav</td>
+      <td>110.965917</td>
+    </tr>
+    <tr>
+      <th>75</th>
+      <td>tutup_81.wav</td>
+      <td>112.062359</td>
+    </tr>
+    <tr>
+      <th>76</th>
+      <td>tutup_86.wav</td>
+      <td>112.183934</td>
+    </tr>
+    <tr>
+      <th>77</th>
+      <td>tutup_91.wav</td>
+      <td>112.760121</td>
+    </tr>
+    <tr>
+      <th>78</th>
+      <td>tutup_12.wav</td>
+      <td>113.238139</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>tutup_80.wav</td>
+      <td>113.616063</td>
+    </tr>
+    <tr>
+      <th>80</th>
+      <td>tutup_90.wav</td>
+      <td>113.823946</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>tutup_83.wav</td>
+      <td>114.155212</td>
+    </tr>
+    <tr>
+      <th>82</th>
+      <td>tutup_56.wav</td>
+      <td>115.042892</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>tutup_77.wav</td>
+      <td>115.205553</td>
+    </tr>
+    <tr>
+      <th>84</th>
+      <td>tutup_76.wav</td>
+      <td>115.335863</td>
+    </tr>
+    <tr>
+      <th>85</th>
+      <td>tutup_95.wav</td>
+      <td>115.348912</td>
+    </tr>
+    <tr>
+      <th>86</th>
+      <td>tutup_89.wav</td>
+      <td>115.979117</td>
+    </tr>
+    <tr>
+      <th>87</th>
+      <td>tutup_99.wav</td>
+      <td>116.255728</td>
+    </tr>
+    <tr>
+      <th>88</th>
+      <td>tutup_85.wav</td>
+      <td>116.898132</td>
+    </tr>
+    <tr>
+      <th>89</th>
+      <td>tutup_87.wav</td>
+      <td>116.998552</td>
+    </tr>
+    <tr>
+      <th>90</th>
+      <td>tutup_78.wav</td>
+      <td>117.993049</td>
+    </tr>
+    <tr>
+      <th>91</th>
+      <td>tutup_73.wav</td>
+      <td>118.069772</td>
+    </tr>
+    <tr>
+      <th>92</th>
+      <td>tutup_74.wav</td>
+      <td>118.546128</td>
+    </tr>
+    <tr>
+      <th>93</th>
+      <td>tutup_57.wav</td>
+      <td>119.673289</td>
+    </tr>
+    <tr>
+      <th>94</th>
+      <td>tutup_75.wav</td>
+      <td>119.898335</td>
+    </tr>
+    <tr>
+      <th>95</th>
+      <td>tutup_60.wav</td>
+      <td>120.954868</td>
+    </tr>
+    <tr>
+      <th>96</th>
+      <td>tutup_79.wav</td>
+      <td>123.786011</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>tutup_61.wav</td>
+      <td>124.530568</td>
+    </tr>
+    <tr>
+      <th>98</th>
+      <td>tutup_54.wav</td>
+      <td>127.022721</td>
+    </tr>
+    <tr>
+      <th>99</th>
+      <td>tutup_65.wav</td>
+      <td>127.736107</td>
+    </tr>
+    <tr>
+      <th>100</th>
+      <td>tutup_64.wav</td>
+      <td>207.525573</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data Terbaik TUTUP: 40.7186
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="perbandingan-antara-buka-dan-tutup">
+<h2>Perbandingan antara BUKA dan TUTUP<a class="headerlink" href="#perbandingan-antara-buka-dan-tutup" title="Link to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">40</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;KEPUTUSAN AKHIR: BUKA VS TUTUP&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">40</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jarak Terdekat ke &#39;TUTUP&#39; : </span><span class="si">{</span><span class="n">best_tutup_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Jarak Terdekat ke &#39;BUKA&#39;  : </span><span class="si">{</span><span class="n">best_buka_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">40</span><span class="p">)</span>
+
+<span class="c1"># Logika Keputusan</span>
+<span class="k">if</span> <span class="n">best_tutup_score</span> <span class="o">&lt;</span> <span class="n">best_buka_score</span><span class="p">:</span>
+    <span class="n">selisih</span> <span class="o">=</span> <span class="n">best_buka_score</span> <span class="o">-</span> <span class="n">best_tutup_score</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HASIL PREDIKSI: TUTUP&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(Lebih dekat </span><span class="si">{</span><span class="n">selisih</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> poin dibanding Buka)&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">selisih</span> <span class="o">=</span> <span class="n">best_tutup_score</span> <span class="o">-</span> <span class="n">best_buka_score</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HASIL PREDIKSI: BUKA&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;(Lebih dekat </span><span class="si">{</span><span class="n">selisih</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> poin dibanding Tutup)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Visualisasi Bar</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">([</span><span class="s1">&#39;TUTUP&#39;</span><span class="p">,</span> <span class="s1">&#39;BUKA&#39;</span><span class="p">],</span> <span class="p">[</span><span class="n">best_tutup_score</span><span class="p">,</span> <span class="n">best_buka_score</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Perbandingan Jarak Minimum&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Jarak DTW&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">bars</span><span class="p">:</span>
+    <span class="n">yval</span> <span class="o">=</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">yval</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">yval</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>========================================
+KEPUTUSAN AKHIR: BUKA VS TUTUP
+========================================
+Jarak Terdekat ke &#39;TUTUP&#39; : 40.7186
+Jarak Terdekat ke &#39;BUKA&#39;  : 57.6976
+----------------------------------------
+HASIL PREDIKSI: TUTUP
+(Lebih dekat 16.9789 poin dibanding Buka)
+</pre></div>
+</div>
+<img alt="_images/422b0d03b7ea331821e7c72d03daad4f72ac2e2738cd2809a85a8bb3f0d47035.png" src="_images/422b0d03b7ea331821e7c72d03daad4f72ac2e2738cd2809a85a8bb3f0d47035.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="bukatutup.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Identifikasi Audio “Buka Tutup”</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#suara-buka">Suara Buka</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-library">Import Library</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-buka-visualisasi-waveform">Load Data “BUKA” &amp; Visualisasi Waveform</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-jarak-dtw-data-buka">Hitung Jarak (DTW) Data “BUKA”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-hasil-jarak-kelas-buka">Statistik Hasil Jarak (Kelas BUKA)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking-20-data-teratas-buka">Ranking 20 Data Teratas (BUKA)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-perbandingan">Visualisasi Perbandingan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking-100-data-terbaik-buka">Ranking 100 Data Terbaik (BUKA)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#suara-tutup">Suara TUTUP</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data-tutup-visualisasi-waveform">Load Data “TUTUP” &amp; Visualisasi Waveform</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hitung-jarak-dtw-data-tutup">Hitung Jarak (DTW) Data “TUTUP”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistik-hasil-jarak-tutup">Statistik Hasil Jarak (TUTUP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking-20-data-teratas-tutup">Ranking 20 Data Teratas (TUTUP)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Visualisasi Perbandingan</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ranking-100-data-terbaik-tutup">Ranking 100 Data Terbaik (TUTUP)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#perbandingan-antara-buka-dan-tutup">Perbandingan antara BUKA dan TUTUP</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book Community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
