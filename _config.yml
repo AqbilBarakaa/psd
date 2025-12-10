@@ -2,8 +2,9 @@
 # Learn more at https://jupyterbook.org/customize/config.html
 
 title: My sample book
-author: The Jupyter Book Community
+author: Aqbil Baraka
 logo: logo.gif
+copyright: "2025"
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
