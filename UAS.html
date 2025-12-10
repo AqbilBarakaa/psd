@@ -424,7 +424,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulasi-prediksi">Simulasi Prediksi</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">Deployment</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">6. Deployment</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-dan-simpan-model-pada-folder-deploy">Load dan simpan model pada folder deploy</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-file-app-py-dengan-code">Membuat file <code class="docutils literal notranslate"><span class="pre">app.py</span></code> dengan code:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mempersiapkan-lingkungan-aplikasi">Mempersiapkan lingkungan aplikasi</a></li>
@@ -623,7 +623,9 @@ document.write(`
    - Dimensi Data: 613 Baris x 236 Kolom
    - Tipe Data Dominan: float64
    - Status Missing Value: Bersih (0)
-   - Status Duplikasi: Tidak Ada (0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   - Status Duplikasi: Tidak Ada (0)
 --------------------------------------------------
 INSPEKSI DATASET: TESTING SET
    - Dimensi Data: 370 Baris x 236 Kolom
@@ -1606,16 +1608,14 @@ Data Scaling Selesai.
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TRAINING &amp; BENCHMARKING
 MODEL                | AKURASI    | F1-SCORE   | WAKTU (s) 
 ------------------------------------------------------------
-Naive Bayes          | 0.7892     | 0.7856     | 0.0083
-Logistic Regression  | 0.9541     | 0.9508     | 0.0495
+Naive Bayes          | 0.7892     | 0.7856     | 0.0044
+Logistic Regression  | 0.9541     | 0.9508     | 0.0230
+Decision Tree        | 0.9459     | 0.9409     | 0.1067
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Decision Tree        | 0.9459     | 0.9409     | 0.1851
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Random Forest        | 0.9595     | 0.9563     | 0.9659
-KNN (k=5)            | 0.9351     | 0.9311     | 0.0510
-SVM (RBF Kernel)     | 0.9324     | 0.9285     | 0.1337
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Random Forest        | 0.9595     | 0.9563     | 0.6937
+KNN (k=5)            | 0.9351     | 0.9311     | 0.0285
+SVM (RBF Kernel)     | 0.9324     | 0.9285     | 0.1127
 ------------------------------------------------------------
 
 PEMENANG: Random Forest
@@ -2088,20 +2088,20 @@ Ukuran Model: 427.35 KB
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Simulasi Prediksi
 ============================================================
-SAMPEL TEST INDEX: 316
-LABEL ASLI      : Adulterated (Oplosan)
-PREDIKSI MODEL  : Adulterated (Oplosan)
-HASIL           : ✅ BENAR (Confidence: 99.00%)
+SAMPEL TEST INDEX: 140
+LABEL ASLI      : Authentic (Murni)
+PREDIKSI MODEL  : Authentic (Murni)
+HASIL           : ✅ BENAR (Confidence: 100.00%)
 ============================================================
 </pre></div>
 </div>
-<img alt="_images/4c3f93ae663d0137aea497af628c607c098ca2b253be6b01e161b09b17a0bf66.png" src="_images/4c3f93ae663d0137aea497af628c607c098ca2b253be6b01e161b09b17a0bf66.png" />
+<img alt="_images/1ff91c6566efdc18432b1177e969d4c11f67bc2649d714e87a846c8b40b5c169.png" src="_images/1ff91c6566efdc18432b1177e969d4c11f67bc2649d714e87a846c8b40b5c169.png" />
 </div>
 </div>
 </section>
 </section>
 <section id="deployment">
-<h2>Deployment<a class="headerlink" href="#deployment" title="Link to this heading">#</a></h2>
+<h2>6. Deployment<a class="headerlink" href="#deployment" title="Link to this heading">#</a></h2>
 <section id="load-dan-simpan-model-pada-folder-deploy">
 <h3>Load dan simpan model pada folder deploy<a class="headerlink" href="#load-dan-simpan-model-pada-folder-deploy" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
@@ -2469,8 +2469,7 @@ Semua file aset berhasil disalin ke folder deploy!
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Note: you may need to restart the kernel to use updated packages.
-Requirement already satisfied: streamlit in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (1.46.0)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: streamlit in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (1.46.0)
 Requirement already satisfied: pandas in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (2.1.4)
 Requirement already satisfied: numpy in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (1.26.4)
 Requirement already satisfied: joblib in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (1.3.2)
@@ -2513,6 +2512,7 @@ Requirement already satisfied: jsonschema-specifications&gt;=2023.03.6 in c:\use
 Requirement already satisfied: referencing&gt;=0.28.4 in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (from jsonschema&gt;=3.0-&gt;altair&lt;6,&gt;=4.0-&gt;streamlit) (0.36.2)
 Requirement already satisfied: rpds-py&gt;=0.7.1 in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (from jsonschema&gt;=3.0-&gt;altair&lt;6,&gt;=4.0-&gt;streamlit) (0.25.0)
 Requirement already satisfied: six&gt;=1.5 in c:\users\acer\appdata\roaming\python\python39\site-packages (from python-dateutil&gt;=2.8.2-&gt;pandas) (1.17.0)
+Note: you may need to restart the kernel to use updated packages.
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[notice] A new release of pip is available: 25.2 -&gt; 25.3
@@ -2628,7 +2628,7 @@ Requirement already satisfied: six&gt;=1.5 in c:\users\acer\appdata\roaming\pyth
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simulasi-prediksi">Simulasi Prediksi</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">Deployment</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#deployment">6. Deployment</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-dan-simpan-model-pada-folder-deploy">Load dan simpan model pada folder deploy</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#membuat-file-app-py-dengan-code">Membuat file <code class="docutils literal notranslate"><span class="pre">app.py</span></code> dengan code:</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mempersiapkan-lingkungan-aplikasi">Mempersiapkan lingkungan aplikasi</a></li>
@@ -2650,7 +2650,7 @@ Requirement already satisfied: six&gt;=1.5 in c:\users\acer\appdata\roaming\pyth
   <div class="footer-item">
     
 <p class="component-author">
-By The Jupyter Book Community
+By Aqbil Baraka
 </p>
 
   </div>
@@ -2660,7 +2660,7 @@ By The Jupyter Book Community
 
   <p class="copyright">
     
-      © Copyright 2023.
+      © Copyright 2025.
       <br/>
     
   </p>
