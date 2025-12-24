@@ -57,6 +57,8 @@
     <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'UAS';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -403,7 +405,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-data">3. PREPROCESSING DATA</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksperimen-seleksi-metode">Eksperimen Seleksi Metode</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksekusi-final-visualisasi-before-vs-after">Eksekusi Final &amp; Visualisasi (Before vs After)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksekusi-final-visualisasi">Eksekusi Final &amp; Visualisasi</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grafik-pipeline-tracking">Grafik Pipeline Tracking</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#komparasi-detail-per-kelas-sebelum-vs-sesudah">Komparasi Detail Per Kelas (Sebelum vs Sesudah)</a></li>
 </ul>
@@ -411,7 +413,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling">4. MODELING</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling-data">Scaling Data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-benchmarking-loop">Training &amp; Benchmarking Loop</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Training &amp; Benchmarking Loop</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-hasil">Visualisasi Hasil</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">Confusion Matrix</a></li>
 </ul>
 </li>
@@ -432,6 +434,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-deploy">Hasil Deploy:</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#link-google-drive-untuk-dataset-dan-file-kompresi">Link Google Drive Untuk Dataset dan File Kompresi</a></li>
 </ul>
             </nav>
         </div>
@@ -533,6 +536,7 @@ document.write(`
 <span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">copy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>  
 
 <span class="c1"># Library Machine Learning &amp; Evaluasi</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
@@ -623,9 +627,7 @@ document.write(`
    - Dimensi Data: 613 Baris x 236 Kolom
    - Tipe Data Dominan: float64
    - Status Missing Value: Bersih (0)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   - Status Duplikasi: Tidak Ada (0)
+   - Status Duplikasi: Tidak Ada (0)
 --------------------------------------------------
 INSPEKSI DATASET: TESTING SET
    - Dimensi Data: 370 Baris x 236 Kolom
@@ -641,52 +643,148 @@ INSPEKSI DATASET: TESTING SET
 </section>
 <section id="pengecekan-struktur-distribusi-kelas">
 <h3>Pengecekan Struktur &amp; Distribusi Kelas<a class="headerlink" href="#pengecekan-struktur-distribusi-kelas" title="Link to this heading">#</a></h3>
-<p>Langkah ini memvalidasi proporsi data antar kelas. Ketidakseimbangan yang ekstrem (<em>Imbalanced Data</em>) dapat menyebabkan model bias, sehingga perlu dideteksi sejak dini. Selain itu, kita akan melihat statistik deskriptif dari intensitas sinyal.</p>
+<p>Langkah ini memvalidasi proporsi data antar kelas. Ketidakseimbangan yang ekstrem (<em>Imbalanced Data</em>) dapat menyebabkan model bias, sehingga perlu dideteksi sejak dini.</p>
+<p><strong>Kriteria Imbalanced Dataset Berdasarkan Imbalance Ratio (IR):</strong><br />
+Menurut <strong>Hamid, Yusoff, &amp; Mohamed (2022)</strong> dalam paper <em>“Survey on Highly Imbalanced Multi-class Data”</em> yang dipublikasikan di International Journal of Advanced Computer Science and Applications (IJACSA), klasifikasi dataset berdasarkan</p>
+<p><strong>Imbalance Ratio (IR)</strong> adalah:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Kategori</p></th>
+<th class="head"><p>Imbalance Ratio (IR)</p></th>
+<th class="head"><p>Contoh Distribusi</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Balanced</strong></p></td>
+<td><p>IR ≤ 1.5</p></td>
+<td><p>50:50 hingga 60:40</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Slightly Imbalanced</strong></p></td>
+<td><p>1.5 &lt; IR &lt; 9</p></td>
+<td><p>70:30 hingga 90:10</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Highly Imbalanced</strong></p></td>
+<td><p>IR ≥ 9</p></td>
+<td><p>90:10 atau lebih ekstrem</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Definisi Imbalance Ratio (IR):</strong>
+$<span class="math notranslate nohighlight">\(IR = \frac{\text{Jumlah Sampel Kelas Mayoritas}}{\text{Jumlah Sampel Kelas Minoritas}}\)</span>$
+<strong>Kriteria Keseimbangan:</strong></p>
+<ul class="simple">
+<li><p>Dataset dianggap <strong>imbalanced</strong> jika IR &gt; 1.5</p></li>
+<li><p>Dataset dianggap <strong>highly imbalanced</strong> jika IR ≥ 9</p></li>
+</ul>
+<p><strong>Referensi:</strong>
+<strong>Hamid, M. H. A., Yusoff, M., &amp; Mohamed, A. (2022).</strong><br />
+<em>Survey on Highly Imbalanced Multi-class Data.</em><br />
+International Journal of Advanced Computer Science and Applications (IJACSA), 13(6), 211-221.</p>
+<p><strong>PDF:</strong> <a class="reference external" href="https://thesai.org/Downloads/Volume13No6/Paper_27-Survey_on_Highly_Imbalanced_Multi_class_Data.pdf">https://thesai.org/Downloads/Volume13No6/Paper_27-Survey_on_Highly_Imbalanced_Multi_class_Data.pdf</a></p>
+<p><strong>Keywords Pencarian:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;imbalance</span> <span class="pre">ratio&quot;</span> <span class="pre">threshold</span> <span class="pre">1.5</span> <span class="pre">imbalanced</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;highly</span> <span class="pre">imbalanced&quot;</span> <span class="pre">&quot;IR</span> <span class="pre">&gt;=</span> <span class="pre">9&quot;</span> <span class="pre">dataset</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;Survey</span> <span class="pre">on</span> <span class="pre">Highly</span> <span class="pre">Imbalanced</span> <span class="pre">Multi-class</span> <span class="pre">Data&quot;</span> <span class="pre">IJACSA</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">imbalanced</span> <span class="pre">dataset</span> <span class="pre">classification</span> <span class="pre">criteria</span></code></p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="s1">&#39;df_train_raw&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">ANALISIS STRUKTUR &amp; DISTRIBUSI&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ANALISIS STRUKTUR &amp; DISTRIBUSI KELAS&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
     
     <span class="c1"># Cek Label Unik &amp; Mapping</span>
     <span class="n">unique_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_train</span><span class="p">)</span>
     <span class="n">class_map</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;Authentic (Murni)&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;Adulterated (Oplosan)&quot;</span><span class="p">}</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Label Kelas Ditemukan: </span><span class="si">{</span><span class="n">unique_labels</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">class_map</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Label Kelas Ditemukan: </span><span class="si">{</span><span class="n">unique_labels</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">class_map</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     
     <span class="c1"># Hitung Distribusi Kelas</span>
     <span class="n">unique</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">class_dist</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="n">class_map</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">unique</span><span class="p">],</span> <span class="n">counts</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Distribusi Sampel: </span><span class="si">{</span><span class="n">class_dist</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">class_dist</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="n">class_map</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">unique</span><span class="p">],</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">counts</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Distribusi Sampel: </span><span class="si">{</span><span class="n">class_dist</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     
-    <span class="c1"># Cek Rasio Imbalance</span>
-    <span class="n">ratio</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span> <span class="o">/</span> <span class="nb">min</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Rasio Kelas Mayoritas vs Minoritas: </span><span class="si">{</span><span class="n">ratio</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> : 1&quot;</span><span class="p">)</span>
+    <span class="c1"># Hitung Imbalance Ratio (IR)</span>
+    <span class="n">imbalance_ratio</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span> <span class="o">/</span> <span class="nb">min</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+    <span class="n">minority_percent</span> <span class="o">=</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">counts</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
+    <span class="n">majority_percent</span> <span class="o">=</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">counts</span><span class="p">))</span> <span class="o">*</span> <span class="mi">100</span>
     
-    <span class="k">if</span> <span class="n">ratio</span> <span class="o">&gt;</span> <span class="mf">1.5</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   KESIMPULAN: Data Terindikasi TIDAK SEIMBANG. Perlu perhatian pada metrik evaluasi.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Imbalance Ratio (IR): </span><span class="si">{</span><span class="n">imbalance_ratio</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Persentase Kelas Minoritas: </span><span class="si">{</span><span class="n">minority_percent</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Persentase Kelas Mayoritas: </span><span class="si">{</span><span class="n">majority_percent</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+    
+    <span class="c1"># Kesimpulan berdasarkan IR</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;KESIMPULAN ANALISIS&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">imbalance_ratio</span> <span class="o">&gt;=</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;HIGHLY IMBALANCED&quot;</span>
+        <span class="n">status_id</span> <span class="o">=</span> <span class="s2">&quot;Sangat Tidak Seimbang&quot;</span>
+        <span class="n">rekomendasi</span> <span class="o">=</span> <span class="s2">&quot;WAJIB menggunakan teknik resampling (SMOTE, ADASYN) atau Cost-Sensitive Learning.&quot;</span>
+    <span class="k">elif</span> <span class="n">imbalance_ratio</span> <span class="o">&gt;</span> <span class="mf">1.5</span><span class="p">:</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;SLIGHTLY IMBALANCED&quot;</span>
+        <span class="n">status_id</span> <span class="o">=</span> <span class="s2">&quot;Sedikit Tidak Seimbang&quot;</span>
+        <span class="n">rekomendasi</span> <span class="o">=</span> <span class="s2">&quot;Tidak wajib resampling, namun gunakan metrik evaluasi yang tepat (F1-Score, ROC-AUC, Precision, Recall).&quot;</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   KESIMPULAN: Data Cukup Seimbang (Balanced).&quot;</span><span class="p">)</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;BALANCED&quot;</span>
+        <span class="n">status_id</span> <span class="o">=</span> <span class="s2">&quot;Seimbang&quot;</span>
+        <span class="n">rekomendasi</span> <span class="o">=</span> <span class="s2">&quot;Data seimbang, dapat menggunakan algoritma klasifikasi standar dengan metrik Accuracy.&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Status Dataset: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="n">status_id</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Imbalance Ratio (IR): </span><span class="si">{</span><span class="n">imbalance_ratio</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Threshold Balanced: IR ≤ 1.5&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Threshold Highly Imbalanced: IR ≥ 9&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">   Karena IR = </span><span class="si">{</span><span class="n">imbalance_ratio</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> dan 1.5 &lt; IR &lt; 9,&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   maka dataset termasuk kategori: </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Rekomendasi: </span><span class="si">{</span><span class="n">rekomendasi</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
         
     <span class="c1"># Statistik Deskriptif Singkat (Fitur)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">STATISTIK INTENSITAS SPEKTRUM (Fitur):&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Minimum Global : </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Maksimum Global: </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Rata-rata Global: </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Standar Deviasi : </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;STATISTIK INTENSITAS SPEKTRUM (Fitur)&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Minimum Global : </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Maksimum Global: </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Rata-rata Global: </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Standar Deviasi : </span><span class="si">{</span><span class="n">X_train</span><span class="o">.</span><span class="n">std</span><span class="p">()</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ANALISIS STRUKTUR &amp; DISTRIBUSI
-   - Label Kelas Ditemukan: [1 2] -&gt; {1: &#39;Authentic (Murni)&#39;, 2: &#39;Adulterated (Oplosan)&#39;}
-   - Distribusi Sampel: {&#39;Authentic (Murni)&#39;: 219, &#39;Adulterated (Oplosan)&#39;: 394}
-   - Rasio Kelas Mayoritas vs Minoritas: 1.80 : 1
-   KESIMPULAN: Data Terindikasi TIDAK SEIMBANG. Perlu perhatian pada metrik evaluasi.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>======================================================================
+ANALISIS STRUKTUR &amp; DISTRIBUSI KELAS
+======================================================================
 
-STATISTIK INTENSITAS SPEKTRUM (Fitur):
-   - Minimum Global : -2.3281
-   - Maksimum Global: 3.6820
-   - Rata-rata Global: 0.0000
-   - Standar Deviasi : 0.9979
+Label Kelas Ditemukan: [1 2] -&gt; {1: &#39;Authentic (Murni)&#39;, 2: &#39;Adulterated (Oplosan)&#39;}
+Distribusi Sampel: {&#39;Authentic (Murni)&#39;: 219, &#39;Adulterated (Oplosan)&#39;: 394}
+
+Imbalance Ratio (IR): 1.80
+Persentase Kelas Minoritas: 35.73%
+Persentase Kelas Mayoritas: 64.27%
+
+----------------------------------------------------------------------
+KESIMPULAN ANALISIS
+----------------------------------------------------------------------
+
+Status Dataset: SLIGHTLY IMBALANCED (Sedikit Tidak Seimbang)
+   • Imbalance Ratio (IR): 1.80
+   • Threshold Balanced: IR ≤ 1.5
+   • Threshold Highly Imbalanced: IR ≥ 9
+
+   Karena IR = 1.80 dan 1.5 &lt; IR &lt; 9,
+   maka dataset termasuk kategori: SLIGHTLY IMBALANCED
+
+Rekomendasi: Tidak wajib resampling, namun gunakan metrik evaluasi yang tepat (F1-Score, ROC-AUC, Precision, Recall).
+
+======================================================================
+STATISTIK INTENSITAS SPEKTRUM (Fitur)
+======================================================================
+   • Minimum Global : -2.3281
+   • Maksimum Global: 3.6820
+   • Rata-rata Global: 0.0000
+   • Standar Deviasi : 0.9979
 </pre></div>
 </div>
 </div>
@@ -1036,7 +1134,7 @@ Karakteristik Distribusi (Skewness):
 </section>
 <section id="preprocessing-data">
 <h2>3. PREPROCESSING DATA<a class="headerlink" href="#preprocessing-data" title="Link to this heading">#</a></h2>
-<p>Tahap ini bertujuan memperbaiki kualitas data latih (<em>Training Set</em>) agar model dapat belajar optimal. Berdasarkan temuan di Bab 2, kita menghadapi dua tantangan utama: potensi <em>outlier</em> dan ketidakseimbangan kelas.</p>
+<p>Berdasarkan tinjauan literatur dan karakteristik data spektroskopi, strategi preprocessing difokuskan pada <strong>Pembersihan Data (Outlier Removal)</strong> untuk membuang sinyal <em>noise</em> atau kesalahan pembacaan sensor.</p>
 <p><strong>Strategi Preprocessing (Adaptive Pipeline):</strong></p>
 <ol class="arabic simple">
 <li><p><strong>Outlier Removal:</strong> Kita akan menguji tiga algoritma deteksi anomali:</p>
@@ -1046,52 +1144,41 @@ Karakteristik Distribusi (Skewness):
 <li><p><em>Angle-Based Outlier Detection (ABOD):</em> Menggunakan varians sudut (bagus untuk data spektrum).</p></li>
 </ul>
 </li>
-<li><p><strong>Class Balancing:</strong> Kita akan menguji teknik <em>Oversampling</em>:</p>
-<ul class="simple">
-<li><p><em>SMOTE:</em> Membuat data sintetis di sepanjang garis hubung antar-sampel.</p></li>
-<li><p><em>ADASYN:</em> Fokus membuat data sintetis di area yang sulit dipelajari (perbatasan kelas).</p></li>
-</ul>
-</li>
 </ol>
 <p>Pendekatan ini menggunakan <strong>Experimental Selection</strong>, di mana sistem akan otomatis memilih kombinasi metode terbaik berdasarkan validasi silang (Cross-Validation Score).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fungsi Evaluasi Kombinasi</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">evaluate_preprocessing</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">outlier_model</span><span class="p">,</span> <span class="n">resampler_model</span><span class="p">):</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Fungsi Evaluasi Kualitas Data</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">evaluate_cleaning</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">outlier_model</span><span class="p">):</span>
     <span class="n">X_curr</span><span class="p">,</span> <span class="n">y_curr</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
     
-    <span class="c1"># Outlier Removal</span>
+    <span class="c1"># Deteksi &amp; Hapus Outlier</span>
     <span class="k">if</span> <span class="n">outlier_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">outlier_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_curr</span><span class="p">)</span>
             <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">outlier_model</span><span class="o">.</span><span class="n">labels_</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">50</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> 
+            
+            <span class="c1"># Safety check: Jangan sampai data habis</span>
+            <span class="k">if</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span> 
+            
             <span class="n">X_curr</span> <span class="o">=</span> <span class="n">X_curr</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
             <span class="n">y_curr</span> <span class="o">=</span> <span class="n">y_curr</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
 
-    <span class="c1"># Resampling </span>
-    <span class="k">if</span> <span class="n">resampler_model</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">X_curr</span><span class="p">,</span> <span class="n">y_curr</span> <span class="o">=</span> <span class="n">resampler_model</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_curr</span><span class="p">,</span> <span class="n">y_curr</span><span class="p">)</span>
-        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
-            
-    <span class="c1"># Validasi dengan Random Forest Sederhana</span>
+    <span class="c1"># Validasi dengan Random Forest</span>
     <span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-    <span class="n">cv</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-    <span class="c1"># Gunakan F1-Macro agar adil untuk kedua kelas</span>
+    <span class="n">cv</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
     <span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">rf</span><span class="p">,</span> <span class="n">X_curr</span><span class="p">,</span> <span class="n">y_curr</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;f1_macro&#39;</span><span class="p">)</span>
     
     <span class="k">return</span> <span class="n">scores</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_curr</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fungsi Evaluasi Siap Digunakan.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fungsi Evaluasi Siap (Mode: Pure Data Preservation).&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fungsi Evaluasi Siap Digunakan.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fungsi Evaluasi Siap (Mode: Pure Data Preservation).
 </pre></div>
 </div>
 </div>
@@ -1100,178 +1187,126 @@ Karakteristik Distribusi (Skewness):
 <h3>Eksperimen Seleksi Metode<a class="headerlink" href="#eksperimen-seleksi-metode" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;EKSPERIMEN PEMILIHAN METODE&quot;</span><span class="p">)</span>
-
-<span class="c1"># DEFINISI KANDIDAT METODE</span>
-<span class="c1"># Outlier Detectors</span>
-<span class="n">outlier_candidates</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;Tanpa Outlier Removal&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">outlier_candidates</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Tanpa Cleaning (Baseline)&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
     <span class="s1">&#39;Isolation Forest&#39;</span><span class="p">:</span> <span class="n">IForest</span><span class="p">(</span><span class="n">contamination</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
-    <span class="s1">&#39;LOF (Local Density)&#39;</span><span class="p">:</span> <span class="n">LOF</span><span class="p">(</span><span class="n">contamination</span><span class="o">=</span><span class="mf">0.05</span><span class="p">),</span>
-    <span class="s1">&#39;ABOD (Angle-Based)&#39;</span><span class="p">:</span> <span class="n">ABOD</span><span class="p">(</span><span class="n">contamination</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+    <span class="s1">&#39;LOF&#39;</span><span class="p">:</span> <span class="n">LOF</span><span class="p">(</span><span class="n">contamination</span><span class="o">=</span><span class="mf">0.05</span><span class="p">),</span>
+    <span class="s1">&#39;ABOD&#39;</span><span class="p">:</span> <span class="n">ABOD</span><span class="p">(</span><span class="n">contamination</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
 <span class="p">}</span>
 
-<span class="c1"># Resamplers</span>
-<span class="n">resampler_candidates</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s1">&#39;Tanpa Resampling&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="s1">&#39;SMOTE&#39;</span><span class="p">:</span> <span class="n">SMOTE</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
-    <span class="s1">&#39;ADASYN&#39;</span><span class="p">:</span> <span class="n">ADASYN</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="c1"># JALANKAN LOOP PENGUJIAN</span>
-<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">best_score</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
 <span class="n">best_combo</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;METODE OUTLIER&#39;</span><span class="si">:</span><span class="s2">&lt;25</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;METODE RESAMPLING&#39;</span><span class="si">:</span><span class="s2">&lt;20</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;F1-SCORE&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;SAMPEL AKHIR&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;METODE OUTLIER&#39;</span><span class="si">:</span><span class="s2">&lt;25</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;F1-SCORE&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;SAMPEL TERSISA&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">65</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">out_name</span><span class="p">,</span> <span class="n">out_model</span> <span class="ow">in</span> <span class="n">outlier_candidates</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="k">for</span> <span class="n">res_name</span><span class="p">,</span> <span class="n">res_model</span> <span class="ow">in</span> <span class="n">resampler_candidates</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        
-        <span class="c1"># Evaluasi</span>
-        <span class="n">score</span><span class="p">,</span> <span class="n">n_samples</span> <span class="o">=</span> <span class="n">evaluate_preprocessing</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">out_model</span><span class="p">,</span> <span class="n">res_model</span><span class="p">)</span>
-        
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">out_name</span><span class="si">:</span><span class="s2">&lt;25</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">res_name</span><span class="si">:</span><span class="s2">&lt;20</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">     | </span><span class="si">{</span><span class="n">n_samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        
-        <span class="c1"># Simpan Pemenang</span>
-        <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="n">best_score</span><span class="p">:</span>
-            <span class="n">best_score</span> <span class="o">=</span> <span class="n">score</span>
-            <span class="n">best_combo</span> <span class="o">=</span> <span class="p">{</span>
-                <span class="s1">&#39;out_name&#39;</span><span class="p">:</span> <span class="n">out_name</span><span class="p">,</span> <span class="s1">&#39;out_model&#39;</span><span class="p">:</span> <span class="n">out_model</span><span class="p">,</span>
-                <span class="s1">&#39;res_name&#39;</span><span class="p">:</span> <span class="n">res_name</span><span class="p">,</span> <span class="s1">&#39;res_model&#39;</span><span class="p">:</span> <span class="n">res_model</span>
-            <span class="p">}</span>
+    <span class="c1"># Evaluasi</span>
+    <span class="n">score</span><span class="p">,</span> <span class="n">n_samples</span> <span class="o">=</span> <span class="n">evaluate_cleaning</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">out_model</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">out_name</span><span class="si">:</span><span class="s2">&lt;25</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">     | </span><span class="si">{</span><span class="n">n_samples</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="c1"># Simpan Pemenang</span>
+    <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="n">best_score</span><span class="p">:</span>
+        <span class="n">best_score</span> <span class="o">=</span> <span class="n">score</span>
+        <span class="n">best_combo</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;out_name&#39;</span><span class="p">:</span> <span class="n">out_name</span><span class="p">,</span> 
+            <span class="s1">&#39;out_model&#39;</span><span class="p">:</span> <span class="n">out_model</span>
+        <span class="p">}</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">JUARA KOMBINASI: </span><span class="si">{</span><span class="n">best_combo</span><span class="p">[</span><span class="s1">&#39;out_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> + </span><span class="si">{</span><span class="n">best_combo</span><span class="p">[</span><span class="s1">&#39;res_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">65</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">METODE TERPILIH: </span><span class="si">{</span><span class="n">best_combo</span><span class="p">[</span><span class="s1">&#39;out_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   (Estimasi F1-Score: </span><span class="si">{</span><span class="n">best_score</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Alasan: Metode ini memberikan keseimbangan terbaik antara kebersihan data dan informasi yang terjaga.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EKSPERIMEN PEMILIHAN METODE
-METODE OUTLIER            | METODE RESAMPLING    | F1-SCORE   | SAMPEL AKHIR
---------------------------------------------------------------------------------
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>METODE OUTLIER            | F1-SCORE   | SAMPEL TERSISA
+-----------------------------------------------------------------
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tanpa Outlier Removal     | Tanpa Resampling     | 0.9607     | 613
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tanpa Cleaning (Baseline) | 0.9608     | 613
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tanpa Outlier Removal     | SMOTE                | 0.9708     | 788
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Isolation Forest          | 0.9614     | 582
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Tanpa Outlier Removal     | ADASYN               | 0.9762     | 798
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LOF                       | 0.9613     | 582
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Isolation Forest          | Tanpa Resampling     | 0.9506     | 582
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Isolation Forest          | SMOTE                | 0.9671     | 730
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Isolation Forest          | ADASYN               | 0.9720     | 751
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LOF (Local Density)       | Tanpa Resampling     | 0.9595     | 582
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LOF (Local Density)       | SMOTE                | 0.9661     | 738
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LOF (Local Density)       | ADASYN               | 0.9705     | 747
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ABOD (Angle-Based)        | Tanpa Resampling     | 0.9596     | 582
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ABOD (Angle-Based)        | SMOTE                | 0.9769     | 736
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ABOD (Angle-Based)        | ADASYN               | 0.9719     | 747
---------------------------------------------------------------------------------
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ABOD                      | 0.9631     | 582
+-----------------------------------------------------------------
 
-JUARA KOMBINASI: ABOD (Angle-Based) + SMOTE
-   (Estimasi F1-Score: 0.9769)
+METODE TERPILIH: ABOD
+   (Estimasi F1-Score: 0.9631)
+   Alasan: Metode ini memberikan keseimbangan terbaik antara kebersihan data dan informasi yang terjaga.
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="eksekusi-final-visualisasi-before-vs-after">
-<h3>Eksekusi Final &amp; Visualisasi (Before vs After)<a class="headerlink" href="#eksekusi-final-visualisasi-before-vs-after" title="Link to this heading">#</a></h3>
+<section id="eksekusi-final-visualisasi">
+<h3>Eksekusi Final &amp; Visualisasi<a class="headerlink" href="#eksekusi-final-visualisasi" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;EKSEKUSI FINAL &amp; VISUALISASI PERUBAHAN&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_before</span><span class="p">,</span> <span class="n">y_before</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">y_train</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">X_final</span><span class="p">,</span> <span class="n">y_final</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">y_train</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
-<span class="c1"># SIAPKAN DATA</span>
-<span class="n">X_before</span><span class="p">,</span> <span class="n">y_before</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">y_train</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">X_cleaned</span><span class="p">,</span> <span class="n">y_cleaned</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">y_train</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-<span class="n">X_final</span><span class="p">,</span> <span class="n">y_final</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span> <span class="n">y_train</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>     
-
-<span class="c1"># EKSEKUSI OUTLIER REMOVAL (Tahap 1)</span>
+<span class="c1"># METODE TERPILIH</span>
 <span class="k">if</span> <span class="n">best_combo</span><span class="p">[</span><span class="s1">&#39;out_model&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
     <span class="n">model_out</span> <span class="o">=</span> <span class="n">best_combo</span><span class="p">[</span><span class="s1">&#39;out_model&#39;</span><span class="p">]</span>
-    <span class="n">model_out</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_before</span><span class="p">)</span>
-    <span class="n">mask_inlier</span> <span class="o">=</span> <span class="p">(</span><span class="n">model_out</span><span class="o">.</span><span class="n">labels_</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> 
+    <span class="n">model_out</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_final</span><span class="p">)</span>
     
-    <span class="n">X_cleaned</span> <span class="o">=</span> <span class="n">X_before</span><span class="p">[</span><span class="n">mask_inlier</span><span class="p">]</span>
-    <span class="n">y_cleaned</span> <span class="o">=</span> <span class="n">y_before</span><span class="p">[</span><span class="n">mask_inlier</span><span class="p">]</span>
-    <span class="n">X_final</span><span class="p">,</span> <span class="n">y_final</span> <span class="o">=</span> <span class="n">X_cleaned</span><span class="p">,</span> <span class="n">y_cleaned</span> 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tahap 1 (Cleaning) Selesai: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_before</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">X_cleaned</span><span class="p">)</span><span class="si">}</span><span class="s2"> outlier dibuang.&quot;</span><span class="p">)</span>
+    <span class="c1"># Ambil data yang normal saja (Label 0)</span>
+    <span class="n">mask_inlier</span> <span class="o">=</span> <span class="p">(</span><span class="n">model_out</span><span class="o">.</span><span class="n">labels_</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    
+    <span class="n">X_final</span> <span class="o">=</span> <span class="n">X_final</span><span class="p">[</span><span class="n">mask_inlier</span><span class="p">]</span>
+    <span class="n">y_final</span> <span class="o">=</span> <span class="n">y_final</span><span class="p">[</span><span class="n">mask_inlier</span><span class="p">]</span>
+    
+    <span class="n">n_dibuang</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_before</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_final</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cleaning Selesai. Dibuang: </span><span class="si">{</span><span class="n">n_dibuang</span><span class="si">}</span><span class="s2"> sampel (terdeteksi noise/rusak).&quot;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tahap 1 (Cleaning) Skipped (Sesuai hasil seleksi).&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Menggunakan Data Asli (Tanpa pembuangan data).&quot;</span><span class="p">)</span>
 
-<span class="c1"># EKSEKUSI RESAMPLING (Tahap 2)</span>
-<span class="k">if</span> <span class="n">best_combo</span><span class="p">[</span><span class="s1">&#39;res_model&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-    <span class="n">model_res</span> <span class="o">=</span> <span class="n">best_combo</span><span class="p">[</span><span class="s1">&#39;res_model&#39;</span><span class="p">]</span>
-    <span class="n">X_final</span><span class="p">,</span> <span class="n">y_final</span> <span class="o">=</span> <span class="n">model_res</span><span class="o">.</span><span class="n">fit_resample</span><span class="p">(</span><span class="n">X_final</span><span class="p">,</span> <span class="n">y_final</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Tahap 2 (Balancing) Selesai: Total data menjadi </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_final</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tahap 2 (Balancing) Skipped (Sesuai hasil seleksi).&quot;</span><span class="p">)</span>
 
-<span class="c1"># VISUALISASI BEFORE vs AFTER</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-<span class="n">my_palette</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Authentic (Murni)&#39;</span><span class="p">:</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;Adulterated (Oplosan)&#39;</span><span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">}</span>
-
-<span class="c1"># Pie Chart (Distribusi)</span>
-<span class="c1"># Before</span>
-<span class="n">u_bef</span><span class="p">,</span> <span class="n">c_bef</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_before</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">c_bef</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="n">class_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">u_bef</span><span class="p">],</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%1.1f%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#2ecc71&#39;</span><span class="p">,</span> <span class="s1">&#39;#e74c3c&#39;</span><span class="p">],</span> <span class="n">startangle</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SEBELUM: Distribusi Kelas</span><span class="se">\n</span><span class="s2">(Total: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y_before</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
-<span class="c1"># After</span>
-<span class="n">u_aft</span><span class="p">,</span> <span class="n">c_aft</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_final</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">c_aft</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="n">class_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">u_aft</span><span class="p">],</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%1.1f%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#2ecc71&#39;</span><span class="p">,</span> <span class="s1">&#39;#e74c3c&#39;</span><span class="p">],</span> <span class="n">startangle</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SESUDAH: Distribusi Kelas</span><span class="se">\n</span><span class="s2">(Total: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y_final</span><span class="p">)</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
-
-<span class="c1"># PCA Scatter (Struktur Data)</span>
+<span class="c1"># VISUALISASI</span>
 <span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<span class="c1"># Before</span>
-<span class="n">X_pca_bef</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_before</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X_pca_bef</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">X_pca_bef</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="p">[</span><span class="n">class_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_before</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="n">my_palette</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;SEBELUM: Peta Data (PCA)&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
-<span class="c1"># After</span>
-<span class="n">X_pca_aft</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_final</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">X_pca_aft</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">X_pca_aft</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="p">[</span><span class="n">class_map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_final</span><span class="p">],</span> <span class="n">palette</span><span class="o">=</span><span class="n">my_palette</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
-<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;SESUDAH: Peta Data (PCA)&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">X_pca_all</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_before</span><span class="p">)</span>
 
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="k">if</span> <span class="n">best_combo</span><span class="p">[</span><span class="s1">&#39;out_model&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="c1"># Plot Data Bersih (Hijau)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_pca_all</span><span class="p">[</span><span class="n">mask_inlier</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pca_all</span><span class="p">[</span><span class="n">mask_inlier</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> 
+                <span class="n">c</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data Valid (Disimpan)&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+    <span class="c1"># Plot Outlier (Merah Silang)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_pca_all</span><span class="p">[</span><span class="o">~</span><span class="n">mask_inlier</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pca_all</span><span class="p">[</span><span class="o">~</span><span class="n">mask_inlier</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> 
+                <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Noise/Outlier (Dibuang)&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># Jika tidak ada cleaning, plot semua hijau</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_pca_all</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_pca_all</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data Asli&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Visualisasi Pembersihan Data (</span><span class="si">{</span><span class="n">best_combo</span><span class="p">[</span><span class="s1">&#39;out_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 1&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Principal Component 2&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-<span class="c1"># UPDATE VARIABEL GLOBAL UNTUK BAB SELANJUTNYA</span>
-<span class="n">X_train</span> <span class="o">=</span> <span class="n">X_final</span>
-<span class="n">y_train</span> <span class="o">=</span> <span class="n">y_final</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variabel X_train dan y_train telah diperbarui dengan data hasil preprocessing.&quot;</span><span class="p">)</span>
+<span class="c1"># UPDATE VARIABEL GLOBAL</span>
+<span class="n">X_train_final</span> <span class="o">=</span> <span class="n">X_final</span>
+<span class="n">y_train_final</span> <span class="o">=</span> <span class="n">y_final</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variabel &#39;X_train_final&#39; siap digunakan untuk Modeling (Bab 4).&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EKSEKUSI FINAL &amp; VISUALISASI PERUBAHAN
-Tahap 1 (Cleaning) Selesai: 31 outlier dibuang.
-Tahap 2 (Balancing) Selesai: Total data menjadi 736.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cleaning Selesai. Dibuang: 31 sampel (terdeteksi noise/rusak).
 </pre></div>
 </div>
-<img alt="_images/e839393d085843dc4f3d9b9ebeb3668f52f7fb6983fedb02fb381828bb2245ec.png" src="_images/e839393d085843dc4f3d9b9ebeb3668f52f7fb6983fedb02fb381828bb2245ec.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Variabel X_train dan y_train telah diperbarui dengan data hasil preprocessing.
+<img alt="_images/61f8c182bc98eea12f7ac1ffe41919d2cd0d9b3ccf32852ed8814e7c11c46bf9.png" src="_images/61f8c182bc98eea12f7ac1ffe41919d2cd0d9b3ccf32852ed8814e7c11c46bf9.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Variabel &#39;X_train_final&#39; siap digunakan untuk Modeling (Bab 4).
 </pre></div>
 </div>
 </div>
@@ -1283,58 +1318,29 @@ Tahap 2 (Balancing) Selesai: Total data menjadi 736.
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ANALISIS PERUBAHAN JUMLAH DATA (Pipeline Tracking)&quot;</span><span class="p">)</span>
 
-<span class="c1"># SIAPKAN DATA PLOTTING</span>
-<span class="n">stages</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Data Awal</span><span class="se">\n</span><span class="s1">(Mentah)&#39;</span><span class="p">,</span> <span class="s1">&#39;Setelah Cleaning</span><span class="se">\n</span><span class="s1">(Outlier Dibuang)&#39;</span><span class="p">,</span> <span class="s1">&#39;Setelah Resampling</span><span class="se">\n</span><span class="s1">(Final)&#39;</span><span class="p">]</span>
-<span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">X_before</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_cleaned</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_final</span><span class="p">)]</span>
-<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="s1">&#39;#e74c3c&#39;</span><span class="p">,</span> <span class="s1">&#39;#2ecc71&#39;</span><span class="p">]</span> <span class="c1"># Abu, Merah (Berkurang), Hijau (Bertambah)</span>
+<span class="n">stages</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Data Awal&#39;</span><span class="p">,</span> <span class="s1">&#39;Data Akhir (Bersih)&#39;</span><span class="p">]</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">X_before</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_final</span><span class="p">)]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;grey&#39;</span><span class="p">,</span> <span class="s1">&#39;#2ecc71&#39;</span><span class="p">]</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-<span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">stages</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">bars</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">stages</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
 
-<span class="c1"># TAMBAHKAN LABEL ANGKA DI ATAS BATANG</span>
+<span class="c1"># Label Angka</span>
 <span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">bars</span><span class="p">:</span>
     <span class="n">height</span> <span class="o">=</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span><span class="o">*</span><span class="mf">0.02</span><span class="p">),</span>
-             <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">height</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">bar</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bar</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">height</span> <span class="o">+</span> <span class="mi">5</span><span class="p">,</span>
+             <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">height</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
 
-<span class="c1"># TAMBAHKAN ANOTASI PERUBAHAN (PANAH &amp; TEXT)</span>
-<span class="c1"># Info Pengurangan (Outlier Removal)</span>
-<span class="n">diff_1</span> <span class="o">=</span> <span class="n">counts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">counts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="k">if</span> <span class="n">diff_1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="c1"># Posisi tengah antara batang 1 dan 2</span>
-    <span class="n">mid_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">bars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_width</span><span class="p">())</span> <span class="o">/</span> <span class="mi">2</span>
-    <span class="n">mid_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">counts</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
-    
-    <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dibuang: -</span><span class="si">{</span><span class="n">diff_1</span><span class="si">}</span><span class="se">\n</span><span class="s2">(Noise/Outlier)&quot;</span><span class="p">,</span> 
-                 <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">mid_x</span><span class="p">,</span> <span class="n">mid_y</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">mid_x</span><span class="p">,</span> <span class="n">mid_y</span><span class="p">),</span>
-                 <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span>
-                 <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;round,pad=0.3&quot;</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">))</span>
-
-<span class="c1"># Info Penambahan (Resampling)</span>
-<span class="n">diff_2</span> <span class="o">=</span> <span class="n">counts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">counts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="k">if</span> <span class="n">diff_2</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-    <span class="c1"># Posisi tengah antara batang 2 dan 3</span>
-    <span class="n">mid_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">bars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bars</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">bars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_width</span><span class="p">())</span> <span class="o">/</span> <span class="mi">2</span>
-    <span class="n">mid_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">counts</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">counts</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span>
-    
-    <span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Ditambah: +</span><span class="si">{</span><span class="n">diff_2</span><span class="si">}</span><span class="se">\n</span><span class="s2">(Sintetis)&quot;</span><span class="p">,</span> 
-                 <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">mid_x</span><span class="p">,</span> <span class="n">mid_y</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">mid_x</span><span class="p">,</span> <span class="n">mid_y</span><span class="p">),</span>
-                 <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span>
-                 <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;round,pad=0.3&quot;</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">))</span>
-
-<span class="c1"># Dekorasi Grafik</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Pelacakan Perubahan Jumlah Sampel Data (Preprocessing)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Jumlah Sampel&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.2</span><span class="p">)</span> <span class="c1"># Memberi ruang kosong di atas untuk label</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Perubahan Jumlah Sampel (Outlier Removal)&quot;</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Jumlah Sampel&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span><span class="o">*</span><span class="mf">1.2</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RINGKASAN AKHIR BAB 3:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;1. Data Awal            : </span><span class="si">{</span><span class="n">counts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2"> sampel.&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;2. Sampel Dibuang       : </span><span class="si">{</span><span class="n">diff_1</span><span class="si">}</span><span class="s2"> sampel (</span><span class="si">{</span><span class="p">(</span><span class="n">diff_1</span><span class="o">/</span><span class="n">counts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">% dari data awal).&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;3. Sampel Ditambahkan   : </span><span class="si">{</span><span class="n">diff_2</span><span class="si">}</span><span class="s2"> sampel (Untuk menyeimbangkan kelas).&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;4. Total Data Siap Latih: </span><span class="si">{</span><span class="n">counts</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="si">}</span><span class="s2"> sampel.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;LAPORAN:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Total Data Sebelum Outlier Removal : </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_before</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Total Data Sesudah Outlier Removal: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_final</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Status: Data cleaning selesai. Integritas sinyal terjaga (tanpa sintesis).&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1342,12 +1348,11 @@ Tahap 2 (Balancing) Selesai: Total data menjadi 736.
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ANALISIS PERUBAHAN JUMLAH DATA (Pipeline Tracking)
 </pre></div>
 </div>
-<img alt="_images/84cf57adf2d7243ee1b91ef60e49b9fd7ab0e0bcb20f39409bab2a776379586d.png" src="_images/84cf57adf2d7243ee1b91ef60e49b9fd7ab0e0bcb20f39409bab2a776379586d.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RINGKASAN AKHIR BAB 3:
-1. Data Awal            : 613 sampel.
-2. Sampel Dibuang       : 31 sampel (5.1% dari data awal).
-3. Sampel Ditambahkan   : 154 sampel (Untuk menyeimbangkan kelas).
-4. Total Data Siap Latih: 736 sampel.
+<img alt="_images/f1dc4e90d4ee36a14fb1e47399c22c52fe060afef2858f83b8266e15572c61d1.png" src="_images/f1dc4e90d4ee36a14fb1e47399c22c52fe060afef2858f83b8266e15572c61d1.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>LAPORAN:
+   - Total Data Sebelum Outlier Removal : 613
+   - Total Data Sesudah Outlier Removal: 582
+   - Status: Data cleaning selesai. Integritas sinyal terjaga (tanpa sintesis).
 </pre></div>
 </div>
 </div>
@@ -1357,134 +1362,91 @@ Tahap 2 (Balancing) Selesai: Total data menjadi 736.
 <h3>Komparasi Detail Per Kelas (Sebelum vs Sesudah)<a class="headerlink" href="#komparasi-detail-per-kelas-sebelum-vs-sesudah" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;EVALUASI DETAIL PERUBAHAN DATA (PER KELAS)&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;ANALISIS DATA HILANG PER KELAS (Dampak Cleaning)&quot;</span><span class="p">)</span>
 
-<span class="c1"># MENYUSUN DATA UNTUK PLOTTING</span>
-<span class="n">data_tracking</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">unique_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_before</span><span class="p">)</span>
+<span class="n">class_map</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Authentic (Murni)&#39;</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span> <span class="s1">&#39;Adulterated (Oplosan)&#39;</span><span class="p">}</span>
 
-<span class="c1"># Fungsi bantuan untuk menghitung per kelas</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">get_counts</span><span class="p">(</span><span class="n">y_data</span><span class="p">,</span> <span class="n">stage_name</span><span class="p">):</span>
-    <span class="n">unique</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y_data</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">u</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">unique</span><span class="p">,</span> <span class="n">counts</span><span class="p">):</span>
-        <span class="n">data_tracking</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
-            <span class="s1">&#39;Tahapan&#39;</span><span class="p">:</span> <span class="n">stage_name</span><span class="p">,</span>
-            <span class="s1">&#39;Kelas&#39;</span><span class="p">:</span> <span class="n">class_map</span><span class="p">[</span><span class="n">u</span><span class="p">],</span>
-            <span class="s1">&#39;Jumlah&#39;</span><span class="p">:</span> <span class="n">c</span>
-        <span class="p">})</span>
+<span class="n">data_per_class</span> <span class="o">=</span> <span class="p">[]</span>
 
-<span class="c1"># Ambil data</span>
-<span class="k">if</span> <span class="s1">&#39;y_before&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;y_cleaned&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;y_final&#39;</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">():</span>
-    <span class="n">get_counts</span><span class="p">(</span><span class="n">y_before</span><span class="p">,</span> <span class="s1">&#39;1. Awal (Mentah)&#39;</span><span class="p">)</span>
-    <span class="n">get_counts</span><span class="p">(</span><span class="n">y_cleaned</span><span class="p">,</span> <span class="s1">&#39;2. Setelah Cleaning</span><span class="se">\n</span><span class="s1">(Outlier Removal)&#39;</span><span class="p">)</span>
-    <span class="n">get_counts</span><span class="p">(</span><span class="n">y_final</span><span class="p">,</span> <span class="s1">&#39;3. Setelah Resampling</span><span class="se">\n</span><span class="s1">(Final)&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">unique_labels</span><span class="p">:</span>
+    <span class="n">label_name</span> <span class="o">=</span> <span class="n">class_map</span><span class="p">[</span><span class="n">label</span><span class="p">]</span>
+    <span class="c1"># Hitung jumlah awal</span>
+    <span class="n">count_awal</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_before</span> <span class="o">==</span> <span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="c1"># Hitung jumlah akhir</span>
+    <span class="n">count_akhir</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_final</span> <span class="o">==</span> <span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="c1"># Masukkan ke list untuk dataframe</span>
+    <span class="n">data_per_class</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">&#39;Kelas&#39;</span><span class="p">:</span> <span class="n">label_name</span><span class="p">,</span> 
+        <span class="s1">&#39;Kondisi&#39;</span><span class="p">:</span> <span class="s1">&#39;Awal (Mentah)&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Jumlah&#39;</span><span class="p">:</span> <span class="n">count_awal</span>
+    <span class="p">})</span>
+    <span class="n">data_per_class</span><span class="o">.</span><span class="n">append</span><span class="p">({</span>
+        <span class="s1">&#39;Kelas&#39;</span><span class="p">:</span> <span class="n">label_name</span><span class="p">,</span> 
+        <span class="s1">&#39;Kondisi&#39;</span><span class="p">:</span> <span class="s1">&#39;Akhir (Bersih)&#39;</span><span class="p">,</span> 
+        <span class="s1">&#39;Jumlah&#39;</span><span class="p">:</span> <span class="n">count_akhir</span>
+    <span class="p">})</span>
 
-    <span class="n">df_track</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_tracking</span><span class="p">)</span>
+<span class="n">df_compare</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data_per_class</span><span class="p">)</span>
 
-    <span class="c1"># VISUALISASI GROUPED BAR CHART</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+<span class="c1"># VISUALISASI</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Plot Batang Berdampingan</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Kelas&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Jumlah&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Kondisi&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">df_compare</span><span class="p">,</span> 
+                 <span class="n">palette</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Awal (Mentah)&#39;</span><span class="p">:</span> <span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="s1">&#39;Akhir (Bersih)&#39;</span><span class="p">:</span> <span class="s1">&#39;#2ecc71&#39;</span><span class="p">})</span>
+
+<span class="c1"># Dekorasi</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Perubahan Jumlah Sampel Per Kelas (Sebelum vs Sesudah Cleaning)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Kategori Kelas&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Jumlah Sampel&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">&quot;Status Data&quot;</span><span class="p">)</span>
+
+<span class="c1"># Tambahkan Label Angka &amp; Selisih</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ax</span><span class="o">.</span><span class="n">patches</span><span class="p">):</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">get_height</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">height</span><span class="p">):</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="nb">int</span><span class="p">(</span><span class="n">height</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> 
+                    <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">get_x</span><span class="p">()</span> <span class="o">+</span> <span class="n">p</span><span class="o">.</span><span class="n">get_width</span><span class="p">()</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> 
+                    <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">,</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> 
+                    <span class="n">textcoords</span><span class="o">=</span><span class="s1">&#39;offset points&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># TABEL RINGKASAN</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;RINCIAN PENGHAPUSAN DATA:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;KELAS&#39;</span><span class="si">:</span><span class="s2">&lt;25</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;AWAL&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;AKHIR&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;DIBUANG&#39;</span><span class="si">:</span><span class="s2">&lt;15</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;% HILANG&#39;</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+
+<span class="n">total_buang</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">unique_labels</span><span class="p">:</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">class_map</span><span class="p">[</span><span class="n">label</span><span class="p">]</span>
+    <span class="n">c_awal</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_before</span> <span class="o">==</span> <span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">c_akhir</span> <span class="o">=</span> <span class="p">(</span><span class="n">y_final</span> <span class="o">==</span> <span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">diff</span> <span class="o">=</span> <span class="n">c_awal</span> <span class="o">-</span> <span class="n">c_akhir</span>
+    <span class="n">persen</span> <span class="o">=</span> <span class="p">(</span><span class="n">diff</span> <span class="o">/</span> <span class="n">c_awal</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span> <span class="k">if</span> <span class="n">c_awal</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
     
-    <span class="c1"># Gunakan palette warna konsisten</span>
-    <span class="n">my_palette</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Authentic (Murni)&#39;</span><span class="p">:</span> <span class="s1">&#39;#2ecc71&#39;</span><span class="p">,</span> <span class="s1">&#39;Adulterated (Oplosan)&#39;</span><span class="p">:</span> <span class="s1">&#39;#e74c3c&#39;</span><span class="p">}</span>
-    
-    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_track</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Tahapan&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Jumlah&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;Kelas&#39;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="n">my_palette</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">&lt;25</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">c_awal</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">c_akhir</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> | -</span><span class="si">{</span><span class="n">diff</span><span class="si">:</span><span class="s2">&lt;14</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">persen</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+    <span class="n">total_buang</span> <span class="o">+=</span> <span class="n">diff</span>
 
-    <span class="c1"># Dekorasi Grafik</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Perubahan Komposisi Kelas: Sebelum vs Sesudah Preprocessing&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Jumlah Sampel&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Kelas Stroberi&#39;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
-
-    <span class="c1"># Menambahkan Angka di Atas Batang</span>
-    <span class="k">for</span> <span class="n">container</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">containers</span><span class="p">:</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">bar_label</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="n">padding</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">fontweight</span><span class="o">=</span><span class="s1">&#39;bold&#39;</span><span class="p">)</span>
-
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-    <span class="c1"># OUTPUT TABEL RINGKASAN</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">TABEL RINCIAN PERUBAHAN:&quot;</span><span class="p">)</span>
-    <span class="n">pivot_table</span> <span class="o">=</span> <span class="n">df_track</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;Kelas&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Tahapan&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;Jumlah&#39;</span><span class="p">)</span>
-    <span class="c1"># Mengurutkan kolom agar sesuai logika waktu</span>
-    <span class="n">cols_order</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;1. Awal (Mentah)&#39;</span><span class="p">,</span> <span class="s1">&#39;2. Setelah Cleaning</span><span class="se">\n</span><span class="s1">(Outlier Removal)&#39;</span><span class="p">,</span> <span class="s1">&#39;3. Setelah Resampling</span><span class="se">\n</span><span class="s1">(Final)&#39;</span><span class="p">]</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">pivot_table</span><span class="p">[</span><span class="n">cols_order</span><span class="p">])</span>
-    
-    <span class="c1"># Analisis Teks Otomatis</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">INTERPRETASI:&quot;</span><span class="p">)</span>
-    <span class="n">diff_clean_auth</span> <span class="o">=</span> <span class="n">pivot_table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Authentic (Murni)&#39;</span><span class="p">,</span> <span class="n">cols_order</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">-</span> <span class="n">pivot_table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Authentic (Murni)&#39;</span><span class="p">,</span> <span class="n">cols_order</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
-    <span class="n">diff_clean_adul</span> <span class="o">=</span> <span class="n">pivot_table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Adulterated (Oplosan)&#39;</span><span class="p">,</span> <span class="n">cols_order</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">-</span> <span class="n">pivot_table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Adulterated (Oplosan)&#39;</span><span class="p">,</span> <span class="n">cols_order</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
-    
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;1. Outlier Removal: Dibuang </span><span class="si">{</span><span class="n">diff_clean_auth</span><span class="si">}</span><span class="s2"> sampel Asli dan </span><span class="si">{</span><span class="n">diff_clean_adul</span><span class="si">}</span><span class="s2"> sampel Oplosan.&quot;</span><span class="p">)</span>
-    
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">final_auth</span> <span class="o">=</span> <span class="n">pivot_table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Authentic (Murni)&#39;</span><span class="p">,</span> <span class="n">cols_order</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
-        <span class="n">final_adul</span> <span class="o">=</span> <span class="n">pivot_table</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Adulterated (Oplosan)&#39;</span><span class="p">,</span> <span class="n">cols_order</span><span class="p">[</span><span class="mi">2</span><span class="p">]]</span>
-        <span class="k">if</span> <span class="n">final_auth</span> <span class="o">==</span> <span class="n">final_adul</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2. Resampling: BERHASIL. Jumlah kedua kelas kini seimbang sempurna (50:50).&quot;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;2. Resampling: Jumlah data diperbaiki menjadi </span><span class="si">{</span><span class="n">final_auth</span><span class="si">}</span><span class="s2"> vs </span><span class="si">{</span><span class="n">final_adul</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
-    <span class="k">except</span><span class="p">:</span>
-        <span class="k">pass</span>
-
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Variabel data tidak ditemukan. Pastikan Cell 3.3 (Eksekusi Final) sudah dijalankan.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">80</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Total sampel noise yang dihapus: </span><span class="si">{</span><span class="n">total_buang</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>EVALUASI DETAIL PERUBAHAN DATA (PER KELAS)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ANALISIS DATA HILANG PER KELAS (Dampak Cleaning)
 </pre></div>
 </div>
-<img alt="_images/730f1d9925d2cc5751c0fc6ad09687c9aafd29fa2d07f8200acac5e1d43348f4.png" src="_images/730f1d9925d2cc5751c0fc6ad09687c9aafd29fa2d07f8200acac5e1d43348f4.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TABEL RINCIAN PERUBAHAN:
-</pre></div>
-</div>
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>Tahapan</th>
-      <th>1. Awal (Mentah)</th>
-      <th>2. Setelah Cleaning\n(Outlier Removal)</th>
-      <th>3. Setelah Resampling\n(Final)</th>
-    </tr>
-    <tr>
-      <th>Kelas</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Adulterated (Oplosan)</th>
-      <td>394</td>
-      <td>368</td>
-      <td>368</td>
-    </tr>
-    <tr>
-      <th>Authentic (Murni)</th>
-      <td>219</td>
-      <td>214</td>
-      <td>368</td>
-    </tr>
-  </tbody>
-</table>
-</div></div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INTERPRETASI:
-1. Outlier Removal: Dibuang 5 sampel Asli dan 26 sampel Oplosan.
-2. Resampling: BERHASIL. Jumlah kedua kelas kini seimbang sempurna (50:50).
+<img alt="_images/e318932ef3ec9d1f3c7c6cd47c61dae57ba8a7f4562eb40a3fd54778ecb587a8.png" src="_images/e318932ef3ec9d1f3c7c6cd47c61dae57ba8a7f4562eb40a3fd54778ecb587a8.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RINCIAN PENGHAPUSAN DATA:
+KELAS                     | AWAL       | AKHIR      | DIBUANG         | % HILANG
+--------------------------------------------------------------------------------
+Authentic (Murni)         | 219        | 214        | -5              | 2.3%
+Adulterated (Oplosan)     | 394        | 368        | -26             | 6.6%
+--------------------------------------------------------------------------------
+Total sampel noise yang dihapus: 31
 </pre></div>
 </div>
 </div>
@@ -1513,30 +1475,35 @@ Model terbaik akan dipilih berdasarkan <strong>F1-Score (Macro Average)</strong>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;PERSIAPAN DATA MODELING&quot;</span><span class="p">)</span>
 
 <span class="c1"># Pastikan Data Test Tersedia</span>
-<span class="k">if</span> <span class="s1">&#39;X_test&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">():</span>
-    <span class="c1"># Load ulang test set jika perlu</span>
-    <span class="n">df_test_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;Strawberry/Strawberry_TEST.txt&quot;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="sa">r</span><span class="s2">&quot;\s+&quot;</span><span class="p">)</span>
-    <span class="n">y_test</span> <span class="o">=</span> <span class="n">df_test_raw</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-    <span class="n">X_test</span> <span class="o">=</span> <span class="n">df_test_raw</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">values</span>
+<span class="k">if</span> <span class="s1">&#39;X_train_final&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">locals</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Peringatan: Data bersih tidak ditemukan. Menggunakan data mentah X_train.&quot;</span><span class="p">)</span>
+    <span class="n">X_train_final</span> <span class="o">=</span> <span class="n">X_train</span>
+    <span class="n">y_train_final</span> <span class="o">=</span> <span class="n">y_train</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Menggunakan Data Bersih dari Bab 3.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Jumlah Sampel Training: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train_final</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="c1"># Scaling Data (Standardization)</span>
+<span class="c1"># 2. Scaling Data (Standardization)</span>
+<span class="c1"># Kita fit scaler pada data latih yang BERSIH</span>
 <span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
 
-<span class="c1"># Fit pada Training data, transform ke Train dan Test</span>
-<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
-<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="c1"># Transformasi</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train_final</span><span class="p">)</span> <span class="c1"># Fit pada data bersih</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>             <span class="c1"># Transform data test (tanpa fit)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Data Scaling Selesai.&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - X_train_scaled shape: </span><span class="si">{</span><span class="n">X_train_scaled</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - X_test_scaled shape : </span><span class="si">{</span><span class="n">X_test_scaled</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Dimensi Train Scaled : </span><span class="si">{</span><span class="n">X_train_scaled</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   - Dimensi Test Scaled  : </span><span class="si">{</span><span class="n">X_test_scaled</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PERSIAPAN DATA MODELING
+Menggunakan Data Bersih dari Bab 3.
+   - Jumlah Sampel Training: 582
 Data Scaling Selesai.
-   - X_train_scaled shape: (736, 235)
-   - X_test_scaled shape : (370, 235)
+   - Dimensi Train Scaled : (582, 235)
+   - Dimensi Test Scaled  : (370, 235)
 </pre></div>
 </div>
 </div>
@@ -1560,24 +1527,17 @@ Data Scaling Selesai.
 
 <span class="c1"># Loop Training &amp; Evaluasi</span>
 <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
-
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;MODEL&#39;</span><span class="si">:</span><span class="s2">&lt;20</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;AKURASI&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;F1-SCORE&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="s1">&#39;WAKTU (s)&#39;</span><span class="si">:</span><span class="s2">&lt;10</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
 
-<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
-
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
     <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-    
-    <span class="c1"># Training</span>
-    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-    
-    <span class="c1"># Testing (Prediksi ke data test yang belum pernah dilihat)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train_final</span><span class="p">)</span>
     <span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
-    
-    <span class="c1"># Hitung Metrik</span>
+
+    <span class="c1"># Hitung performa</span>
     <span class="n">acc</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-    <span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;macro&#39;</span><span class="p">)</span> <span class="c1"># Macro avg agar adil</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">f1_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s1">&#39;macro&#39;</span><span class="p">)</span>
     
     <span class="n">end_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
     <span class="n">duration</span> <span class="o">=</span> <span class="n">end_time</span> <span class="o">-</span> <span class="n">start_time</span>
@@ -1587,20 +1547,21 @@ Data Scaling Selesai.
         <span class="s1">&#39;Accuracy&#39;</span><span class="p">:</span> <span class="n">acc</span><span class="p">,</span>
         <span class="s1">&#39;F1_Score&#39;</span><span class="p">:</span> <span class="n">f1</span><span class="p">,</span>
         <span class="s1">&#39;Time&#39;</span><span class="p">:</span> <span class="n">duration</span><span class="p">,</span>
-        <span class="s1">&#39;Model_Obj&#39;</span><span class="p">:</span> <span class="n">model</span> <span class="c1"># Simpan objek model untuk nanti</span>
+        <span class="s1">&#39;Model_Obj&#39;</span><span class="p">:</span> <span class="n">model</span>
     <span class="p">})</span>
     
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">:</span><span class="s2">&lt;20</span><span class="si">}</span><span class="s2"> | </span><span class="si">{</span><span class="n">acc</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">     | </span><span class="si">{</span><span class="n">f1</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">     | </span><span class="si">{</span><span class="n">duration</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span> <span class="o">*</span> <span class="mi">60</span><span class="p">)</span>
 
-<span class="c1"># Konversi ke DataFrame untuk Analisis</span>
+<span class="c1"># Pilih Pemenang</span>
 <span class="n">df_results</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;F1_Score&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">best_model_name</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Model&#39;</span><span class="p">]</span>
 <span class="n">best_model_obj</span> <span class="o">=</span> <span class="n">df_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;Model_Obj&#39;</span><span class="p">]</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">PEMENANG: </span><span class="si">{</span><span class="n">best_model_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   (F1-Score Tertinggi: </span><span class="si">{</span><span class="n">df_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;F1_Score&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   F1-Score: </span><span class="si">{</span><span class="n">df_results</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;F1_Score&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Model ini dipilih karena memiliki keseimbangan performa terbaik antar kelas.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1608,25 +1569,26 @@ Data Scaling Selesai.
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TRAINING &amp; BENCHMARKING
 MODEL                | AKURASI    | F1-SCORE   | WAKTU (s) 
 ------------------------------------------------------------
-Naive Bayes          | 0.7892     | 0.7856     | 0.0044
-Logistic Regression  | 0.9541     | 0.9508     | 0.0230
-Decision Tree        | 0.9459     | 0.9409     | 0.1067
+Naive Bayes          | 0.7892     | 0.7856     | 0.0042
+Logistic Regression  | 0.9595     | 0.9565     | 0.0297
+Decision Tree        | 0.9189     | 0.9120     | 0.0584
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Random Forest        | 0.9595     | 0.9563     | 0.6937
-KNN (k=5)            | 0.9351     | 0.9311     | 0.0285
-SVM (RBF Kernel)     | 0.9324     | 0.9285     | 0.1127
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Random Forest        | 0.9649     | 0.9619     | 0.3620
+KNN (k=5)            | 0.9459     | 0.9419     | 0.0247
+SVM (RBF Kernel)     | 0.9405     | 0.9366     | 0.0575
 ------------------------------------------------------------
 
 PEMENANG: Random Forest
-   (F1-Score Tertinggi: 0.9563)
+   F1-Score: 0.9619
+   Model ini dipilih karena memiliki keseimbangan performa terbaik antar kelas.
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="id1">
-<h3>Training &amp; Benchmarking Loop<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<section id="visualisasi-hasil">
+<h3>Visualisasi Hasil<a class="headerlink" href="#visualisasi-hasil" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;VISUALISASI KOMPARASI MODEL (Accuracy vs F1-Score)&quot;</span><span class="p">)</span>
@@ -1669,7 +1631,7 @@ PEMENANG: Random Forest
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>VISUALISASI KOMPARASI MODEL (Accuracy vs F1-Score)
 </pre></div>
 </div>
-<img alt="_images/061a6028f9ef6b8038fda3aba6fca2d9d3b5978f41c965ec1f855a0348850c93.png" src="_images/061a6028f9ef6b8038fda3aba6fca2d9d3b5978f41c965ec1f855a0348850c93.png" />
+<img alt="_images/29a702677af4bc08e4b3e1b2598a8ac81164b21b44c3a344172e12b03c994a53.png" src="_images/29a702677af4bc08e4b3e1b2598a8ac81164b21b44c3a344172e12b03c994a53.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ANALISIS:
    - Grafik di atas membandingkan model berdasarkan dua metrik utama.
    - Pemenang (Random Forest) memiliki batang paling panjang dan stabil di kedua metrik.
@@ -1716,20 +1678,20 @@ PEMENANG: Random Forest
 Laporan Klasifikasi Lengkap:
                      precision    recall  f1-score   support
 
-   Authentic (Asli)       0.92      0.97      0.94       132
-Adulterated (Palsu)       0.98      0.95      0.97       238
+   Authentic (Asli)       0.94      0.96      0.95       132
+Adulterated (Palsu)       0.98      0.97      0.97       238
 
            accuracy                           0.96       370
-          macro avg       0.95      0.96      0.96       370
-       weighted avg       0.96      0.96      0.96       370
+          macro avg       0.96      0.96      0.96       370
+       weighted avg       0.97      0.96      0.96       370
 </pre></div>
 </div>
-<img alt="_images/8af732a2e41f2d1d5e4361096b2c0b559d63a8dc46f2e0a60f560e655c884e3d.png" src="_images/8af732a2e41f2d1d5e4361096b2c0b559d63a8dc46f2e0a60f560e655c884e3d.png" />
+<img alt="_images/2e107dfbcb083ceb3d20c242a3417364c13e9cf430404a773bf3e2b4dc0f4664.png" src="_images/2e107dfbcb083ceb3d20c242a3417364c13e9cf430404a773bf3e2b4dc0f4664.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CARA BACA CONFUSION MATRIX:
-   - Benar Prediksi ASLI (True Pos): 128 sampel.
-   - Benar Prediksi PALSU (True Neg): 227 sampel.
-   - Salah Prediksi (Asli dibilang Palsu): 4 sampel -&gt; Bahaya! (Rejecting good product)
-   - Salah Prediksi (Palsu dibilang Asli): 11 sampel -&gt; Bahaya! (Accepting fake product)
+   - Benar Prediksi ASLI (True Pos): 127 sampel.
+   - Benar Prediksi PALSU (True Neg): 230 sampel.
+   - Salah Prediksi (Asli dibilang Palsu): 5 sampel -&gt; Bahaya! (Rejecting good product)
+   - Salah Prediksi (Palsu dibilang Asli): 8 sampel -&gt; Bahaya! (Accepting fake product)
 </pre></div>
 </div>
 </div>
@@ -1786,16 +1748,16 @@ Sedang menghitung dampak setiap panjang gelombang terhadap model
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>TOP 10 PANJANG GELOMBANG PENENTU (Wavelength Indices):
 RANK  | INDEX FITUR     | IMPORTANCE SCORE
 ---------------------------------------------
-1     | Fitur_65        | 0.004198
-2     | Fitur_57        | 0.003074
-3     | Fitur_1         | 0.002387
-4     | Fitur_81        | 0.002103
-5     | Fitur_19        | 0.002089
-6     | Fitur_59        | 0.002089
-7     | Fitur_74        | 0.002089
-8     | Fitur_44        | 0.001987
-9     | Fitur_56        | 0.001860
-10    | Fitur_13        | 0.001790
+1     | Fitur_56        | 0.008931
+2     | Fitur_65        | 0.006343
+3     | Fitur_140       | 0.004189
+4     | Fitur_42        | 0.004129
+5     | Fitur_74        | 0.003900
+6     | Fitur_71        | 0.003283
+7     | Fitur_67        | 0.002997
+8     | Fitur_196       | 0.002997
+9     | Fitur_69        | 0.002997
+10    | Fitur_70        | 0.002997
 
 Perhitungan Selesai.
 </pre></div>
@@ -1846,10 +1808,10 @@ Perhitungan Selesai.
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>VISUALISASI SPEKTRUM PENTING
 </pre></div>
 </div>
-<img alt="_images/33fcdcc0720e9e6770ea84f9effcfe3758d26fd33b7adb805a43eddecc1e5c41.png" src="_images/33fcdcc0720e9e6770ea84f9effcfe3758d26fd33b7adb805a43eddecc1e5c41.png" />
+<img alt="_images/cfd8c22444f1f326e3d6e1126b4459ac7e043e66ca1e5a9ba691791777b316ac.png" src="_images/cfd8c22444f1f326e3d6e1126b4459ac7e043e66ca1e5a9ba691791777b316ac.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>INTERPRETASI BISNIS &amp; KIMIA:
 1. Grafik di atas bukan sekadar angka. Puncak-puncak merah adalah &#39;lokasi&#39; di mana pemalsuan terdeteksi.
-2. Fitur ke-65 adalah indikator terkuat.
+2. Fitur ke-56 adalah indikator terkuat.
 3. Jika dikaitkan dengan ilmu pangan, panjang gelombang ini mungkin berkaitan dengan
    gugus fungsi kimia tertentu (misal: ikatan O-H air atau C-H gula) yang kadarnya berbeda antara stroberi asli dan oplosan.
 </pre></div>
@@ -1908,7 +1870,7 @@ Perhitungan Selesai.
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KURVA ROC Seluruh Model
 </pre></div>
 </div>
-<img alt="_images/e91a5ac2fc3934a00679cb5980359a4316984641b41caa58dcb8b5de8e205c03.png" src="_images/e91a5ac2fc3934a00679cb5980359a4316984641b41caa58dcb8b5de8e205c03.png" />
+<img alt="_images/d10b205c0bf4c2ad4c9cad93c6cee45db368a15bea61e5e17ca39a894f8c5bb4.png" src="_images/d10b205c0bf4c2ad4c9cad93c6cee45db368a15bea61e5e17ca39a894f8c5bb4.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KETERANGAN:
 1. [Posisi Garis]: Semakin garis melengkung ke POJOK KIRI ATAS, semakin hebat modelnya.
 2. [Nilai AUC]: Lihat legenda. Nilai tertinggi (mendekati 1.000) adalah pemenangnya.
@@ -1964,9 +1926,9 @@ Perhitungan Selesai.
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KURVA ROC Model Terbaik
 </pre></div>
 </div>
-<img alt="_images/4979b988603a39617d05bbbc82a0df8c56e24cbec6ce7086fbe1cde278a4c419.png" src="_images/4979b988603a39617d05bbbc82a0df8c56e24cbec6ce7086fbe1cde278a4c419.png" />
+<img alt="_images/605a9c43c045118e7f3dc8004a9ec67db8a56e2842e0b59ec1b717b9799d9989.png" src="_images/605a9c43c045118e7f3dc8004a9ec67db8a56e2842e0b59ec1b717b9799d9989.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>KETERANGAN:
-   - Nilai AUC (Area Under Curve) adalah 0.986 (Sempurna = 1.0).
+   - Nilai AUC (Area Under Curve) adalah 0.990 (Sempurna = 1.0).
    - Semakin kurva mendekat ke pojok kiri atas, semakin hebat model memisahkan barang asli dan palsu
      tanpa banyak melakukan kesalahan (False Alarm).
 </pre></div>
@@ -2018,7 +1980,7 @@ Perhitungan Selesai.
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MENYIMPAN MODEL &amp; SCALER
 Berhasil menyimpan Model  -&gt; model_strawberry.pkl
 Berhasil menyimpan Scaler -&gt; scaler_strawberry.pkl
-Ukuran Model: 427.35 KB
+Ukuran Model: 416.26 KB
 </pre></div>
 </div>
 </div>
@@ -2062,7 +2024,7 @@ Ukuran Model: 427.35 KB
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PREDIKSI MODEL  : </span><span class="si">{</span><span class="n">pred_text</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
     
     <span class="c1"># Cek Kebenaran</span>
-    <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;✅ BENAR&quot;</span> <span class="k">if</span> <span class="n">pred_code</span> <span class="o">==</span> <span class="n">true_label_code</span> <span class="k">else</span> <span class="s2">&quot;❌ SALAH&quot;</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="s2">&quot;BENAR&quot;</span> <span class="k">if</span> <span class="n">pred_code</span> <span class="o">==</span> <span class="n">true_label_code</span> <span class="k">else</span> <span class="s2">&quot;SALAH&quot;</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;HASIL           : </span><span class="si">{</span><span class="n">status</span><span class="si">}</span><span class="s2"> (Confidence: </span><span class="si">{</span><span class="n">confidence</span><span class="si">:</span><span class="s2">.2%</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">60</span><span class="p">)</span>
     
@@ -2088,14 +2050,14 @@ Ukuran Model: 427.35 KB
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Simulasi Prediksi
 ============================================================
-SAMPEL TEST INDEX: 140
-LABEL ASLI      : Authentic (Murni)
-PREDIKSI MODEL  : Authentic (Murni)
-HASIL           : ✅ BENAR (Confidence: 100.00%)
+SAMPEL TEST INDEX: 281
+LABEL ASLI      : Adulterated (Oplosan)
+PREDIKSI MODEL  : Adulterated (Oplosan)
+HASIL           : BENAR (Confidence: 90.00%)
 ============================================================
 </pre></div>
 </div>
-<img alt="_images/1ff91c6566efdc18432b1177e969d4c11f67bc2649d714e87a846c8b40b5c169.png" src="_images/1ff91c6566efdc18432b1177e969d4c11f67bc2649d714e87a846c8b40b5c169.png" />
+<img alt="_images/71c6f52f2bd49fa6798acda289ea36a8d25d9eaeb2fa0f73dfefe332c540575e.png" src="_images/71c6f52f2bd49fa6798acda289ea36a8d25d9eaeb2fa0f73dfefe332c540575e.png" />
 </div>
 </div>
 </section>
@@ -2470,7 +2432,7 @@ Semua file aset berhasil disalin ke folder deploy!
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: streamlit in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (1.46.0)
-Requirement already satisfied: pandas in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (2.1.4)
+Requirement already satisfied: pandas in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (2.3.3)
 Requirement already satisfied: numpy in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (1.26.4)
 Requirement already satisfied: joblib in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (1.3.2)
 Requirement already satisfied: plotly in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (6.3.0)
@@ -2493,7 +2455,7 @@ Requirement already satisfied: pydeck&lt;1,&gt;=0.8.0b4 in c:\users\acer\appdata
 Requirement already satisfied: tornado!=6.5.0,&lt;7,&gt;=6.0.3 in c:\users\acer\appdata\roaming\python\python39\site-packages (from streamlit) (6.4.2)
 Requirement already satisfied: python-dateutil&gt;=2.8.2 in c:\users\acer\appdata\roaming\python\python39\site-packages (from pandas) (2.9.0.post0)
 Requirement already satisfied: pytz&gt;=2020.1 in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (from pandas) (2025.2)
-Requirement already satisfied: tzdata&gt;=2022.1 in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (from pandas) (2025.2)
+Requirement already satisfied: tzdata&gt;=2022.7 in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (from pandas) (2025.2)
 Requirement already satisfied: jinja2 in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (from altair&lt;6,&gt;=4.0-&gt;streamlit) (3.1.6)
 Requirement already satisfied: jsonschema&gt;=3.0 in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (from altair&lt;6,&gt;=4.0-&gt;streamlit) (4.23.0)
 Requirement already satisfied: narwhals&gt;=1.14.2 in c:\users\acer\appdata\local\programs\python\python39\lib\site-packages (from altair&lt;6,&gt;=4.0-&gt;streamlit) (1.44.0)
@@ -2530,6 +2492,10 @@ Note: you may need to restart the kernel to use updated packages.
 <h3>Hasil Deploy:<a class="headerlink" href="#hasil-deploy" title="Link to this heading">#</a></h3>
 <p><a class="reference external" href="https://psddeployuas.streamlit.app/">https://psddeployuas.streamlit.app/</a></p>
 </section>
+</section>
+<section id="link-google-drive-untuk-dataset-dan-file-kompresi">
+<h2>Link Google Drive Untuk Dataset dan File Kompresi<a class="headerlink" href="#link-google-drive-untuk-dataset-dan-file-kompresi" title="Link to this heading">#</a></h2>
+<p><a class="reference external" href="https://drive.google.com/drive/folders/1ikzEt1sl4IAX7AE1urrURLE5QgZP0keO?usp=sharing">Dataset dan File Kompresi</a></p>
 </section>
 </section>
 
@@ -2607,7 +2573,7 @@ Note: you may need to restart the kernel to use updated packages.
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-data">3. PREPROCESSING DATA</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksperimen-seleksi-metode">Eksperimen Seleksi Metode</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksekusi-final-visualisasi-before-vs-after">Eksekusi Final &amp; Visualisasi (Before vs After)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksekusi-final-visualisasi">Eksekusi Final &amp; Visualisasi</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grafik-pipeline-tracking">Grafik Pipeline Tracking</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#komparasi-detail-per-kelas-sebelum-vs-sesudah">Komparasi Detail Per Kelas (Sebelum vs Sesudah)</a></li>
 </ul>
@@ -2615,7 +2581,7 @@ Note: you may need to restart the kernel to use updated packages.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modeling">4. MODELING</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scaling-data">Scaling Data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#training-benchmarking-loop">Training &amp; Benchmarking Loop</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Training &amp; Benchmarking Loop</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisasi-hasil">Visualisasi Hasil</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#confusion-matrix">Confusion Matrix</a></li>
 </ul>
 </li>
@@ -2636,6 +2602,7 @@ Note: you may need to restart the kernel to use updated packages.
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hasil-deploy">Hasil Deploy:</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#link-google-drive-untuk-dataset-dan-file-kompresi">Link Google Drive Untuk Dataset dan File Kompresi</a></li>
 </ul>
   </nav></div>
 
